@@ -12,6 +12,14 @@
                     </li>
                 @endcanany
 
+                @canany(['Complaints Index'])
+                    <li class="nav-item {{ setActive(['complaints']) }}">
+                        <a href="{{ route('complaints.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="fa fa-exclamation-triangle"></i></span>
+                            <span class="pcoded-mtext">Complaints</span>
+                        </a>
+                    </li>
+                @endcanany
                 
                 @canany(['Users Index', 'User Profile'])
                     <li class="nav-item {{ setActive(['users']) }}">

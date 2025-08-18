@@ -6,7 +6,7 @@
                 <div class="pcoded-inner-content">
                     
                     <!-- [ breadcrumb ] start -->
-                    <x-breadcrumb title="Add Category" />
+                    <x-breadcrumb title="Update Category" />
                     <!-- [ breadcrumb ] end -->
                     
                     <div class="main-body">
@@ -17,7 +17,7 @@
                                 <div class="col-xl-12">
                                     <div class="card card-custom gutter-b example example-compact">
                                         <!--begin::Form-->
-                                        {{ html()->form('POST', route('categories.store'))->id('formValidation')->open() }}
+                                        {{ html()->modelForm($category, 'PUT', route('categories.update', $category->uuid))->id('formValidation')->open() }}
                                             <div class="card-body row">
                                                 @include ('categories.form')
                                             </div>

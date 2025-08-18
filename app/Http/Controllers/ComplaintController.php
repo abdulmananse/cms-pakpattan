@@ -24,7 +24,7 @@ class ComplaintController extends Controller
         if($request->ajax()) {
 
             $user = Auth::user();
-            $complaints = Complaint::query();
+            $complaints = Complaint::with('category', 'complaint_by');
 
             if(!$request->filled('order')) {
                 $complaints->orderBy('updated_at', 'desc');
@@ -45,7 +45,7 @@ class ComplaintController extends Controller
                     return $action;
                     
                 })
-                ->rawColumns(['is_active', 'action'])
+                ->rawColumns(['complaint_status', 'action'])
                 ->make(true);
         }
 

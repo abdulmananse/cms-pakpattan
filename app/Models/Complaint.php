@@ -26,13 +26,13 @@ class Complaint extends Model
         'created_by',
     ];
 
-    /**
-     * Get the category that owns the Complaint
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function complaint_by(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

@@ -23,7 +23,7 @@ class FrontComplaintController extends Controller
     public function create()
     {
         $categories = Category::active()->orderBy('ordering')->pluck('name', 'id');
-        return view('complaints.create', get_defined_vars());
+        return view('front-complaints.create', get_defined_vars());
     }
 
     /**
@@ -82,7 +82,7 @@ class FrontComplaintController extends Controller
 
     public function status()
     {
-        return view('complaints.check-status', get_defined_vars());
+        return view('front-complaints.check-status', get_defined_vars());
     }
 
     public function checkStatus (Request $request) {
@@ -110,77 +110,5 @@ class FrontComplaintController extends Controller
         }
 
         return back()->withInput()->with('error', 'Complaint not found against this complaint no. (' . $complaintNo . ')');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
-    {
-        return view('categories.edit', get_defined_vars());
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Request\CategoryRequest  $request
-     * @param  \App\Models\Category $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(CategoryRequest $request, Category $category) {
-
-        $category->update($request->validated());
-
-        Session::flash('success', 'Category successfully updated!');
-
-        return redirect()->route('categories.index');
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category $category
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Category $category) {
-        if($category) {
-            $category->delete();
-            return $this->sendResponse(true, 'Category successfully deleted!');
-        }
-
-        return $this->sendResponse(false, 'Category not found!', [], 404);
-    }
-
-    /**
-     * Update Status
-     *
-     * @param  \App\Models\Category $category
-     * @return \Illuminate\Http\Response
-     */
-    public function updateStatus(Category $category) {
-
-        if($category) {
-            $category->is_active = !$category->is_active;
-            $category->save();
-
-            return $this->sendResponse(true, 'Category status successfully updated!');
-        }
-
-        return $this->sendResponse(false, 'Category not found!', [], 404);
     }
 }
