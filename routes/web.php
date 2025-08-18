@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('landing');
 
 # Complaint
 Route::get('complaint', [FrontComplaintController::class, 'create'])->name('complaint');
