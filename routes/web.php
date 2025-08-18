@@ -5,33 +5,29 @@ use App\Http\Controllers\Acl\PermissionGroupController;
 use App\Http\Controllers\Acl\RoleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\FrontComplaintController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Models\Complaint;
 use App\Models\PermissionGroup;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    if(roleName() == 'Complainant') {
-        $complaints = Complaint::where('created_by', Auth::id())->get();
-        return view('home', get_defined_vars());
-    }
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 # Complaint
-Route::get('complaint', [ComplaintController::class, 'create'])->name('complaint');
-Route::post('complaint', [ComplaintController::class, 'store'])->name('complaint.store');
-Route::get('complaint-status', [ComplaintController::class, 'status'])->name('complaint-status');
-Route::post('complaint-status', [ComplaintController::class, 'checkStatus'])->name('complaint-status.check');
+Route::get('complaint', [FrontComplaintController::class, 'create'])->name('complaint');
+Route::post('complaint', [FrontComplaintController::class, 'store'])->name('complaint.store');
+Route::get('complaint-status', [FrontComplaintController::class, 'status'])->name('complaint-status');
+Route::post('complaint-status', [FrontComplaintController::class, 'checkStatus'])->name('complaint-status.check');
 
 Route::middleware('auth')->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -41,6 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::post('update-profile', [UserController::class, 'updateProfile'])->name('update-profile');
     Route::get('change-password', [UserController::class, 'changePassword'])->name('change-password');
     Route::post('update-password', [UserController::class, 'updatePassword'])->name('update-password');
+
+    # Users 
+    Route::resource('complaints', ComplaintController::class)->only('index')->middleware('permission:Complaints Index');
 
     # Users 
     Route::resource('users', UserController::class)->only('index')->middleware('permission:Users Index');

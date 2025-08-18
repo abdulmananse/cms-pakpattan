@@ -94,6 +94,44 @@ if (!function_exists('getSettingValue')) {
 
 }
 
+if (!function_exists('getComplaintStatus')) {
+
+    function getComplaintStatus($status)
+    {
+        $statusText = 'Pending';
+        if ($status == 1) {
+            $statusText = 'Resolved';
+        }elseif ($status == 2) {
+            $statusText = 'Rejected';
+        }
+        return $statusText;
+    }
+
+}
+
+if (!function_exists('getComplaintStatusBadge')) {
+
+    function getComplaintStatusBadge($status = 1)
+    {
+        $badge = '<span style="overflow: visible; position: relative; width: 130px;">';
+                    
+        switch ($status) {
+            case 1:
+                $badge .= '<a href="#" class="badge bg-success" > Resolved </a>';
+                break;
+            case 2:
+                $badge .= '<a href="#" class="badge bg-danger" > Rejected </a>';
+                break;    
+            default:
+                $badge .= '<a href="#" class="badge bg-info" > Pending </a>';
+        }
+        
+        $badge .= '</span>';    
+        return $badge;
+    }
+
+}
+
 /**
 * Get Role Name
 *

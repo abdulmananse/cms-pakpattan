@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
-use App\Http\Requests\ComplaintRequest;
 use App\Models\Category;
 use App\Models\Complaint;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Hash;
 
 class ComplaintController extends Controller
 {
@@ -26,32 +23,33 @@ class ComplaintController extends Controller
 
         if($request->ajax()) {
 
-            $categories = Category::query();
+            $user = Auth::user();
+            $complaints = Complaint::query();
 
             if(!$request->filled('order')) {
-                $categories->orderBy('ordering', 'asc');
+                $complaints->orderBy('updated_at', 'desc');
             }
 
-            return Datatables::of($categories)
-                ->addColumn('is_active', function ($category) {
-                    return getStatusBadge($category->is_active);
+            return Datatables::of($complaints)
+                ->addColumn('complaint_status', function ($complaint) {
+                    return getComplaintStatusBadge($complaint->complaint_status);
                 })
-                ->addColumn('action', function ($category) {
-                    $statusAction = '   <td>
-                                            <div class="overlay-edit">
-                                                <a href="'.route('categories.edit', $category->uuid).'" class="btn btn-icon btn-secondary"><i class="feather icon-edit-2"></i></a>
-                                                <a href="'.route('categories.updateStatus', $category->uuid).'" class="btn btn-icon '.($category->is_active == 1 ? "btn-danger" : "btn-success").' btn-status"><i class="feather '.($category->is_active == 1 ? "icon-x-circle" : "icon-check-circle").'"></i></a>
-                                                <a href="'.route('categories.destroy', $category->uuid).'" class="btn btn-icon btn-danger btn-delete"><i class="feather icon-trash-2"></i></a>
-                                            </div>
-                                        </td>';
-                    return $statusAction;
+                ->addColumn('action', function ($complaint) use ($user) {
+                    $action = '<td><div class="overlay-edit">';
+
+                    // if ($user->can('Complaints Show')) {
+                    //     $action .= '<a href="'.route('users.edit', $user->uuid).'" class="btn btn-icon btn-secondary"><i class="feather icon-edit-2"></i></a>';
+                    // }
+                    $action .= '</div></td>';
+
+                    return $action;
+                    
                 })
                 ->rawColumns(['is_active', 'action'])
                 ->make(true);
-
         }
 
-        return view('categories.index');
+        return view('complaints.index');
     }
 
     /**
@@ -61,94 +59,22 @@ class ComplaintController extends Controller
      */
     public function create()
     {
-        $categories = Category::active()->orderBy('ordering')->pluck('name', 'id');
-        return view('complaints.create', get_defined_vars());
+        return view('categories.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Request\ComplaintRequest  $request
+     * @param  \App\Http\Request\CategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ComplaintRequest $request)
+    public function store(CategoryRequest $request)
     {
-        // dd($request->all());
-        $userId = NULL;
-        if (Auth::check()) {
-            $userId = Auth::id();
-        } else {
-            $user = User::create([
-                'name' => $request->name,
-                'username' => $request->username,
-                'mobile' => $request->mobile,
-                'role' => 'Complainant',
-                'email' => @$request->email,
-                'address' => $request->address,
-                'password' => Hash::make($request->password),
-            ]);
+        Category::create($request->validated());
 
-            if($user) {
-                $user->assignRole('Complainant');
-                $userId = $user->id;
-            }
-        }
+        Session::flash('success', 'Category successfully created!');
 
-        $category = Category::find($request->category);
-
-        $complaintData = $request->validated();
-
-        $lastId = Complaint::max('id') + 1;
-        $complaintNo = $category->code . str_pad($lastId, 4, '0', STR_PAD_LEFT);
-        $complaintData['complaint_no'] = $complaintNo;
-        $complaintData['category_id'] = $category->id;
-        $complaintData['created_by'] = $userId;
-        $complaintData['source'] = 'Online Form';
-
-        if ($request->hasFile('attachment')) {
-            $extension = $request->file('attachment')->getClientOriginalExtension();
-            $fileName = $complaintNo . '.' . $extension;
-            $request->file('attachment')->storeAs('complaints', $fileName, 'public');
-            $complaintData['attachment'] = $fileName;
-        }
-
-        Complaint::create($complaintData);
-
-        Session::flash('success', 'Complaint submitted successfully your complaint number is (' . $complaintNo . ')');
-
-        return redirect()->route('complaint');
-    }
-
-    public function status()
-    {
-        return view('complaints.check-status', get_defined_vars());
-    }
-
-    public function checkStatus (Request $request) {
-        
-        $request->validate([
-            'complaint_no' => 'required'
-        ]);
-
-        $complaintNo = $request->complaint_no;
-
-        $complaint = Complaint::where('complaint_no', $request->complaint_no)->first();
-
-        if($complaint) {
-            if ($complaint->complaint_status == 0 && $complaint->approved_by == NULL) {
-                return back()->withInput()->with('info', 'Your complaint is still pending approval. Please wait for the approval from the admin.');
-            } elseif ($complaint->complaint_status == 0 && $complaint->approved_by != NULL && $complaint->assigned_by == NULL) {
-                return back()->withInput()->with('info', 'Your complaint has been approved by the admin.');
-            } elseif ($complaint->complaint_status == 0 && $complaint->approved_by != NULL && $complaint->department_id != NULL) {
-                return back()->withInput()->with('info', 'Your complaint has been assigned to the concerned department.');
-            } elseif ($complaint->complaint_status == 1) {
-                return back()->withInput()->with('success', 'Your complaint has been successfully resolved.');
-            } elseif ($complaint->complaint_status == 2) {
-                return back()->withInput()->with('error', 'Your complaint is rejected.');
-            }
-        }
-
-        return back()->withInput()->with('error', 'Complaint not found against this complaint no. (' . $complaintNo . ')');
+        return redirect()->route('categories.index');
     }
 
     /**
