@@ -6,8 +6,8 @@
             <div class="relative max-w-7xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-10 items-center text-white">
             <div>
                 <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">
-                Complaint Management System
-                <span class="block text-primary-200">District Pakpattan</span>
+                    Complaint Management System
+                    <span class="block text-primary-200">District Pakpattan</span>
                 </h1>
                 <p class="mt-4 text-lg text-gray-200">Submit service complaints in minutes, track progress in real-time, and help us improve public services across Pakpattan.</p>
                 <div class="mt-8 flex flex-wrap items-center gap-3">
