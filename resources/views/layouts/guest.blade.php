@@ -74,8 +74,13 @@
                 <a href="#categories" class="px-2 py-2 rounded-lg hover:bg-gray-50">Categories</a>
                 <a href="#track" class="px-2 py-2 rounded-lg hover:bg-gray-50">Track</a>
                 <div class="h-px bg-gray-100 my-2"></div>
-                <a href="#login" class="px-2 py-2 rounded-lg border border-gray-200 text-center">Login</a>
-                <a href="#register-complaint" class="px-2 py-2 rounded-lg bg-primary-600 text-white text-center">Register Complaint</a>
+                    @guest
+                        <a href="{{ url('register') }}" class="px-2 py-2 rounded-lg border border-gray-200 text-center">Register</a>
+                    @endguest
+                    @auth
+                        <a href="{{ url('dashboard') }}" class="px-2 py-2 rounded-lg border border-gray-200 text-center">Dashboard</a>
+                    @endauth
+                    <a href="{{ url('complaint') }}" class="px-2 py-2 rounded-lg bg-primary-600 text-white text-center">Register Complaint</a>
                 </div>
             </div>
             </nav>

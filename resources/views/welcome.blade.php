@@ -1,29 +1,27 @@
 <x-guest-layout>
 
         <!-- Hero -->
-        <section class="relative overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-b from-primary-50 to-white pointer-events-none"></div>
-            <div class="max-w-7xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-10 items-center">
+        <section class="relative overflow-hidden bg-cover bg-center" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/69/Mosque_at_Shrine_of_Fariduddin_Ganjshakar_1.jpg');">
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="relative max-w-7xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-10 items-center text-white">
             <div>
-                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">
                 Complaint Management System
-                <span class="block text-primary-600">District Pakpattan</span>
+                <span class="block text-primary-200">District Pakpattan</span>
                 </h1>
-                <p class="mt-4 text-lg text-gray-600">Submit service complaints in minutes, track progress in real-time, and help us improve public services across Pakpattan.</p>
+                <p class="mt-4 text-lg text-gray-200">Submit service complaints in minutes, track progress in real-time, and help us improve public services across Pakpattan.</p>
                 <div class="mt-8 flex flex-wrap items-center gap-3">
-                <a href="#register-complaint" class="px-5 py-3 rounded-xl bg-primary-600 text-white font-medium hover:bg-primary-700">Register Complaint</a>
-                <a href="#track" class="px-5 py-3 rounded-xl border border-gray-200 hover:bg-gray-50">Track Complaint</a>
+                <a href="{{ url('complaint') }}" class="px-5 py-3 rounded-xl bg-primary-600 text-white font-medium hover:bg-primary-700">Register Complaint</a>
+                <a href="#track" class="px-5 py-3 rounded-xl border border-white/30 hover:bg-white/10">Track Complaint</a>
                 </div>
-                <div class="mt-6 flex items-center gap-6 text-sm text-gray-600">
-                <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-green-500"></span>24/7 Online</div>
-                <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-blue-500"></span>SMS & Email updates</div>
-                <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-amber-500"></span>Urdu & English</div>
+                <div class="mt-6 flex items-center gap-6 text-sm text-gray-200">
+                <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-green-400"></span>24/7 Online</div>
+                <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-blue-400"></span>SMS & Email updates</div>
+                <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-amber-400"></span>Urdu & English</div>
                 </div>
             </div>
             <div class="relative">
-                <div class="absolute -inset-6 bg-gradient-to-tr from-primary-100/60 to-transparent rounded-3xl blur-2xl"></div>
-                <div class="relative rounded-3xl border border-gray-200 shadow-sm bg-white p-4">
-                <!-- Mocked dashboard preview card -->
+                <div class="relative rounded-3xl border border-gray-200 shadow-sm bg-white p-4 text-gray-800">
                 <div class="grid gap-4">
                     <div class="rounded-2xl bg-primary-600 text-white p-6">
                     <div class="text-sm opacity-90">Active Complaints</div>
