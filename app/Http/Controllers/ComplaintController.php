@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Models\Complaint;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -24,7 +25,11 @@ class ComplaintController extends Controller
         if($request->ajax()) {
 
             $user = Auth::user();
-            $complaints = Complaint::with('category', 'complaint_by');
+            $complaints = Complaint::with('category', 'department', 'complaint_by');
+
+            if ($user->role == 'Department') {
+                $complaints->where('department_id', $user->department_id);
+            }
 
             if(!$request->filled('order')) {
                 $complaints->orderBy('updated_at', 'desc');
@@ -32,14 +37,14 @@ class ComplaintController extends Controller
 
             return Datatables::of($complaints)
                 ->addColumn('complaint_status', function ($complaint) {
-                    return getComplaintStatusBadge($complaint->complaint_status);
+                    return getComplaintStatusBadge($complaint);
                 })
                 ->addColumn('action', function ($complaint) use ($user) {
                     $action = '<td><div class="overlay-edit">';
 
-                    // if ($user->can('Complaints Show')) {
-                    //     $action .= '<a href="'.route('users.edit', $user->uuid).'" class="btn btn-icon btn-secondary"><i class="feather icon-edit-2"></i></a>';
-                    // }
+                    if ($user->can('Complaints Show')) {
+                        $action .= '<a href="'.route('complaints.show', $complaint->uuid).'" class="btn btn-icon btn-secondary"><i class="feather icon-eye"></i></a>';
+                    }
                     $action .= '</div></td>';
 
                     return $action;
@@ -80,12 +85,52 @@ class ComplaintController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Complaint $complaint
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Complaint $complaint)
     {
-        //
+        $departments = Department::active()->pluck('name', 'id');
+        return view('complaints.show', get_defined_vars());
+    }
+
+    /**
+     * Assign complaint to department
+     *
+     * @param  \App\Http\Request\Request  $request
+     * @param  \App\Models\Complaint $complaint
+     * @return \Illuminate\Http\Response
+     */
+    public function assigned(Request $request, Complaint $complaint) {
+
+
+        if ($request->filled('department_id')) {
+            $complaint->department_id = $request->department_id;
+            $complaint->assigned_by = Auth::id();
+            $complaint->save();
+
+            Session::flash('success', 'Complaint successfully assigned!');
+            return redirect()->route('complaints.index');
+        }
+
+        Session::flash('error', 'Complaint not assigned!');
+        return redirect()->back();
+    }
+    
+    /**
+     * Reject Complaint
+     *
+     * @param  \App\Http\Request\Request  $request
+     * @param  \App\Models\Complaint $complaint
+     * @return \Illuminate\Http\Response
+     */
+    public function rejected(Complaint $complaint) {
+
+        $complaint->complaint_status = 2;
+        $complaint->assigned_by = Auth::id();
+        $complaint->save();
+
+        return ['status' => true];
     }
 
     /**

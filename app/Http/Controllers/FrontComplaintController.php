@@ -62,6 +62,9 @@ class FrontComplaintController extends Controller
         $lastId = Complaint::max('id') + 1;
         $complaintNo = $category->code . str_pad($lastId, 4, '0', STR_PAD_LEFT);
         $complaintData['complaint_no'] = $complaintNo;
+        $complaintData['name'] = $request->name;
+        $complaintData['cnic'] = $request->username;
+        $complaintData['mobile'] = $request->mobile;
         $complaintData['category_id'] = $category->id;
         $complaintData['created_by'] = $userId;
         $complaintData['source'] = 'Online Form';

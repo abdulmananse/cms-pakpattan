@@ -111,19 +111,20 @@ if (!function_exists('getComplaintStatus')) {
 
 if (!function_exists('getComplaintStatusBadge')) {
 
-    function getComplaintStatusBadge($status = 1)
+    function getComplaintStatusBadge($complaint)
     {
         $badge = '<span style="overflow: visible; position: relative; width: 130px;">';
-                    
-        switch ($status) {
-            case 1:
-                $badge .= '<a href="#" class="badge bg-success" > Resolved </a>';
-                break;
-            case 2:
-                $badge .= '<a href="#" class="badge bg-danger" > Rejected </a>';
-                break;    
-            default:
-                $badge .= '<a href="#" class="badge bg-info" > Pending </a>';
+        $status = $complaint->complaint_status;
+        $department = $complaint->department_id;
+
+        if ($status == 0 && $department > 0) {
+            $badge .= '<a href="#" class="badge bg-info">Assigned to Department</a>';
+        } elseif ($status == 1) {
+            $badge .= '<a href="#" class="badge bg-success">Resolved</a>';
+        } elseif ($status == 2) {
+            $badge .= '<a href="#" class="badge bg-danger">Rejected</a>';
+        } else {
+            $badge .= '<a href="#" class="badge bg-info">Pending</a>';
         }
         
         $badge .= '</span>';    

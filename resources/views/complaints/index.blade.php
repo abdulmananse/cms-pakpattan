@@ -12,7 +12,7 @@
                 <div class="col-xl-12 col-md-12">
                     <div class="card user-profile-list">
                         <div class="card-body-dd">
-                            <x-table :keys="['Complaint No', 'Category', 'Location', 'Complaint By', 'Status', '']"></x-table>
+                            <x-table :keys="['Complaint No', 'Name', 'CNIC', 'Mobile', 'Category', 'Department', 'Complaint By', 'Source', 'Status', '']"></x-table>
                         </div>
                     </div>
                 </div>
@@ -30,13 +30,25 @@
                         data: 'complaint_no'
                     },
                     {
+                        data: 'name'
+                    },
+                    {
+                        data: 'cnic'
+                    },
+                    {
+                        data: 'mobile'
+                    },
+                    {
                         data: 'category.name'
                     },
                     {
-                        data: 'location'
+                        data: 'department.name'
                     },
                     {
                         data: 'complaint_by.name'
+                    },
+                    {
+                        data: 'source'
                     },
                     {
                         data: 'complaint_status',

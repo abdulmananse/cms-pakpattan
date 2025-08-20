@@ -17,6 +17,9 @@ class Complaint extends Model
      */
     protected $fillable = [
         'complaint_no',
+        'name',
+        'cnic',
+        'mobile',
         'category_id',
         'description',
         'location',
@@ -30,9 +33,19 @@ class Complaint extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    
+    public function department(): BelongsTo
+    {
+        return $this->belongsTo(Department::class);
+    }
 
     public function complaint_by(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+    
+    public function assigned_user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'assigned_by');
     }
 }

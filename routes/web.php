@@ -38,9 +38,12 @@ Route::middleware('auth')->group(function () {
     Route::get('change-password', [UserController::class, 'changePassword'])->name('change-password');
     Route::post('update-password', [UserController::class, 'updatePassword'])->name('update-password');
 
-    # Users 
+    # Complaints 
     Route::resource('complaints', ComplaintController::class)->only('index')->middleware('permission:Complaints Index');
+    Route::resource('complaints', ComplaintController::class)->only('show')->middleware('permission:Complaints Show');
     Route::post('complaints/datatable', [ComplaintController::class, 'index'])->name('complaints.datatable');
+    Route::post('complaints/assign/{complaint}', [ComplaintController::class, 'assigned'])->name('complaints.assigned')->middleware('permission:Complaints Assigned');
+    Route::get('complaints/reject/{complaint}', [ComplaintController::class, 'rejected'])->name('complaints.rejected')->middleware('permission:Complaints Rejected');
 
     # Users 
     Route::resource('users', UserController::class)->only('index')->middleware('permission:Users Index');

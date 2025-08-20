@@ -17,6 +17,9 @@ class CreateComplaintsTable extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('complaint_no', 30)->unique()->index();
+            $table->string('name')->index();
+            $table->bigInteger('cnic')->nullable()->index();
+            $table->bigInteger('mobile')->nullable()->index();
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->string('description', 500)->nullable();
