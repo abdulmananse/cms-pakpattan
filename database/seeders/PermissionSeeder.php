@@ -20,6 +20,7 @@ class PermissionSeeder extends Seeder
             'Super Admin',
             'Admin',
             'Complainant',
+            'Department',
         ];
 
         foreach($roles as $role) {

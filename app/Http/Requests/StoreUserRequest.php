@@ -25,7 +25,8 @@ class StoreUserRequest extends BaseRequest
     public function rules()
     {
         return [
-            'role' => 'nullable|exists:roles,id',
+            'role' => 'required|exists:roles,id',
+            'department_id' => 'nullable|exists:departments,id',
             'name' => 'required|max:50',
             'designation' => 'nullable|max:50',
             'username' => 'required|max:50|unique:users,username',

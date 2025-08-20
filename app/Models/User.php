@@ -25,6 +25,7 @@ class User extends Authenticatable
         'mobile',
         'address',
         'role',
+        'department_id',
         'designation',
         'password',
     ];

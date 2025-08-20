@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Department;
 
 class UserController extends Controller
 {
@@ -78,6 +79,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::where('id', '!=', 1)->active()->pluck('name', 'id');
+        $departments = Department::active()->pluck('name', 'id');
 
         return view('users.create', get_defined_vars());
     }
@@ -142,7 +144,9 @@ class UserController extends Controller
         } else {
             $user->role = '';
         }
-    
+        
+        $departments = Department::active()->pluck('name', 'id');
+        
         return view('users.edit', get_defined_vars());
         
     }

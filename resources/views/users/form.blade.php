@@ -20,8 +20,13 @@
 </div>
 <div class="form-group col-md-6">
     {{ html()->label()->for('role')->text('Role')->class('form-label required-input') }}
-    {{ html()->select('role', $roles, null)->class('form-select')->classIf($errors->has('role'), 'error')->placeholder('Role')->required() }}
+    {{ html()->select('role', $roles, null)->class('form-select')->classIf($errors->has('role'), 'error')->placeholder('Select Role')->required() }}
     {!! $errors->first('role', '<label class="error">:message</label>') !!}
+</div>
+<div class="form-group col-md-6">
+    {{ html()->label()->for('department_id')->text('Department')->class('form-label') }}
+    {{ html()->select('department_id', $departments, null)->class('form-select')->placeholder('Select Department') }}
+    {!! $errors->first('department_id', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
     {{ html()->label()->for('designation')->text('Designation')->class('form-label') }}
