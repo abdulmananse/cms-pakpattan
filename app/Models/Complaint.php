@@ -29,6 +29,11 @@ class Complaint extends Model
         'created_by',
     ];
 
+    public function getMobileAttribute($value)
+    {
+        return ($value == null) ? null : (mb_substr($value, 0, 1) == 3 ? '0' . $value : $value);
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);

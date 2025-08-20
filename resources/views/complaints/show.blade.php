@@ -39,13 +39,13 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label font-weight-bolder">CNIC</label>
                                                 <div class="col-sm-9">
-                                                    {{ $complaint->cnic }}
+                                                    {{ addDashesInCNIC($complaint->cnic) }}
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label font-weight-bolder">Mobile</label>
                                                 <div class="col-sm-9">
-                                                    {{ $complaint->mobile }}
+                                                    {{ addDashInMobile($complaint->mobile) }}
                                                 </div>
                                             </div>
                                             <div class="form-group row">
