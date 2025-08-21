@@ -131,6 +131,22 @@
                                             {{ html()->form()->close() }}
                                             @endif
                                         @endcan
+
+                                        @canany(['Complaints Resolved'])
+                                            @if($complaint->complaint_status == 0 && $complaint->department_id == $user->department_id)
+                                            {{ html()->form('POST', route('complaints.resolved', $complaint->uuid))->id('formValidation')->open() }}
+                                                <div class="card-body row">
+                                                    <div class="form-group col-md-4">
+                                                        {{ html()->label()->for('remarks')->text('Remarks')->class('form-label required-input') }}
+                                                        {{ html()->textarea('remarks', null)->class('form-control')->placeholder('Remarks')->required()->maxlength(500) }}
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <button type="submit" class="btn btn-primary mr-2">Resolved</button>
+                                                    </div>
+                                                </div>
+                                            {{ html()->form()->close() }}
+                                            @endif
+                                        @endcan
                                     </div>
                                 </div>
                                 <!-- [ basic-table ] end -->

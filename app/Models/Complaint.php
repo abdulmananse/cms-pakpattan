@@ -27,6 +27,9 @@ class Complaint extends Model
         'source',
         'complaint_status',
         'created_by',
+        'rejected_by',
+        'resolved_by',
+        'remarks',
     ];
 
     public function getMobileAttribute($value)

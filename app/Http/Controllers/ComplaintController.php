@@ -90,6 +90,7 @@ class ComplaintController extends Controller
      */
     public function show(Complaint $complaint)
     {
+        $user = Auth::user();
         $departments = Department::active()->pluck('name', 'id');
         return view('complaints.show', get_defined_vars());
     }
@@ -120,14 +121,30 @@ class ComplaintController extends Controller
     /**
      * Reject Complaint
      *
-     * @param  \App\Http\Request\Request  $request
      * @param  \App\Models\Complaint $complaint
      * @return \Illuminate\Http\Response
      */
     public function rejected(Complaint $complaint) {
 
         $complaint->complaint_status = 2;
-        $complaint->assigned_by = Auth::id();
+        $complaint->rejected_by = Auth::id();
+        $complaint->save();
+
+        return ['status' => true];
+    }
+    
+    /**
+     * Reject Complaint
+     *
+     * @param  \App\Http\Request\Request  $request
+     * @param  \App\Models\Complaint $complaint
+     * @return \Illuminate\Http\Response
+     */
+    public function resolved(Request $request, Complaint $complaint) {
+
+        $complaint->complaint_status = 1;
+        $complaint->remarks = $request->remarks;
+        $complaint->resolved_by = Auth::id();
         $complaint->save();
 
         return ['status' => true];
