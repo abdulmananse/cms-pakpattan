@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::post('complaints/datatable', [ComplaintController::class, 'index'])->name('complaints.datatable');
     Route::post('complaints/assign/{complaint}', [ComplaintController::class, 'assigned'])->name('complaints.assigned')->middleware('permission:Complaints Assigned');
     Route::get('complaints/reject/{complaint}', [ComplaintController::class, 'rejected'])->name('complaints.rejected')->middleware('permission:Complaints Rejected');
-    Route::get('complaints/resolved/{complaint}', [ComplaintController::class, 'resolved'])->name('complaints.resolved')->middleware('permission:Complaints Resolved');
+    Route::post('complaints/resolved/{complaint}', [ComplaintController::class, 'resolved'])->name('complaints.resolved')->middleware('permission:Complaints Resolved');
 
     # Users 
     Route::resource('users', UserController::class)->only('index')->middleware('permission:Users Index');
