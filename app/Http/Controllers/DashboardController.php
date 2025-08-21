@@ -16,8 +16,8 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-
-        if(roleName() == 'Complainant') {
+        $user = Auth::user();
+        if($user->role == 'Complainant') {
             $complaints = Complaint::where('created_by', Auth::id())->orderBy('updated_at', 'desc')->get();
             return view('home', get_defined_vars());
         }
@@ -27,7 +27,13 @@ class DashboardController extends Controller
             SUM(CASE WHEN complaint_status = 0 THEN 1 ELSE 0 END) as pending,
             SUM(CASE WHEN complaint_status = 1 THEN 1 ELSE 0 END) as resolved,
             SUM(CASE WHEN complaint_status = 2 THEN 1 ELSE 0 END) as rejected
-        ")->first();
+        ");
+        
+        if ($user->role == 'Department') {
+            $summary->where('department_id', $user->department_id);
+        }
+
+        $summary = $summary->first();
 
         return view('dashboard', get_defined_vars());
     }
