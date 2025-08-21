@@ -147,7 +147,8 @@ class ComplaintController extends Controller
         $complaint->resolved_by = Auth::id();
         $complaint->save();
 
-        return ['status' => true];
+        Session::flash('success', 'Complaint successfully resolved!');
+        return redirect()->route('complaints.index');
     }
 
     /**
