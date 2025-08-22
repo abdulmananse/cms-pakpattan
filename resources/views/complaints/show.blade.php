@@ -86,7 +86,15 @@
                                                         <img src="{{ asset('storage/complaints/' . $complaint->attachment) }}" width=80 />
                                                     </a>
                                                     @endif
+
+                                                    @if(complaint->complaint_status == 1 && $complaint->resolved_attachment)
+                                                    <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="ms-3">
+                                                        <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" width=80 />
+                                                    </a>
+                                                    @endif
                                                 </div>
+
+                                                
                                             </div>
                                             @if($complaint->department_id > 0)
                                             <div class="form-group row">
@@ -109,6 +117,15 @@
                                                     {!! getComplaintStatusBadge($complaint) !!}
                                                 </div>
                                             </div>
+
+                                            @if(complaint->complaint_status == 1)
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label font-weight-bolder">Remarks</label>
+                                                <div class="col-sm-9">
+                                                    {{ $complaint->remarks }}
+                                                </div>
+                                            </div>
+                                            @endif
                                         </div>
 
                                         @canany(['Complaints Assigned', 'Complaints Rejected'])
