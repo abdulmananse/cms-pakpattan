@@ -134,7 +134,7 @@
 
                                         @canany(['Complaints Resolved'])
                                             @if($complaint->complaint_status == 0 && $complaint->department_id == $user->department_id)
-                                            {{ html()->form('POST', route('complaints.resolved', $complaint->uuid))->id('formValidation')->enctype("multipart/form-data")->open() }}
+                                            {{ html()->form('POST', route('complaints.resolved', $complaint->uuid))->id('formValidation')->attribute('enctype', 'multipart/form-data')->open() }}
                                                 <div class="card-body row">
                                                     <div class="form-group col-md-4">
                                                         {{ html()->label()->for('attachment')->text('Attachment')->class('form-label required-input') }}
