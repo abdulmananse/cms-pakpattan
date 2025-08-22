@@ -87,7 +87,7 @@
                                                     </a>
                                                     @endif
 
-                                                    @if(complaint->complaint_status == 1 && $complaint->resolved_attachment)
+                                                    @if($complaint->complaint_status == 1 && $complaint->resolved_attachment)
                                                     <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="ms-3">
                                                         <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" width=80 />
                                                     </a>
