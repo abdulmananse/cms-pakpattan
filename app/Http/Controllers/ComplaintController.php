@@ -142,6 +142,13 @@ class ComplaintController extends Controller
      */
     public function resolved(Request $request, Complaint $complaint) {
 
+        if ($request->hasFile('attachment')) {
+            $extension = $request->file('attachment')->getClientOriginalExtension();
+            $fileName = $complaint->complaint_no . '_r.' . $extension;
+            $request->file('attachment')->storeAs('complaints', $fileName, 'public');
+            $complaint->resolved_attachment = $fileName;
+        }
+
         $complaint->complaint_status = 1;
         $complaint->remarks = $request->remarks;
         $complaint->resolved_by = Auth::id();

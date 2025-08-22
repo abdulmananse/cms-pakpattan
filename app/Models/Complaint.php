@@ -29,6 +29,7 @@ class Complaint extends Model
         'created_by',
         'rejected_by',
         'resolved_by',
+        'resolved_attachment',
         'remarks',
     ];
 
