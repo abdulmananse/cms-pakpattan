@@ -120,6 +120,12 @@
 
                                             @if($complaint->complaint_status == 1)
                                             <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label font-weight-bolder">Resolved By</label>
+                                                <div class="col-sm-9">
+                                                    {{ optional($complaint->resolved_user)->name }}
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label font-weight-bolder">Remarks</label>
                                                 <div class="col-sm-9">
                                                     {{ $complaint->remarks }}

@@ -57,4 +57,9 @@ class Complaint extends Model
     {
         return $this->belongsTo(User::class, 'assigned_by');
     }
+   
+    public function resolved_user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'resolved_by');
+    }
 }
