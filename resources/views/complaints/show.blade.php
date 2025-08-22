@@ -118,7 +118,7 @@
                                                 </div>
                                             </div>
 
-                                            @if(complaint->complaint_status == 1)
+                                            @if($complaint->complaint_status == 1)
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label font-weight-bolder">Remarks</label>
                                                 <div class="col-sm-9">
