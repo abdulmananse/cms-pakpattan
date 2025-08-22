@@ -136,12 +136,12 @@
                                             @if($complaint->complaint_status == 0 && $complaint->department_id == $user->department_id)
                                             {{ html()->form('POST', route('complaints.resolved', $complaint->uuid))->id('formValidation')->attribute('enctype', 'multipart/form-data')->open() }}
                                                 <div class="card-body row">
-                                                    <div class="form-group col-md-4">
+                                                    <div class="form-group col-md-12">
                                                         {{ html()->label()->for('attachment')->text('Attachment')->class('form-label required-input') }}
                                                         {{ html()->file('attachment')->required() }}
                                                         {!! $errors->first('attachment', '<label class="error">:message</label>') !!}
                                                     </div>
-                                                    <div class="form-group col-md-4">
+                                                    <div class="form-group col-md-12">
                                                         {{ html()->label()->for('remarks')->text('Remarks')->class('form-label required-input') }}
                                                         {{ html()->textarea('remarks', null)->class('form-control')->placeholder('Remarks')->required()->maxlength(500) }}
                                                         {!! $errors->first('remarks', '<label class="error">:message</label>') !!}
