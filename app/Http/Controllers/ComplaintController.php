@@ -90,6 +90,7 @@ class ComplaintController extends Controller
         $complaintData['category_id'] = $category->id;
         $complaintData['source_id'] = $request->source;
         $complaintData['complaint_no'] = $complaintNo;
+        $complaintData['assigned_by'] = $userId;
         $complaintData['created_by'] = $userId;
 
         if ($request->hasFile('attachment')) {
