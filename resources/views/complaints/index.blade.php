@@ -2,12 +2,23 @@
     <div class="pcoded-main-container">
         <div class="pcoded-content">
             <!-- [ breadcrumb ] start -->
-            {{-- <x-breadcrumb title="Complaints" :button="['name' => 'Add', 'allow' => true, 'link' => route('complaints.create')]" /> --}}
+            <x-breadcrumb title="Complaints" :button="['name' => 'Register Complaint', 'allow' => true, 'link' => route('complaints.create')]" />
             <x-breadcrumb title="Complaints" />
             <!-- [ breadcrumb ] end -->
             <!-- [ Main Content ] start -->
             <div class="row">
                 <!-- product profit end -->
+
+                @if(Session::has('success'))
+                <div class="alert alert-success d-flex align-items-center" role="alert">
+                    <div>{{ Session::get('success') }}</div>
+                </div>
+                @endif
+                @if(Session::has('error'))
+                <div class="alert alert-success d-flex align-items-center" role="alert">
+                    <div>{{ Session::get('error') }}</div>
+                </div>
+                @endif
 
                 <div class="col-xl-12 col-md-12">
                     <div class="card user-profile-list">
@@ -25,7 +36,7 @@
         <script>
             $(document).ready(function() {
 
-                const datatable_url = route('complaints.datatable');
+                const datatable_url = route('complaints.datatable', getUrlParams(location.search));
                 const datatable_columns = [{
                         data: 'complaint_no'
                     },

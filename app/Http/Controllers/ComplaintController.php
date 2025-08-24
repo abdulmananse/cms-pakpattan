@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\ComplaintRequest;
 use App\Models\Category;
 use App\Models\Complaint;
 use App\Models\Department;
@@ -25,11 +26,9 @@ class ComplaintController extends Controller
         if($request->ajax()) {
 
             $user = Auth::user();
-            $complaints = Complaint::with('category', 'department', 'complaint_by');
-
-            if ($user->role == 'Department') {
-                $complaints->where('department_id', $user->department_id);
-            }
+            $complaints = Complaint::with('category', 'department', 'complaint_by')
+                            ->roleFilter($user)
+                            ->filter($request);
 
             if(!$request->filled('order')) {
                 $complaints->orderBy('updated_at', 'desc');
@@ -64,22 +63,42 @@ class ComplaintController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        $categories = Category::active()->orderBy('ordering')->pluck('name', 'id');
+        return view('complaints.create', get_defined_vars());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Request\CategoryRequest  $request
+     * @param  \App\Http\Request\ComplaintRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(ComplaintRequest $request)
     {
-        Category::create($request->validated());
+        $userId = Auth::id();
+        $category = Category::find($request->category);
 
-        Session::flash('success', 'Category successfully created!');
+        $complaintData = $request->validated();
 
-        return redirect()->route('categories.index');
+        $lastId = Complaint::max('id') + 1;
+        $complaintNo = $category->code . str_pad($lastId, 4, '0', STR_PAD_LEFT);
+        $complaintData['cnic'] = $request->username;
+        $complaintData['category_id'] = $category->id;
+        $complaintData['complaint_no'] = $complaintNo;
+        $complaintData['created_by'] = $userId;
+
+        if ($request->hasFile('attachment')) {
+            $extension = $request->file('attachment')->getClientOriginalExtension();
+            $fileName = $complaintNo . '.' . $extension;
+            $request->file('attachment')->storeAs('complaints', $fileName, 'public');
+            $complaintData['attachment'] = $fileName;
+        }
+
+        Complaint::create($complaintData);
+
+        Session::flash('success', 'Complaint submitted successfully your complaint number is (' . $complaintNo . ')');
+
+        return redirect()->route('complaints.index');
     }
 
     /**

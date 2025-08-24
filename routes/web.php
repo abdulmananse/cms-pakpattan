@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
 
     # Complaints 
     Route::resource('complaints', ComplaintController::class)->only('index')->middleware('permission:Complaints Index');
+    Route::resource('complaints', ComplaintController::class)->only(['create', 'store'])->middleware('permission:Complaints Create');
     Route::resource('complaints', ComplaintController::class)->only('show')->middleware('permission:Complaints Show');
     Route::post('complaints/datatable', [ComplaintController::class, 'index'])->name('complaints.datatable');
     Route::post('complaints/assign/{complaint}', [ComplaintController::class, 'assigned'])->name('complaints.assigned')->middleware('permission:Complaints Assigned');

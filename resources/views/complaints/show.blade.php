@@ -142,12 +142,12 @@
                                                         {{ html()->label()->for('department_id')->text('Department')->class('form-label required-input') }}
                                                         {{ html()->select('department_id', $departments, null)->class('form-select')->placeholder('Select Department')->required() }}
                                                     </div>
-                                                    <div class="card-footer">
-                                                        @can('Complaints Assigned')
-                                                        <button type="submit" class="btn btn-primary mr-2">Assign</button>
-                                                        @endcan
+                                                    <div class="card-footer d-flex justify-content-end">
                                                         @can('Complaints Rejected')
-                                                        <button type="button" class="btn btn-danger btn-reject mr-2">Rejected</button>
+                                                        <button type="button" class="btn btn-danger btn-reject me-2">Rejected</button>
+                                                        @endcan
+                                                        @can('Complaints Assigned')
+                                                        <button type="submit" class="btn btn-primary">Assign</button>
                                                         @endcan
                                                     </div>
                                                 </div>
@@ -156,7 +156,7 @@
                                         @endcan
 
                                         @canany(['Complaints Resolved'])
-                                            @if($complaint->complaint_status == 0 && $complaint->department_id == $user->department_id)
+                                            @if($complaint->complaint_status == 0 && $complaint->department_id != NULL && $complaint->department_id == $user->department_id)
                                             {{ html()->form('POST', route('complaints.resolved', $complaint->uuid))->id('formValidation')->attribute('enctype', 'multipart/form-data')->open() }}
                                                 <div class="card-body row">
                                                     <div class="form-group col-md-12">
@@ -169,8 +169,8 @@
                                                         {{ html()->textarea('remarks', null)->class('form-control')->placeholder('Remarks')->required()->maxlength(500) }}
                                                         {!! $errors->first('remarks', '<label class="error">:message</label>') !!}
                                                     </div>
-                                                    <div class="card-footer">
-                                                        <button type="submit" class="btn btn-primary mr-2">Resolved</button>
+                                                    <div class="card-footer d-flex justify-content-end">
+                                                        <button type="submit" class="btn btn-success mr-2">Resolved</button>
                                                     </div>
                                                 </div>
                                             {{ html()->form()->close() }}

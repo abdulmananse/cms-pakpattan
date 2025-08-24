@@ -28,16 +28,27 @@ class ComplaintRequest extends FormRequest
         $rules = [
             'category' => 'required|exists:categories,id',
             'description' => 'required|string|max:500',
-            'location' => 'required|string|max:100',
+            'location' => 'nullable|string|max:100',
             'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'source' => 'nullable',
         ];
+
+        if ($this->source == 'Online Form') {
+            $rules['location'] = 'required|string|max:100';
+        } else {
+            $rules['name'] = ['required', 'string', 'max:255'];
+            $rules['email'] = ['nullable', 'string', 'lowercase', 'email', 'max:255'];
+            $rules['address'] = ['nullable', 'string', 'max:500'];
+            $rules['username'] = ['nullable', 'string', 'max:255'];
+            $rules['mobile'] = ['nullable'];
+        }
 
         if (!Auth::check()) {
             $rules['name'] = ['required', 'string', 'max:255'];
-            $rules['username'] = ['required', 'string', 'max:255', 'unique:'.User::class];
-            $rules['mobile'] = ['required'];
             $rules['email'] = ['nullable', 'string', 'lowercase', 'email', 'max:255'];
             $rules['address'] = ['nullable', 'string', 'max:500'];
+            $rules['username'] = ['required', 'string', 'max:255', 'unique:'.User::class];
+            $rules['mobile'] = ['required'];
         }
 
         return $rules;
@@ -45,9 +56,15 @@ class ComplaintRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        $this->merge([
-            'username' => str_replace('-', '', $this->get('username')),
-            'mobile' => str_replace('-', '', $this->get('mobile'))
-        ]);
+        $data = [];
+ 
+        if($this->filled('username')) {
+            $data['username'] = str_replace('-', '', $this->get('username'));
+        }
+        if($this->filled('mobile')) {
+            $data['mobile'] = str_replace('-', '', $this->get('mobile'));
+        }
+        
+        $this->merge($data);
     }
 }

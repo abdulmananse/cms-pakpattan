@@ -33,6 +33,24 @@ class Complaint extends Model
         'remarks',
     ];
 
+    public function scopeRoleFilter($query, $user)
+    {
+        if ($user->role == 'Department') {
+            $query->where('department_id', $user->department_id);
+        }
+
+        return $query;
+    }
+
+    public function scopeFilter($query, $request)
+    {
+        if($request->filled('s')) {
+            $query->where('complaint_status', $request->s);
+        }
+
+        return $query;
+    }
+
     public function getMobileAttribute($value)
     {
         return ($value == null) ? null : (mb_substr($value, 0, 1) == 3 ? '0' . $value : $value);

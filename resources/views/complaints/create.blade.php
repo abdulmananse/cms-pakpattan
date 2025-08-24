@@ -6,7 +6,7 @@
                 <div class="pcoded-inner-content">
                     
                     <!-- [ breadcrumb ] start -->
-                    <x-breadcrumb title="Add Category" />
+                    <x-breadcrumb title="Register Complaint" />
                     <!-- [ breadcrumb ] end -->
                     
                     <div class="main-body">
@@ -17,13 +17,12 @@
                                 <div class="col-xl-12">
                                     <div class="card card-custom gutter-b example example-compact">
                                         <!--begin::Form-->
-                                        {{ html()->form('POST', route('categories.store'))->id('formValidation')->open() }}
+                                        {{ html()->form('POST', route('complaints.store'))->id('formValidation')->attribute('enctype', 'multipart/form-data')->open() }}
                                             <div class="card-body row">
-                                                @include ('categories.form')
+                                                @include ('complaints.form')
                                             </div>
-                                            <div class="card-footer">
-                                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                                                <button type="button" onclick="window.location='{{ URL::previous() }}'" class="btn btn-secondary">Cancel</button>
+                                            <div class="card-footer d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
                                             </div>
                                         {{ html()->form()->close() }}
                                     </div>
@@ -42,9 +41,12 @@
 
     @push('scripts')    
     <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.mask.js') }}"></script>
     <script type="text/javascript">
         $('document').ready(function () {
             $('#formValidation').validate();
+            $('#username').mask('00000-0000000-0');    
+            $('#mobile').mask('0300-0000000');    
         });
     </script>
     @endpush

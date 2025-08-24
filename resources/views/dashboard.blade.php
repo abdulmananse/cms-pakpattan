@@ -17,36 +17,36 @@
 
                 <div class="col-md-6 col-xl-3">
                     <div class="card bg-c-blue order-card">
-                        <div class="card-body">
+                        <a class="card-body" href="{{ route('complaints.index') }}">
                             <h4 class="text-white">Total Complaints</h4>
                             <h2 class="text-end text-white"><i class="fa fa-exclamation-triangle float-start"></i><span>{{ number_format($summary->total) }}</span></h2>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-3">
                     <div class="card bg-c-green order-card">
-                        <div class="card-body">
+                        <a class="card-body" href="{{ route('complaints.index', ['s' => 1]) }}">
                             <h4 class="text-white">Resolved</h4>
                             <h2 class="text-end text-white"><i class="fa fa-check-circle float-start"></i><span>{{ number_format($summary->resolved) }}</span>
                             </h2>
-                        </div>
+                        </a>
                     </div>
                 </div>
                
                 <div class="col-md-6 col-xl-3">
                     <div class="card bg-c-yellow order-card">
-                        <div class="card-body">
+                        <a class="card-body" href="{{ route('complaints.index', ['s' => 0]) }}">
                             <h4 class="text-white">Pending</h4>
                             <h2 class="text-end text-white"><i class="fas fa-clock float-start"></i><span>{{ number_format($summary->pending) }}</span></h2>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-3">
                     <div class="card bg-c-red order-card">
-                        <div class="card-body">
+                        <a class="card-body" href="{{ route('complaints.index', ['s' => 2]) }}">
                             <h4 class="text-white">Rejected</h4>
                             <h2 class="text-end text-white"><i class="fas fa-times-circle float-start"></i><span>{{ number_format($summary->rejected) }}</span></h2>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
