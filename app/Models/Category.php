@@ -16,7 +16,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'ordering', 'is_active'];
+    protected $fillable = ['code', 'name', 'ordering', 'is_active'];
 
     public function scopeActive($query)
     {

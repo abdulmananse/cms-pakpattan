@@ -11,6 +11,7 @@ use App\Http\Controllers\FrontComplaintController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\SourceController;
 use App\Http\Controllers\UserController;
 use App\Models\Complaint;
 use App\Models\PermissionGroup;
@@ -69,6 +70,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::post('categories/datatable', [CategoryController::class, 'index'])->name('categories.datatable');
     Route::get('categories/update-status/{category}', [CategoryController::class, 'updateStatus'])->name('categories.updateStatus');
+
+    # Source 
+    Route::resource('sources', SourceController::class);
+    Route::post('sources/datatable', [SourceController::class, 'index'])->name('sources.datatable');
+    Route::get('sources/update-status/{source}', [SourceController::class, 'updateStatus'])->name('sources.updateStatus');
 
     # ACL 
     Route::resource('roles', RoleController::class)->only('index')->middleware('permission:Roles Index');
