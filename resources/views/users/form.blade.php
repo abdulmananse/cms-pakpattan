@@ -52,7 +52,7 @@
     {!! $errors->first('password', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
-    {{ html()->label()->for('password_confirmation')->text('Confirm Password')->class('form-label required-input') }}
+    {{ html()->label()->for('password_confirmation')->text('Confirm Password')->class('form-label ' . $requiredClass) }}
     {{ html()->password('password_confirmation')->class('form-control')->classIf($errors->has('password_confirmation'), 'error')->placeholder('Confirm Password') }}
     {!! $errors->first('password_confirmation', '<label class="error">:message</label>') !!}
 </div>
