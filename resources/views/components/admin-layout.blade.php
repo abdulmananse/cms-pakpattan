@@ -23,7 +23,7 @@
 
     <!-- vendor css -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/custom.css?v=2') }}">
+    <link rel="stylesheet" href="{{ asset('css/custom.css?v=3') }}">
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
@@ -70,7 +70,7 @@
     @endif
 
     @routes
-    <script src="{{ asset('js/common.js?v=5') }}"></script>
+    <script src="{{ asset('js/common.js?v=3') }}"></script>
     @stack('scripts')
 
 </body>
