@@ -60,7 +60,7 @@ class FrontComplaintController extends Controller
         $complaintData = $request->validated();
 
         $lastId = Complaint::max('id') + 1;
-        $complaintNo = $category->code . str_pad($lastId, 4, '0', STR_PAD_LEFT);
+        $complaintNo = $category->code .'-'. str_pad($lastId, 3, '0', STR_PAD_LEFT);
         $complaintData['complaint_no'] = $complaintNo;
         $complaintData['name'] = $request->name;
         $complaintData['cnic'] = $request->username;

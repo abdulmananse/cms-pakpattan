@@ -83,7 +83,7 @@ class ComplaintController extends Controller
         $complaintData = $request->validated();
 
         $lastId = Complaint::max('id') + 1;
-        $complaintNo = $category->code . str_pad($lastId, 4, '0', STR_PAD_LEFT);
+        $complaintNo = $category->code .'-'. str_pad($lastId, 3, '0', STR_PAD_LEFT);
         $complaintData['cnic'] = $request->username;
         $complaintData['category_id'] = $category->id;
         $complaintData['complaint_no'] = $complaintNo;
