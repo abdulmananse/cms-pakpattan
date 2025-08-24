@@ -26,7 +26,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|max:50',
-            'designation' => 'required|max:50',
+            'designation' => 'nullable|max:50',
             'role' => 'nullable|exists:roles,id',
             'username' => 'required|max:100|unique:users,username,'.$this->id,
             'email' => 'nullable|email|max:100',
