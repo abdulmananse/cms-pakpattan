@@ -44,6 +44,7 @@ class FrontComplaintController extends Controller
                 'username' => $request->username,
                 'mobile' => $request->mobile,
                 'role' => 'Complainant',
+                'designation' => 'Complainant',
                 'email' => @$request->email,
                 'address' => $request->address,
                 'password' => Hash::make($request->password),
