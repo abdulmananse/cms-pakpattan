@@ -8,6 +8,7 @@ use App\Http\Requests\ComplaintRequest;
 use App\Models\Category;
 use App\Models\Complaint;
 use App\Models\Department;
+use App\Models\Source;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -26,7 +27,7 @@ class ComplaintController extends Controller
         if($request->ajax()) {
 
             $user = Auth::user();
-            $complaints = Complaint::with('category', 'department', 'complaint_by')
+            $complaints = Complaint::with('category', 'department', 'source', 'complaint_by')
                             ->roleFilter($user)
                             ->filter($request);
 
@@ -64,6 +65,7 @@ class ComplaintController extends Controller
     public function create()
     {
         $categories = Category::active()->orderBy('ordering')->pluck('name', 'id');
+        $sources = Source::active()->where('id', '!=', 1)->orderBy('ordering')->pluck('name', 'id');
         return view('complaints.create', get_defined_vars());
     }
 

@@ -47,6 +47,15 @@
                         </a>
                     </li>
                 @endcanany
+               
+                @canany(['Sources Index'])
+                    <li class="nav-item {{ setActive(['sources']) }}">
+                        <a href="{{ route('sources.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-sliders"></i></span>
+                            <span class="pcoded-mtext">Sources</span>
+                        </a>
+                    </li>
+                @endcanany
 
                 @canany(['Pending Complaints', 'Resolved Complaints'])
                     <li class="nav-item pcoded-hasmenu {{ setActive(['reports']) }}">

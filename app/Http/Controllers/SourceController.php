@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryRequest;
-use App\Models\Category;
+use App\Http\Requests\SourceRequest;
+use App\Models\Source;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
@@ -21,22 +21,22 @@ class SourceController extends Controller
 
         if($request->ajax()) {
 
-            $categories = Category::query();
+            $sources = Source::query();
 
             if(!$request->filled('order')) {
-                $categories->orderBy('ordering', 'asc');
+                $sources->orderBy('ordering', 'asc');
             }
 
-            return Datatables::of($categories)
-                ->addColumn('is_active', function ($category) {
-                    return getStatusBadge($category->is_active);
+            return Datatables::of($sources)
+                ->addColumn('is_active', function ($source) {
+                    return getStatusBadge($source->is_active);
                 })
-                ->addColumn('action', function ($category) {
+                ->addColumn('action', function ($source) {
                     $statusAction = '   <td>
                                             <div class="overlay-edit">
-                                                <a href="'.route('categories.edit', $category->uuid).'" class="btn btn-icon btn-secondary"><i class="feather icon-edit-2"></i></a>
-                                                <a href="'.route('categories.updateStatus', $category->uuid).'" class="btn btn-icon '.($category->is_active == 1 ? "btn-danger" : "btn-success").' btn-status"><i class="feather '.($category->is_active == 1 ? "icon-x-circle" : "icon-check-circle").'"></i></a>
-                                                <a href="'.route('categories.destroy', $category->uuid).'" class="btn btn-icon btn-danger btn-delete"><i class="feather icon-trash-2"></i></a>
+                                                <a href="'.route('sources.edit', $source->uuid).'" class="btn btn-icon btn-secondary"><i class="feather icon-edit-2"></i></a>
+                                                <a href="'.route('sources.updateStatus', $source->uuid).'" class="btn btn-icon '.($source->is_active == 1 ? "btn-danger" : "btn-success").' btn-status"><i class="feather '.($source->is_active == 1 ? "icon-x-circle" : "icon-check-circle").'"></i></a>
+                                                <a href="'.route('sources.destroy', $source->uuid).'" class="btn btn-icon btn-danger btn-delete"><i class="feather icon-trash-2"></i></a>
                                             </div>
                                         </td>';
                     return $statusAction;
@@ -46,7 +46,7 @@ class SourceController extends Controller
 
         }
 
-        return view('categories.index');
+        return view('sources.index');
     }
 
     /**
@@ -56,22 +56,22 @@ class SourceController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        return view('sources.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Request\CategoryRequest  $request
+     * @param  \App\Http\Request\SourceRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(SourceRequest $request)
     {
-        Category::create($request->validated());
+        Source::create($request->validated());
 
-        Session::flash('success', 'Category successfully created!');
+        Session::flash('success', 'Source successfully added!');
 
-        return redirect()->route('categories.index');
+        return redirect()->route('sources.index');
     }
 
     /**
@@ -88,61 +88,61 @@ class SourceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category $category
+     * @param  \App\Models\Source $source
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Source $source)
     {
-        return view('categories.edit', get_defined_vars());
+        return view('sources.edit', get_defined_vars());
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Request\CategoryRequest  $request
-     * @param  \App\Models\Category $category
+     * @param  \App\Http\Request\SourceRequest  $request
+     * @param  \App\Models\Source $source
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, Category $category) {
+    public function update(SourceRequest $request, Source $source) {
 
-        $category->update($request->validated());
+        $source->update($request->validated());
 
-        Session::flash('success', 'Category successfully updated!');
+        Session::flash('success', 'Source successfully updated!');
 
-        return redirect()->route('categories.index');
+        return redirect()->route('sources.index');
 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category $category
+     * @param  \App\Models\Source $source
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category) {
-        if($category) {
-            $category->delete();
-            return $this->sendResponse(true, 'Category successfully deleted!');
+    public function destroy(Source $source) {
+        if($source) {
+            $source->delete();
+            return $this->sendResponse(true, 'Source successfully deleted!');
         }
 
-        return $this->sendResponse(false, 'Category not found!', [], 404);
+        return $this->sendResponse(false, 'Source not found!', [], 404);
     }
 
     /**
      * Update Status
      *
-     * @param  \App\Models\Category $category
+     * @param  \App\Models\Source $source
      * @return \Illuminate\Http\Response
      */
-    public function updateStatus(Category $category) {
+    public function updateStatus(Source $source) {
 
-        if($category) {
-            $category->is_active = !$category->is_active;
-            $category->save();
+        if($source) {
+            $source->is_active = !$source->is_active;
+            $source->save();
 
-            return $this->sendResponse(true, 'Category status successfully updated!');
+            return $this->sendResponse(true, 'Source status successfully updated!');
         }
 
-        return $this->sendResponse(false, 'Category not found!', [], 404);
+        return $this->sendResponse(false, 'Source not found!', [], 404);
     }
 }

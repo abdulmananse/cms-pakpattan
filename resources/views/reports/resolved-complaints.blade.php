@@ -16,21 +16,21 @@
                                     <thead>
                                         <tr>
                                             <th>Source</th>
-                                            @foreach($departments as $dept)
-                                                <th>{{ $dept->name }}</th>
+                                            @foreach($departments as $deptID => $deptName)
+                                                <th>{{ $deptName }}</th>
                                             @endforeach
                                             <th>Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($sources as $src)
+                                        @foreach($sources as $sourceId => $sourceName)
                                             <tr>
-                                                <td class="text-start fw-bold">{{ $src }}</td>
+                                                <td class="text-start fw-bold">{{ $sourceName }}</td>
                                                 @php $rowTotal = $count = 0; @endphp
-                                                @foreach($departments as $dept)
+                                                @foreach($departments as $deptID => $deptName)
                                                     @php
-                                                        if(isset($data[$src])) {
-                                                            $count = $data[$src]->firstWhere('department_id', $dept->id)->total ?? 0;
+                                                        if(isset($data[$sourceId])) {
+                                                            $count = $data[$sourceId]->firstWhere('department_id', $deptID)->total ?? 0;
                                                             $rowTotal += $count;
                                                         }
                                                     @endphp
@@ -43,21 +43,24 @@
                                     <tfoot class="table-secondary fw-bold">
                                         <tr>
                                             <td>Total</td>
-                                            @foreach($departments as $dept)
+                                            @foreach($departments as $deptID => $deptName)
                                                 @php
-                                                    $colTotal = collect($sources)->sum(function($src) use($data, $dept) {
-                                                        return (isset($data[$src])) ? ($data[$src]->firstWhere('department_id', $dept->id)->total ?? 0) : 0;
-                                                    });
+                                                    $colTotal = collect($sources)->map(function($name, $id) use($data, $deptID) {
+                                                        return isset($data[$id]) ? ($data[$id]->firstWhere('department_id', $deptID)->total ?? 0): 0;
+                                                    })->sum();
                                                 @endphp
                                                 <td>{{ $colTotal }}</td>
                                             @endforeach
-                                            <td>
-                                                {{ collect($sources)->sum(function($src) use($departments, $data) {
-                                                    return $departments->sum(function($dept) use($data, $src) {
-                                                        return (isset($data[$src])) ? ($data[$src]->firstWhere('department_id', $dept->id)->total ?? 0) : 0;
-                                                    });
-                                                }) }}
-                                            </td>
+                                            
+                                            @php
+                                                $grandTotal = $sources->map(function($sourceName, $sourceId) use($departments, $data) {
+                                                    return $departments->map(function($deptName, $deptId) use ($data, $sourceId) {
+                                                        return isset($data[$sourceId]) ? ($data[$sourceId]->firstWhere('department_id', $deptId)->total ?? 0) : 0;
+                                                    })->sum();
+                                                })->sum();
+                                            @endphp
+
+                                            <td>{{ $grandTotal }}</td>
                                         </tr>
                                     </tfoot>
                                 </table>

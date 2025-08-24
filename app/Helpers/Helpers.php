@@ -14,6 +14,7 @@ use App\Models\UserDistrict;
 use App\Models\DEODistrictsTehsil;
 use App\Models\DEOClasses;
 use App\Models\Department;
+use App\Models\Source;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -930,18 +931,6 @@ if (!function_exists('getDEODistrictIds')) {
     }
 }
 
-/**
- * Get DEO Tehsils Ids
- * @return Number
- */
-if (!function_exists('getDEOTehsilIds')) {
-    function getDEOTehsilIds($userId = null)
-    {
-        $userId = ($userId) ? $userId : Auth::id();
-        return DEODistrictsTehsil::where('user_id', $userId)->pluck('level_2_id');
-    }
-}
-
 
 if (!function_exists('complaintSources')) {
     function complaintSources()
@@ -953,7 +942,14 @@ if (!function_exists('complaintSources')) {
 if (!function_exists('getActiveDepartments')) {
     function getActiveDepartments()
     {
-        return Department::active()->pluck('name', 'id');;
+        return Department::active()->orderBy('ordering', 'asc')->pluck('name', 'id');;
+    }
+}
+
+if (!function_exists('getActiveSources')) {
+    function getActiveSources()
+    {
+        return Source::active()->orderBy('ordering', 'asc')->pluck('name', 'id');
     }
 }
 

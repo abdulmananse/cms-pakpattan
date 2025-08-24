@@ -9,7 +9,7 @@
             
             <div class="col-lg-12 col-md-12 ms-auto mb-3">
                 <div class="card-body-dd">
-                    <x-filter date=true department=true status=true col=2 />
+                    <x-filter date=true department=true source=true status=true col=2 />
                 </div>
             </div>
             
@@ -64,7 +64,7 @@
                     data: 'complaint_by.name'
                 },
                 {
-                    data: 'source'
+                    data: 'source.name'
                 },
                 {
                     data: 'complaint_status',

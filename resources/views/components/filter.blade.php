@@ -10,18 +10,18 @@
             </div>
         @endif
         
-        {{-- @if($source == 'true')
+        @if($source == 'true')
         <div class="col-xxl-{{ $col }} main-div col-md-3">
             <div class="label-float p-0">
-                {{ html()->select('source_id', getActiveDepartments(), request()->d)->class('form-select')->placeholder('All Sources') }}
+                {{ html()->select('source_id', getActiveSources(), request()->s)->class('form-select')->placeholder('All Sources') }}
             </div>
         </div>
-        @endif --}}
+        @endif
 
         @if($status == 'true')
             <div class="col-xxl-{{ $col }} col-md-3 main-div">
                 <div class="label-float p-0">
-                    {{ html()->select('status', ['' => 'Complaint Status', '0' => 'Pending', '1' => 'Resolved', '2' => 'Rejected'], request()->s)->class('form-select') }}
+                    {{ html()->select('status', ['' => 'Complaint Status', '0' => 'Pending', '1' => 'Resolved', '2' => 'Rejected'], request()->status)->class('form-select') }}
                 </div>
             </div>
         @endif
@@ -107,13 +107,21 @@
                 }
                 insertParam('d', departmentId);
                 @endif
+
+                @if($source == 'true')
+                let sourceId = $('[name=source_id]').val();
+                if (sourceId == '' || sourceId == undefined) {
+                    sourceId = ($('[name=source_id]').data('selectedid') > 0) ? $('[name=source_id]').data('selectedid') : 0;
+                }
+                insertParam('s', sourceId);
+                @endif
                 
                 @if($status == 'true')
                 let status = $('[name=status]').val();
                 if (status == '' || status == undefined) {
                     status = ($('[name=status]').data('selectedid') > 0) ? $('[name=status]').data('selectedid') : '';
                 }
-                insertParam('s', status);
+                insertParam('status', status);
                 @endif
                
                 @if($date == 'true')
