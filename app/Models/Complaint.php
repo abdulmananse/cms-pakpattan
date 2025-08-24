@@ -38,6 +38,9 @@ class Complaint extends Model
         if ($user->role == 'Department') {
             $query->where('department_id', $user->department_id);
         }
+        if ($user->role == 'Complaint_Sources') {
+            $query->where('source_id', $user->source_id);
+        }
 
         return $query;
     }
@@ -53,6 +56,19 @@ class Complaint extends Model
         if($request->filled('s') && $request->s > 0) {
             $query->where('source_id', $request->s);
         }
+
+        $query->when(($request->filled('date') && $request->date != 'all'), function ($query) use ($request) {
+            $date = explode(',', $request->date);
+            $startDate = date('Y-m-d', strtotime($date[0]));
+            $query->where('updated_at', '>=', $startDate);
+
+            if(@$date[1]) {
+                $endDate = date('Y-m-d', strtotime($date[1]));
+                $query->where('updated_at', '<=', $endDate);
+            }
+
+            return $query;
+        });
 
         return $query;
     }

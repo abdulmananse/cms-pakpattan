@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Complaint;
 use App\Models\Department;
+use App\Models\Source;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,15 +29,18 @@ class DashboardController extends Controller
             SUM(CASE WHEN complaint_status = 0 THEN 1 ELSE 0 END) as pending,
             SUM(CASE WHEN complaint_status = 1 THEN 1 ELSE 0 END) as resolved,
             SUM(CASE WHEN complaint_status = 2 THEN 1 ELSE 0 END) as rejected
-        ");
+        ")
+        ->roleFilter($user)
+        ->filter($request);
         
-        if ($user->role == 'Department') {
-            $summary->where('department_id', $user->department_id);
-        }
-
         $summary = $summary->first();
 
-        $departments = Department::withCount('pending_complaints', 'resolved_complaints')->get();
+        if ($user->can('Department Complaint Charts')) {
+            $departments = Department::withCount('pending_complaints', 'resolved_complaints')->get();
+        }
+        if ($user->can('Source Complaint Charts')) {
+            $sources = Source::withCount('pending_complaints', 'resolved_complaints')->get();
+        }
 
         return view('dashboard', get_defined_vars());
     }

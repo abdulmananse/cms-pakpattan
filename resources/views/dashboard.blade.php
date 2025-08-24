@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-md-6 col-xl-3">
                     <div class="card bg-c-green order-card">
-                        <a class="card-body" href="{{ route('complaints.index', ['s' => 1]) }}">
+                        <a class="card-body" href="{{ route('complaints.index', ['status' => 1]) }}">
                             <h4 class="text-white">Resolved</h4>
                             <h2 class="text-end text-white"><i class="fa fa-check-circle float-start"></i><span>{{ number_format($summary->resolved) }}</span>
                             </h2>
@@ -35,7 +35,7 @@
                
                 <div class="col-md-6 col-xl-3">
                     <div class="card bg-c-yellow order-card">
-                        <a class="card-body" href="{{ route('complaints.index', ['s' => 0]) }}">
+                        <a class="card-body" href="{{ route('complaints.index', ['status' => 0]) }}">
                             <h4 class="text-white">Pending</h4>
                             <h2 class="text-end text-white"><i class="fas fa-clock float-start"></i><span>{{ number_format($summary->pending) }}</span></h2>
                         </a>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="col-md-6 col-xl-3">
                     <div class="card bg-c-red order-card">
-                        <a class="card-body" href="{{ route('complaints.index', ['s' => 2]) }}">
+                        <a class="card-body" href="{{ route('complaints.index', ['status' => 2]) }}">
                             <h4 class="text-white">Rejected</h4>
                             <h2 class="text-end text-white"><i class="fas fa-times-circle float-start"></i><span>{{ number_format($summary->rejected) }}</span></h2>
                         </a>
@@ -62,6 +62,7 @@
                     </div>
                 </div>
 
+                @can('Department Complaint Charts')
                 <div class="col-xl-6 col-md-6 col-sm-12">
                     <div class="card">
                         <div class="card-body">
@@ -71,7 +72,21 @@
                         </div>
                     </div>
                 </div>
+                @endcan
 
+                @can('Source Complaint Charts')
+                <div class="col-xl-6 col-md-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="text-center fw-bold">Pending Complaints</h4>
+                            <p  class="text-center"> by Source</p>
+                            <div class="pie-chart-div" id="PendingComplaintsBySourcePieChart"></div>
+                        </div>
+                    </div>
+                </div>
+                @endcan
+
+                @can('Department Complaint Charts')
                 <div class="col-md-12 mb-3">
                     <div class="card card-h-100 w-100" style="padding-top: 0;">
                         <div class="card-body" style="padding-bottom: 0;">
@@ -85,6 +100,23 @@
                         </div>
                     </div>
                 </div>
+                @endcan
+                
+                @can('Source Complaint Charts')
+                <div class="col-md-12 mb-3">
+                    <div class="card card-h-100 w-100" style="padding-top: 0;">
+                        <div class="card-body" style="padding-bottom: 0;">
+                            <div class="row justify-content-between">
+                                <div class="bg-white text-center rounded-lg p-4">
+                                    <h4 class="text-center fw-bold">Complaint Status</h4>
+                                    <p  class="text-center">by Source</p>
+                                    <div class="pie-chart-div" id="ComplaintsBySourceColumnChart"></div>	
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endcan
             </div>
         </div>
     </div>
@@ -159,95 +191,189 @@
             }]
         });
         
-        Highcharts.chart('PendingComplaintsByDepartmentPieChart', {
-            chart: chartOption,
-            title: {text: ''},
-            tooltip: tooltip,
-            plotOptions: plotOptions,
-            legend: {
-                align: 'right',       // Move legend to the right
-                verticalAlign: 'middle', // Center it vertically
-                layout: 'vertical'    // Stack items vertically
-            },
-            series: [{
-                name: 'Counts',
-                colorByPoint: true,
-                data: [
-                    @foreach ($departments as $department)
-                        @if($department->pending_complaints_count > 0)
-                        {
-                            name: '{{ $department->name }}',
-                            y: {{ (int) $department->pending_complaints_count }}
-                        },
-                        @endif
-                    @endforeach
-                    ]
-            }]
-        });
+        @can('Department Complaint Charts')
+            Highcharts.chart('PendingComplaintsByDepartmentPieChart', {
+                chart: chartOption,
+                title: {text: ''},
+                tooltip: tooltip,
+                plotOptions: plotOptions,
+                legend: {
+                    align: 'right',       // Move legend to the right
+                    verticalAlign: 'middle', // Center it vertically
+                    layout: 'vertical'    // Stack items vertically
+                },
+                series: [{
+                    name: 'Counts',
+                    colorByPoint: true,
+                    data: [
+                        @foreach ($departments as $department)
+                            @if($department->pending_complaints_count > 0)
+                            {
+                                name: '{{ $department->name }}',
+                                y: {{ (int) $department->pending_complaints_count }}
+                            },
+                            @endif
+                        @endforeach
+                        ]
+                }]
+            });
 
-          Highcharts.chart('ComplaintsByDepartmentColumnChart', {
-            chart: {type: 'column',events: {load: function() {$('.highcharts-credits').hide();}}},
-            title: {text: ''},
-            xAxis: {
-                categories: [
-                    @foreach ($departments as $department)
-                    '{{ $department->name }}', 
-                    @endforeach
+            Highcharts.chart('ComplaintsByDepartmentColumnChart', {
+                chart: {type: 'column',events: {load: function() {$('.highcharts-credits').hide();}}},
+                title: {text: ''},
+                xAxis: {
+                    categories: [
+                        @foreach ($departments as $department)
+                        '{{ $department->name }}', 
+                        @endforeach
+                    ],
+                    crosshair: true,
+                    accessibility: {
+                        description: 'Departments'
+                    }
+                },
+                yAxis: {min: 0,title: {text: '(#)'}},
+                tooltip: {valueSuffix: ' '},
+                series: [
+                    {
+                        name: 'Resolved',
+                        data: [
+                            @foreach ($departments as $department)
+                            {
+                                y: {{ $department->resolved_complaints_count }},
+                                department_id: {{ $department->id }}
+                            },
+                            @endforeach
+                        ],
+                        color: '#107b02',
+                    },
+                    {
+                        name: 'Pending',
+                        data: [
+                            @foreach ($departments as $department)
+                            {
+                                y: {{ $department->pending_complaints_count }},
+                                department_id: {{ $department->id }}
+                            },
+                            @endforeach
+                        ],
+                        color: '#be091f'
+                    }
                 ],
-                crosshair: true,
-                accessibility: {
-                    description: 'Countries'
-                }
-            },
-            yAxis: {min: 0,title: {text: '(#)'}},
-            tooltip: {valueSuffix: ' '},
-            series: [
-                {
-                    name: 'Resolved',
-                    data: [
-                        @foreach ($departments as $department)
-                        {
-                            y: {{ $department->resolved_complaints_count }},
-                            department_id: {{ $department->id }}
-                        },
-                        @endforeach
-                    ],
-                    color: '#107b02',
-                },
-                {
-                    name: 'Pending',
-                    data: [
-                        @foreach ($departments as $department)
-                        {
-                            y: {{ $department->pending_complaints_count }},
-                            department_id: {{ $department->id }}
-                        },
-                        @endforeach
-                    ],
-                    color: '#be091f'
-                }
-            ],
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                },
-                series: {
-                    cursor: 'pointer',
-                    point: {
-                        events: {
-                            click: function () {
-                                let department = this.department_id;   
-                                let status = this.series.name == 'Resolved' ? 1 : 0;    
-                                
-                                window.open(route('complaints.index', { d: department, s: status }), '_blank');
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        cursor: 'pointer',
+                        point: {
+                            events: {
+                                click: function () {
+                                    let department = this.department_id;   
+                                    let status = this.series.name == 'Resolved' ? 1 : 0;    
+                                    
+                                    window.open(route('complaints.index', { d: department, status: status }), '_blank');
+                                }
                             }
                         }
                     }
-                }
-            },
+                },
 
-        });
+            });
+        @endcan
+        
+        @can('Source Complaint Charts')
+            Highcharts.chart('PendingComplaintsBySourcePieChart', {
+                chart: chartOption,
+                title: {text: ''},
+                tooltip: tooltip,
+                plotOptions: plotOptions,
+                legend: {
+                    align: 'right',       // Move legend to the right
+                    verticalAlign: 'middle', // Center it vertically
+                    layout: 'vertical'    // Stack items vertically
+                },
+                series: [{
+                    name: 'Counts',
+                    colorByPoint: true,
+                    data: [
+                        @foreach ($sources as $source)
+                            @if($source->pending_complaints_count > 0)
+                            {
+                                name: '{{ $source->name }}',
+                                y: {{ (int) $source->pending_complaints_count }}
+                            },
+                            @endif
+                        @endforeach
+                        ]
+                }]
+            });
+
+            Highcharts.chart('ComplaintsBySourceColumnChart', {
+                chart: {type: 'column',events: {load: function() {$('.highcharts-credits').hide();}}},
+                title: {text: ''},
+                xAxis: {
+                    categories: [
+                        @foreach ($sources as $source)
+                        '{{ $source->name }}', 
+                        @endforeach
+                    ],
+                    crosshair: true,
+                    accessibility: {
+                        description: 'Sources'
+                    }
+                },
+                yAxis: {min: 0,title: {text: '(#)'}},
+                tooltip: {valueSuffix: ' '},
+                series: [
+                    {
+                        name: 'Resolved',
+                        data: [
+                            @foreach ($sources as $source)
+                            {
+                                y: {{ $source->resolved_complaints_count }},
+                                source_id: {{ $source->id }}
+                            },
+                            @endforeach
+                        ],
+                        color: '#107b02',
+                    },
+                    {
+                        name: 'Pending',
+                        data: [
+                            @foreach ($sources as $source)
+                            {
+                                y: {{ $source->pending_complaints_count }},
+                                source_id: {{ $source->id }}
+                            },
+                            @endforeach
+                        ],
+                        color: '#be091f'
+                    }
+                ],
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        cursor: 'pointer',
+                        point: {
+                            events: {
+                                click: function () {
+                                    let source = this.source_id;   
+                                    let status = this.series.name == 'Resolved' ? 1 : 0;    
+                                    
+                                    window.open(route('complaints.index', { s: source, status: status }), '_blank');
+                                }
+                            }
+                        }
+                    }
+                },
+
+            });
+        @endcan
     </script>
     @endpush
 </x-admin-layout>

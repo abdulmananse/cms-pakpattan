@@ -29,6 +29,11 @@
     {!! $errors->first('department_id', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
+    {{ html()->label()->for('source_id')->text('Source')->class('form-label') }}
+    {{ html()->select('source_id', $sources, null)->class('form-select')->placeholder('Select Source') }}
+    {!! $errors->first('source_id', '<label class="error">:message</label>') !!}
+</div>
+<div class="form-group col-md-6">
     {{ html()->label()->for('designation')->text('Designation')->class('form-label') }}
     {{ html()->text('designation')->class('form-control')->classIf($errors->has('designation'), 'error')->placeholder('Designation')->maxlength(50) }}
     {!! $errors->first('designation', '<label class="error">:message</label>') !!}

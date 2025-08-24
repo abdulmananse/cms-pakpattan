@@ -79,7 +79,8 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::where('id', '!=', 1)->active()->pluck('name', 'id');
-        $departments = Department::active()->pluck('name', 'id');
+        $departments = getActiveDepartments();
+        $sources = getActiveSources();
 
         return view('users.create', get_defined_vars());
     }
@@ -145,7 +146,8 @@ class UserController extends Controller
             $user->role = '';
         }
         
-        $departments = Department::active()->pluck('name', 'id');
+        $departments = getActiveDepartments();
+        $sources = getActiveSources();
         
         return view('users.edit', get_defined_vars());
         

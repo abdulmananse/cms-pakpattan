@@ -29,33 +29,6 @@
                         </a>
                     </li>
                 @endcanany
-                
-                @canany(['Departments Index'])
-                    <li class="nav-item {{ setActive(['departments']) }}">
-                        <a href="{{ route('departments.index') }}" class="nav-link ">
-                            <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                            <span class="pcoded-mtext">Departments</span>
-                        </a>
-                    </li>
-                @endcanany
-                
-                @canany(['Categories Index'])
-                    <li class="nav-item {{ setActive(['categories']) }}">
-                        <a href="{{ route('categories.index') }}" class="nav-link ">
-                            <span class="pcoded-micon"><i class="feather icon-sliders"></i></span>
-                            <span class="pcoded-mtext">Categories</span>
-                        </a>
-                    </li>
-                @endcanany
-               
-                @canany(['Sources Index'])
-                    <li class="nav-item {{ setActive(['sources']) }}">
-                        <a href="{{ route('sources.index') }}" class="nav-link ">
-                            <span class="pcoded-micon"><i class="feather icon-sliders"></i></span>
-                            <span class="pcoded-mtext">Sources</span>
-                        </a>
-                    </li>
-                @endcanany
 
                 @canany(['Pending Complaints', 'Resolved Complaints'])
                     <li class="nav-item pcoded-hasmenu {{ setActive(['reports']) }}">
@@ -74,7 +47,7 @@
                     </li>
                 @endcanany
 
-                @canany(['Settings Index', 'Roles Index', 'Permissions Index', 'Permission Groups Index'])
+                @canany(['Settings Index', 'Roles Index', 'Permissions Index', 'Permission Groups Index', 'Categories Index', 'Departments Index', 'Sources Index'])
                     <li class="nav-item pcoded-hasmenu {{ setActive(['settings', 'roles', 'permissions', 'permission-groups']) }}">
                         <a href="#" class="nav-link ">
                             <span class="pcoded-micon"><i class="feather icon-settings"></i></span>
@@ -83,6 +56,15 @@
                         <ul class="pcoded-submenu">
                             @can('Settings Index')
                                 <li><a href="{{ route('settings.index') }}">General Settings</a></li>
+                            @endcan
+                            @can('Categories Index')
+                                <li><a href="{{ route('categories.index') }}">Categories</a></li>
+                            @endcan
+                            @can('Departments Index')
+                                <li><a href="{{ route('departments.index') }}">Departments</a></li>
+                            @endcan
+                            @can('Sources Index')
+                                <li><a href="{{ route('sources.index') }}">Sources</a></li>
                             @endcan
                             @can('Roles Index')
                                 <li><a href="{{ route('roles.index') }}">Roles</a></li>

@@ -49,12 +49,12 @@
         _$.ready(function() {
 
             @if($date == 'true')
-            let start = moment();
+            let start = moment().subtract(6, 'days');
             let end = moment();
             let date = 'custom';
 
-            @if(request()->filled('dt'))
-                const qDate = '{{ request()->dt }}';
+            @if(request()->filled('date'))
+                const qDate = '{{ request()->date }}';
                 if (qDate == 'all') {
                     date = 'all';
                 } else {
