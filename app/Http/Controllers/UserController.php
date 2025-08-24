@@ -15,6 +15,7 @@ use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Department;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -111,7 +112,6 @@ class UserController extends Controller
             $user->assignRole($role);
         }
         
-        
         Session::flash('success', 'User successfully created');
 
         return redirect()->route('users.index');
@@ -173,6 +173,13 @@ class UserController extends Controller
         
         if ($request->filled('mobile')) {
             $userData['mobile'] = str_replace('-', '', $request->mobile);
+        }
+
+        if ($request->filled('password')) {
+            $userData['password'] = Hash::make($request->password);
+            DB::table('sessions')->where('user_id', $user->id)->delete();
+        } else {
+            unset($userData['password']);
         }
 
         $user->update($userData);

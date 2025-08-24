@@ -38,20 +38,24 @@
     {{ html()->text('designation')->class('form-control')->classIf($errors->has('designation'), 'error')->placeholder('Designation')->maxlength(50) }}
     {!! $errors->first('designation', '<label class="error">:message</label>') !!}
 </div>
+
+@php($requiredClass = 'required-input')
 @if(@$user)
-@else
+@php($requiredClass = '')
+<h6 class="mt-4">Update Password</h6>
+<small>If you leave this field empty then password will not be updated</small>
+@endif
+
 <div class="form-group col-md-6">
-    {{ html()->label()->for('password')->text('Password')->class('form-label required-input') }}
-    {{ html()->password('password')->class('form-control')->classIf($errors->has('password'), 'error')->placeholder('Password')->required() }}
+    {{ html()->label()->for('password')->text('Password')->class('form-label ' . $requiredClass) }}
+    {{ html()->password('password')->class('form-control')->classIf($errors->has('password'), 'error')->placeholder('Password') }}
     {!! $errors->first('password', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
     {{ html()->label()->for('password_confirmation')->text('Confirm Password')->class('form-label required-input') }}
-    {{ html()->password('password_confirmation')->class('form-control')->classIf($errors->has('password_confirmation'), 'error')->placeholder('Confirm Password')->required() }}
+    {{ html()->password('password_confirmation')->class('form-control')->classIf($errors->has('password_confirmation'), 'error')->placeholder('Confirm Password') }}
     {!! $errors->first('password_confirmation', '<label class="error">:message</label>') !!}
 </div>
-@endif
-
 
 @push('scripts')    
     <script src="{{ asset('js/jquery.validate.min.js') }}"></script>

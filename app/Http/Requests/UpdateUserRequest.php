@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -32,6 +33,7 @@ class UpdateUserRequest extends FormRequest
             'mobile' => 'nullable',
             'department_id' => 'nullable|exists:departments,id',
             'source_id' => 'nullable|exists:sources,id',
+            'password' => ['nullable', 'confirmed', Rules\Password::defaults()]
         ];
     }
 
