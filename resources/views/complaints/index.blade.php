@@ -1,11 +1,18 @@
 <x-admin-layout>
     <div class="pcoded-main-container">
         <div class="pcoded-content">
+
             <!-- [ breadcrumb ] start -->
             <x-breadcrumb title="Complaints" :button="['name' => 'Register Complaint', 'allow' => true, 'link' => route('complaints.create')]" />
-            <x-breadcrumb title="Complaints" />
             <!-- [ breadcrumb ] end -->
             <!-- [ Main Content ] start -->
+            
+            <div class="col-lg-12 col-md-12 ms-auto mb-3">
+                <div class="card-body-dd">
+                    <x-filter date=true department=true status=true col=2 />
+                </div>
+            </div>
+            
             <div class="row">
                 <!-- product profit end -->
 
@@ -34,49 +41,57 @@
     @include('layouts.dataTablesFiles')
     @push('scripts')
         <script>
-            $(document).ready(function() {
+            let t;
+            const columns = [{
+                    data: 'complaint_no'
+                },
+                {
+                    data: 'name'
+                },
+                {
+                    data: 'cnic'
+                },
+                {
+                    data: 'mobile'
+                },
+                {
+                    data: 'category.name'
+                },
+                {
+                    data: 'department.name'
+                },
+                {
+                    data: 'complaint_by.name'
+                },
+                {
+                    data: 'source'
+                },
+                {
+                    data: 'complaint_status',
+                    width: '5%',
+                    orderable: true,
+                    searchable: false
+                },
+                {
+                    data: 'action',
+                    width: '10%',
+                    orderable: false,
+                    searchable: false
+                }
+            ];
 
-                const datatable_url = route('complaints.datatable', getUrlParams(location.search));
-                const datatable_columns = [{
-                        data: 'complaint_no'
-                    },
-                    {
-                        data: 'name'
-                    },
-                    {
-                        data: 'cnic'
-                    },
-                    {
-                        data: 'mobile'
-                    },
-                    {
-                        data: 'category.name'
-                    },
-                    {
-                        data: 'department.name'
-                    },
-                    {
-                        data: 'complaint_by.name'
-                    },
-                    {
-                        data: 'source'
-                    },
-                    {
-                        data: 'complaint_status',
-                        width: '5%',
-                        orderable: true,
-                        searchable: false
-                    },
-                    {
-                        data: 'action',
-                        width: '10%',
-                        orderable: false,
-                        searchable: false
-                    }
-                ];
-
-                create_datatables(datatable_url, datatable_columns);
-            });
+        /**
+         * Filter Callback
+         */
+        const filterCallbackFun = () => {
+            const url = route('complaints.datatable', getUrlParams(location.search));
+            if (t != undefined) {
+                t.ajax.url(url).load()
+            } else {
+                t = create_datatables(url, columns) 
+            }
+            stopOverlay($('.filterBtn'));
+        }
         </script>
     @endpush
 </x-admin-layout>

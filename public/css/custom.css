@@ -268,6 +268,44 @@ table.dataTable.table-sm .sorting_desc:after {
     text-align: right;
 }
 
+#filterForm .select2-container--default .select2-selection {
+    box-shadow: none;
+}
+#filterForm .main-div {
+    padding-right: 2px;
+    padding-left: 2px;
+}
+#filterForm .col-xxl-2 {
+    width: 15% !important;
+}
+#filterForm .select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 0px;
+}
+#filterForm .select2-container--default .select2-selection--single, #filterForm .form-control, #filterForm .form-select {
+    height: 40px !important;
+    min-height: 40px !important;
+    padding: 4px 16px;
+    font-size: 14px;
+}
+.col-md-1.search_icon {
+    width: 4%;
+    margin-left: -15px;
+}
+.btn-continue {
+    background: #0294c9;
+    border-color: #0294c9;
+    height: 37px;
+    width: 37px;
+    padding: 5px;
+    box-shadow: 0 0 7px #ccc;
+    font-weight: 600;
+    font-size: 18px;
+    color: #fff;
+}
+.btn-continue:hover, .btn-continue:focus, .btn-continue:first-child:active {
+    background: #0176a1;
+    border-color: #0176a1;
+}
 /* Media Query */
 @media(max-width:991px) {
     .auth-container {
@@ -284,6 +322,9 @@ table.dataTable.table-sm .sorting_desc:after {
     }
 }
 @media (max-width: 767px) {
+    #filterForm .label-float {
+        margin-bottom: 10px;
+    }
     .table-responsive {
         overflow-x: auto;
     }
@@ -294,8 +335,12 @@ table.dataTable.table-sm .sorting_desc:after {
     .dataTables_length, .dataTables_length {
         float: none;
     }
-
-    
+    .search_icon {
+        width: 100% !important;
+    }
+    .col-md-1.search_icon {
+        width: 100% !important;
+    }
     .dataTables_filter input {
         float: none;
         background-color: white;
@@ -304,7 +349,9 @@ table.dataTable.table-sm .sorting_desc:after {
         margin-top: 10px;
         margin-bottom: 10px;
     }
-
+    button.btn.btn-continue.btn-sm.filterBtn {
+        width: 100%;
+    }
     .noteDiv .col-md-1 {
         border-top-left-radius: 8px;
         border-bottom-left-radius: 0px;
@@ -317,7 +364,11 @@ table.dataTable.table-sm .sorting_desc:after {
         border-bottom-left-radius: 8px;
     }
 }
-
+@media screen and (max-width: 1024px) {
+    button.btn.btn-continue.btn-sm.filterBtn {
+        width: 100%;
+    }
+}
 @media (width >=576px) {
     .auth-content-box {
         width: 380px;

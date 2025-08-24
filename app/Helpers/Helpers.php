@@ -13,7 +13,7 @@ use App\Models\User;
 use App\Models\UserDistrict;
 use App\Models\DEODistrictsTehsil;
 use App\Models\DEOClasses;
-
+use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -947,6 +947,13 @@ if (!function_exists('complaintSources')) {
     function complaintSources()
     {
         return ['Control Room','Online Form','Complaint Cell','SMU','Social Media','CM Complaint Cell','Email','Mobile App'];
+    }
+}
+
+if (!function_exists('getActiveDepartments')) {
+    function getActiveDepartments()
+    {
+        return Department::active()->pluck('name', 'id');;
     }
 }
 

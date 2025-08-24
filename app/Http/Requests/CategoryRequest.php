@@ -24,6 +24,7 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
+            'code' => 'required|max:100|unique:categories,code,'.@$this->category->id,
             'name' => 'required|max:100|unique:categories,name,'.@$this->category->id,
             'ordering' => 'nullable|max:100'
         ];

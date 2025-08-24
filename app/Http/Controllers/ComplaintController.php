@@ -110,7 +110,7 @@ class ComplaintController extends Controller
     public function show(Complaint $complaint)
     {
         $user = Auth::user();
-        $departments = Department::active()->pluck('name', 'id');
+        $departments = getActiveDepartments();
         return view('complaints.show', get_defined_vars());
     }
 

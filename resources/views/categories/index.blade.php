@@ -11,7 +11,7 @@
                 <div class="col-xl-12 col-md-12">
                     <div class="card user-profile-list">
                         <div class="card-body-dd">
-                            <x-table :keys="['Name', 'Ordering', 'Status', '']"></x-table>
+                            <x-table :keys="['Code', 'Name', 'Ordering', 'Status', '']"></x-table>
                         </div>
                     </div>
                 </div>
@@ -26,6 +26,8 @@
 
                 const datatable_url = route('categories.datatable');
                 const datatable_columns = [{
+                        data: 'code'
+                    },{
                         data: 'name'
                     },
                     {
