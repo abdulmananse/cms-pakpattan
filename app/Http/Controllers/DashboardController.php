@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Complaint;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,6 +35,8 @@ class DashboardController extends Controller
         }
 
         $summary = $summary->first();
+
+        $departments = Department::withCount('pending_complaints', 'resolved_complaints')->get();
 
         return view('dashboard', get_defined_vars());
     }

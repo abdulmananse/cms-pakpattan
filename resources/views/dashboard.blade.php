@@ -61,30 +61,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-6 col-md-6 col-sm-12 d-none">
+
+                <div class="col-xl-6 col-md-6 col-sm-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="text-center fw-bold">Schools</h4>
-                            <p  class="text-center"> by Status</p>
-                            <div class="pie-chart-div" id="statusWiseSchoolPieChart"></div>
+                            <h4 class="text-center fw-bold">Pending Complaints</h4>
+                            <p  class="text-center"> by Department</p>
+                            <div class="pie-chart-div" id="PendingComplaintsByDepartmentPieChart"></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-6 col-md-6 col-sm-12 d-none">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="text-center fw-bold">Teachers</h4>
-                            <p  class="text-center"> by Gender</p>
-                            <div class="pie-chart-div" id="genderWiseTeacherPieChart"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-md-6 col-sm-12 d-none">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="text-center fw-bold">Students</h4>
-                            <p  class="text-center"> by Gender</p>
-                            <div class="pie-chart-div" id="genderWiseStudentPieChart"></div>
+
+                <div class="col-md-12 mb-3">
+                    <div class="card card-h-100 w-100" style="padding-top: 0;">
+                        <div class="card-body" style="padding-bottom: 0;">
+                            <div class="row justify-content-between">
+                                <div class="bg-white text-center rounded-lg p-4">
+                                    <h4 class="text-center fw-bold">Complaint Status</h4>
+                                    <p  class="text-center">by Departments</p>
+                                    <div class="pie-chart-div" id="ComplaintsByDepartmentColumnChart"></div>	
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -162,64 +159,68 @@
             }]
         });
         
-        Highcharts.chart('statusWiseSchoolPieChart', {
+        Highcharts.chart('PendingComplaintsByDepartmentPieChart', {
             chart: chartOption,
             title: {text: ''},
             tooltip: tooltip,
             plotOptions: plotOptions,
+            legend: {
+                align: 'right',       // Move legend to the right
+                verticalAlign: 'middle', // Center it vertically
+                layout: 'vertical'    // Stack items vertically
+            },
             series: [{
                 name: 'Counts',
                 colorByPoint: true,
-                data: [{
-                        name: 'Functional',
-                        y: 21312,
-                        color: 'rgb(91, 137, 210)'
-                    }, {
-                        name: 'Non-Functional',
-                        y: 123,
-                        color: 'rgb(212, 76, 157)'
-                    },]
-            }]
-        });
-        
-        Highcharts.chart('genderWiseTeacherPieChart', {
-            chart: chartOption,
-            title: {text: ''},
-            tooltip: tooltip,
-            plotOptions: plotOptions,
-            series: [{
-                name: 'Counts',
-                colorByPoint: true,
-                data: [{
-                        name: 'Male',
-                        y: 312,
-                        color: 'rgb(91, 137, 210)'
-                    }, {
-                        name: 'Female',
-                        y: 12,
-                        color: 'rgb(212, 76, 157)'
-                    },]
+                data: [
+                    @foreach ($departments as $department)
+                        @if($department->pending_complaints_count > 0)
+                        {
+                            name: '{{ $department->name }}',
+                            y: {{ (int) $department->pending_complaints_count }}
+                        },
+                        @endif
+                    @endforeach
+                    ]
             }]
         });
 
-        Highcharts.chart('genderWiseStudentPieChart', {
-            chart: chartOption,
+          Highcharts.chart('ComplaintsByDepartmentColumnChart', {
+            chart: {type: 'column',events: {load: function() {$('.highcharts-credits').hide();}}},
             title: {text: ''},
-            tooltip: tooltip,
-            plotOptions: plotOptions,
-            series: [{
-                name: 'Counts',
-                colorByPoint: true,
-                data: [{
-                        name: 'Male',
-                        y: 123,
-                        color: 'rgb(91, 137, 210)'
-                    }, {
-                        name: 'Female',
-                        y: 12,
-                        color: 'rgb(212, 76, 157)'
-                    },]
-            }]
+            xAxis: {
+                categories: [
+                    @foreach ($departments as $department)
+                    '{{ $department->name }}', 
+                    @endforeach
+                ],
+                crosshair: true,
+                accessibility: {
+                    description: 'Countries'
+                }
+            },
+            yAxis: {min: 0,title: {text: '(#)'}},
+            tooltip: {valueSuffix: ' '},
+            series: [
+                {
+                    name: 'Resolved',
+                    data: [
+                        @foreach ($departments as $department)
+                            {{ $department->resolved_complaints_count }},
+                        @endforeach
+                    ],
+                    color: '#107b02',
+                },
+                {
+                    name: 'Pending',
+                    data: [
+                        @foreach ($departments as $department)
+                            {{ $department->pending_complaints_count }},
+                        @endforeach
+                    ],
+                    color: '#be091f'
+                }
+            ]
         });
     </script>
     @endpush
