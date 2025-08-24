@@ -24,6 +24,7 @@ class Complaint extends Model
         'description',
         'location',
         'attachment',
+        'department_id',
         'source_id',
         'complaint_status',
         'created_by',
@@ -60,11 +61,11 @@ class Complaint extends Model
         $query->when(($request->filled('date') && $request->date != 'all'), function ($query) use ($request) {
             $date = explode(',', $request->date);
             $startDate = date('Y-m-d', strtotime($date[0]));
-            $query->where('updated_at', '>=', $startDate);
+            $query->where('updated_at', '>=', $startDate . ' 00:00:00');
 
             if(@$date[1]) {
                 $endDate = date('Y-m-d', strtotime($date[1]));
-                $query->where('updated_at', '<=', $endDate);
+                $query->where('updated_at', '<=', $endDate . ' 23:59:59');
             }
 
             return $query;

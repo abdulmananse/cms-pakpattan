@@ -29,6 +29,11 @@
     {!! $errors->first('category', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
+    {{ html()->label()->for('department_id')->text('Department')->class('form-label required-input') }}
+    {{ html()->select('department_id', $departments, null)->class('form-select')->placeholder('Department')->required() }}
+    {!! $errors->first('department_id', '<label class="error">:message</label>') !!}
+</div>
+<div class="form-group col-md-6">
     {{ html()->label()->for('description')->text('Description')->class('form-label required-input') }}
     {{ html()->textarea('description')->class('form-control')->classIf($errors->has('description'), 'error')->placeholder('Description')->maxlength(500)->required() }}
     {!! $errors->first('description', '<label class="error">:message</label>') !!}
@@ -39,12 +44,12 @@
     {!! $errors->first('location', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
-    {{ html()->label()->for('attachment')->text('Attachment')->class('form-label') }}
-    {{ html()->file('attachment') }}
-    {!! $errors->first('attachment', '<label class="error">:message</label>') !!}
-</div>
-<div class="form-group col-md-6">
     {{ html()->label()->for('source')->text('Source')->class('form-label required-input') }}
     {{ html()->select('source', $sources, null)->class('form-select')->placeholder('Complaint Source')->required() }}
     {!! $errors->first('source', '<label class="error">:message</label>') !!}
+</div>
+<div class="form-group col-md-6">
+    {{ html()->label()->for('attachment')->text('Attachment')->class('form-label') }} <br/>
+    {{ html()->file('attachment') }}
+    {!! $errors->first('attachment', '<label class="error">:message</label>') !!}
 </div>

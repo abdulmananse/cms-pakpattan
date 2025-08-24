@@ -36,6 +36,7 @@ class ComplaintRequest extends FormRequest
         if ($this->source == 'Online Form') {
             $rules['location'] = 'required|string|max:100';
         } else {
+            $rules['department_id'] = ['required'];
             $rules['name'] = ['required', 'string', 'max:255'];
             $rules['email'] = ['nullable', 'string', 'lowercase', 'email', 'max:255'];
             $rules['address'] = ['nullable', 'string', 'max:500'];

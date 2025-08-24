@@ -64,8 +64,10 @@ class ComplaintController extends Controller
      */
     public function create()
     {
-        $categories = Category::active()->orderBy('ordering')->pluck('name', 'id');
+        $categories = getActiveCategories();
+        $departments = getActiveDepartments();
         $sources = Source::active()->where('id', '!=', 1)->orderBy('ordering')->pluck('name', 'id');
+
         return view('complaints.create', get_defined_vars());
     }
 
@@ -86,6 +88,7 @@ class ComplaintController extends Controller
         $complaintNo = $category->code .'-'. str_pad($lastId, 3, '0', STR_PAD_LEFT);
         $complaintData['cnic'] = $request->username;
         $complaintData['category_id'] = $category->id;
+        $complaintData['source_id'] = $request->source;
         $complaintData['complaint_no'] = $complaintNo;
         $complaintData['created_by'] = $userId;
 

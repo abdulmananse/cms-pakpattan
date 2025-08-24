@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use App\Models\Level1;
 use App\Models\Level2;
 use App\Models\Role;
@@ -950,6 +951,13 @@ if (!function_exists('getActiveSources')) {
     function getActiveSources()
     {
         return Source::active()->orderBy('ordering', 'asc')->pluck('name', 'id');
+    }
+}
+
+if (!function_exists('getActiveCategories')) {
+    function getActiveCategories()
+    {
+        return Category::active()->orderBy('ordering')->pluck('name', 'id');
     }
 }
 

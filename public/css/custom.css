@@ -16,9 +16,10 @@ label.error {
     float: left;
 }
 .dataTables_length select {
-    float: left;
+    /* float: left; */
+    display: inline;
     background: white;
-    position: absolute;
+    /* position: absolute; */
     width: 100px;
     left: 98px;
     top: -2px
@@ -329,10 +330,10 @@ table.dataTable.table-sm .sorting_desc:after {
     .table-responsive {
         overflow-x: auto;
     }
-    .dataTables_length select {
+    /* .dataTables_length select {
         position: relative;
         float: none;
-    }
+    } */
     .dataTables_length, .dataTables_length {
         float: none;
     }
