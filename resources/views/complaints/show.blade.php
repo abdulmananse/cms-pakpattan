@@ -69,7 +69,7 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label font-weight-bolder">Source</label>
                                                 <div class="col-sm-9">
-                                                    {{ $complaint->source }}
+                                                    {{ optional($complaint->source)->name }}
                                                 </div>
                                             </div>
                                             <div class="form-group row">
