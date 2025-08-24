@@ -206,7 +206,10 @@
                     name: 'Resolved',
                     data: [
                         @foreach ($departments as $department)
-                            {{ $department->resolved_complaints_count }},
+                        {
+                            y: {{ $department->resolved_complaints_count }},
+                            department_id: {{ $department->id }}
+                        },
                         @endforeach
                     ],
                     color: '#107b02',
@@ -215,12 +218,35 @@
                     name: 'Pending',
                     data: [
                         @foreach ($departments as $department)
-                            {{ $department->pending_complaints_count }},
+                        {
+                            y: {{ $department->pending_complaints_count }},
+                            department_id: {{ $department->id }}
+                        },
                         @endforeach
                     ],
                     color: '#be091f'
                 }
-            ]
+            ],
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                },
+                series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function () {
+                                let department = this.department_id;   
+                                let status = this.series.name == 'Resolved' ? 1 : 0;    
+                                
+                                window.open(route('complaints.index', { d: department, s: status }), '_blank');
+                            }
+                        }
+                    }
+                }
+            },
+
         });
     </script>
     @endpush

@@ -49,7 +49,7 @@ class Department extends Model
      */
     public function resolved_complaints(): HasMany
     {
-        return $this->hasMany(Complaint::class, 'department_id')->where('complaint_status', 2);
+        return $this->hasMany(Complaint::class, 'department_id')->where('complaint_status', 1);
     }
 
 }
