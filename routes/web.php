@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FrontComplaintController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Models\Complaint;
@@ -46,6 +47,10 @@ Route::middleware('auth')->group(function () {
     Route::post('complaints/assign/{complaint}', [ComplaintController::class, 'assigned'])->name('complaints.assigned')->middleware('permission:Complaints Assigned');
     Route::get('complaints/reject/{complaint}', [ComplaintController::class, 'rejected'])->name('complaints.rejected')->middleware('permission:Complaints Rejected');
     Route::post('complaints/resolved/{complaint}', [ComplaintController::class, 'resolved'])->name('complaints.resolved')->middleware('permission:Complaints Resolved');
+
+    # Reports
+    Route::get('reports/pending-complaints', [ReportController::class, 'pendingComplaints'])->name('reports.pendingComplaints')->middleware('permission:Pending Complaints');
+    Route::get('reports/resolved-complaints', [ReportController::class, 'resolvedComplaints'])->name('reports.resolvedComplaints')->middleware('permission:Resolved Complaints');
 
     # Users 
     Route::resource('users', UserController::class)->only('index')->middleware('permission:Users Index');

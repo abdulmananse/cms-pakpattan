@@ -48,6 +48,23 @@
                     </li>
                 @endcanany
 
+                @canany(['Pending Complaints', 'Resolved Complaints'])
+                    <li class="nav-item pcoded-hasmenu {{ setActive(['reports']) }}">
+                        <a href="#" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-file-text"></i></span>
+                            <span class="pcoded-mtext">Reports</span>
+                        </a>
+                        <ul class="pcoded-submenu">
+                            @can('Pending Complaints')
+                                <li><a href="{{ route('reports.pendingComplaints') }}">Pending Complaints</a></li>
+                            @endcan
+                            @can('Resolved Complaints')
+                                <li><a href="{{ route('reports.resolvedComplaints') }}">Resolved Complaints</a></li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcanany
+
                 @canany(['Settings Index', 'Roles Index', 'Permissions Index', 'Permission Groups Index'])
                     <li class="nav-item pcoded-hasmenu {{ setActive(['settings', 'roles', 'permissions', 'permission-groups']) }}">
                         <a href="#" class="nav-link ">

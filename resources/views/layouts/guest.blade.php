@@ -51,7 +51,7 @@
                 
                 <div class="hidden md:flex items-center gap-3">
                     @guest
-                        <a href="{{ url('register') }}" class="px-4 py-2 rounded-xl border border-gray-200 hover:bg-gray-50">Register</a>
+                        <a href="{{ url('login') }}" class="px-4 py-2 rounded-xl border border-gray-200 hover:bg-gray-50">Login</a>
                     @endguest
                     @auth
                         <a href="{{ url('dashboard') }}" class="px-4 py-2 rounded-xl border border-gray-200 hover:bg-gray-50">Dashboard</a>

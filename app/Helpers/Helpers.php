@@ -942,15 +942,11 @@ if (!function_exists('getDEOTehsilIds')) {
     }
 }
 
-/**
- * Get DEO Class Ids
- * @return Number
- */
-if (!function_exists('getDEOClassIds')) {
-    function getDEOClassIds($userId = null)
+
+if (!function_exists('complaintSources')) {
+    function complaintSources()
     {
-        $userId = ($userId) ? $userId : Auth::id();
-        return DEOClasses::where('user_id', $userId)->pluck('class_id');
+        return ['Control Room','Online Form','Complaint Cell','SMU','Social Media','CM Complaint Cell','Email','Mobile App'];
     }
 }
 
