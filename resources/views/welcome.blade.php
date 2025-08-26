@@ -268,7 +268,7 @@
         </section>
 
         <!-- Call to action -->
-        <section id="register-complaint" class="relative1 overflow-hidden">
+        <section id="register-complaint" class="relative overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-b from-primary-50 to-white pointer-events-none"></div>
             <div class="max-w-7xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-8 items-center">
             <div>
@@ -281,7 +281,7 @@
             </div>
         </section>
 
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
+
     <script>
         // Mobile menu toggle
         const menuBtn = document.getElementById('menuBtn');
@@ -292,6 +292,6 @@
         });
         }
         // Current year
-        document.getElementById('year').textContent = new Date().getFullYear();
+        // document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </x-guest-layout>
