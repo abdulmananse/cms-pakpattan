@@ -26,8 +26,8 @@ class DashboardController extends Controller
 
         $summary = Complaint::selectRaw("
             COUNT(*) as total,
-            SUM(CASE WHEN complaint_status = 0 AND created_at >= DATE_SUB(NOW(), INTERVAL 2 DAY) THEN 1 ELSE 0 END) as fresh,
-            SUM(CASE WHEN complaint_status = 0 AND assigned_at < DATE_SUB(NOW(), INTERVAL 2 DAY) THEN 1 ELSE 0 END) as overdue,
+            SUM(CASE WHEN complaint_status = 0 AND (department_id IS NULL OR created_at >= DATE_SUB(NOW(), INTERVAL 2 DAY)) THEN 1 ELSE 0 END) as fresh,
+            SUM(CASE WHEN complaint_status = 0 AND department_id > 0 AND assigned_at < DATE_SUB(NOW(), INTERVAL 2 DAY) THEN 1 ELSE 0 END) as overdue,
             SUM(CASE WHEN complaint_status = 0 THEN 1 ELSE 0 END) as pending,
             SUM(CASE WHEN complaint_status = 1 THEN 1 ELSE 0 END) as resolved,
             SUM(CASE WHEN complaint_status = 2 THEN 1 ELSE 0 END) as rejected
@@ -47,4 +47,18 @@ class DashboardController extends Controller
         return view('dashboard', get_defined_vars());
     }
 
+    public function landing()
+    {
+        $summary = Complaint::selectRaw("
+            COUNT(*) as total,
+            SUM(CASE WHEN complaint_status = 0 AND (department_id IS NULL OR created_at >= DATE_SUB(NOW(), INTERVAL 2 DAY)) THEN 1 ELSE 0 END) as fresh,
+            SUM(CASE WHEN complaint_status = 0 AND department_id > 0 AND assigned_at < DATE_SUB(NOW(), INTERVAL 2 DAY) THEN 1 ELSE 0 END) as overdue,
+            SUM(CASE WHEN complaint_status = 0 THEN 1 ELSE 0 END) as pending,
+            SUM(CASE WHEN complaint_status = 1 THEN 1 ELSE 0 END) as resolved,
+            SUM(CASE WHEN complaint_status = 2 THEN 1 ELSE 0 END) as rejected
+        ")
+        ->first();
+
+        return view('welcome', get_defined_vars());
+    }
 }

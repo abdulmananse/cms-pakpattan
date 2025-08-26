@@ -22,7 +22,7 @@
             <p class="truncate">Government of the Punjab — District Pakpattan</p>
             <div class="flex items-center gap-6">
                 <a href="#contact" class="hover:underline">Contact</a>
-                <a href="tel:1122" class="font-semibold">Helpline: 1122</a>
+                <a href="tel:1718" class="font-semibold">Helpline: 1718</a>
             </div>
             </div>
         </div>
@@ -117,8 +117,8 @@
                 <ul class="mt-3 space-y-2 text-sm text-gray-600">
                 <li>DC Office, Pakpattan</li>
                 <li>Mon–Fri, 9:00–5:00</li>
-                <li><a href="tel:+92457300000" class="hover:text-primary-700">+92 (457) 300000</a></li>
-                <li><a href="mailto:info@pakpattan.gov.pk" class="hover:text-primary-700">info@pakpattan.gov.pk</a></li>
+                <li><a href="tel:+92457921020" class="hover:text-primary-700">+92 (457) 921020</a></li>
+                <li><a href="mailto:info@dcpakpattan.gov.pk" class="hover:text-primary-700">info@dcpakpattan.gov.pk</a></li>
                 </ul>
             </div>
             </div>

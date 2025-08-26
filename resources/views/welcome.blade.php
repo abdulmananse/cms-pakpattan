@@ -25,21 +25,21 @@
                 <div class="grid gap-4">
                     <div class="rounded-2xl bg-primary-600 text-white p-6">
                     <div class="text-sm opacity-90">Active Complaints</div>
-                    <div class="mt-1 text-3xl font-bold">12,457</div>
+                    <div class="mt-1 text-3xl font-bold">{{ number_format($summary->total) }}</div>
                     <div class="mt-4 grid grid-cols-3 gap-4 text-center">
-                        <div><div class="text-xl font-bold">7,130</div><div class="text-xs opacity-90">Resolved</div></div>
-                        <div><div class="text-xl font-bold">3,800</div><div class="text-xs opacity-90">Pending</div></div>
-                        <div><div class="text-xl font-bold">1,527</div><div class="text-xs opacity-90">In Progress</div></div>
+                        <div><div class="text-xl font-bold">{{ number_format($summary->resolved) }}</div><div class="text-xs opacity-90">Resolved</div></div>
+                        <div><div class="text-xl font-bold">{{ number_format($summary->resolved) }}</div><div class="text-xs opacity-90">Pending</div></div>
+                        <div><div class="text-xl font-bold">{{ number_format($summary->overdue) }}</div><div class="text-xs opacity-90">Overdue</div></div>
                     </div>
                     </div>
-                    <div class="rounded-2xl border border-gray-200 p-4">
-                    <div class="text-sm font-semibold">Recent Updates</div>
-                    <ul class="mt-2 space-y-2 text-sm text-gray-600">
-                        <li class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-green-500"></span> Complaint <span class="font-semibold">PKP-2025-1032</span> resolved</li>
-                        <li class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-amber-500"></span> Complaint <span class="font-semibold">PKP-2025-0975</span> assigned</li>
-                        <li class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-blue-500"></span> New complaint <span class="font-semibold">PKP-2025-1044</span> submitted</li>
-                    </ul>
-                    </div>
+                    {{-- <div class="rounded-2xl border border-gray-200 p-4">
+                        <div class="text-sm font-semibold">Recent Updates</div>
+                        <ul class="mt-2 space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-green-500"></span> Complaint <span class="font-semibold">PKP-2025-1032</span> resolved</li>
+                            <li class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-amber-500"></span> Complaint <span class="font-semibold">PKP-2025-0975</span> assigned</li>
+                            <li class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-blue-500"></span> New complaint <span class="font-semibold">PKP-2025-1044</span> submitted</li>
+                        </ul>
+                    </div> --}}
                 </div>
                 </div>
             </div>
@@ -263,12 +263,12 @@
                 <input id="complaint_no" name="complaint_no" type="text" placeholder="e.g. PKP-2025-1044" class="w-full sm:w-96 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500" />
                 <button type="submit" class="px-5 py-3 rounded-xl bg-primary-600 text-white font-medium hover:bg-primary-700">Track</button>
             </form>
-            <p class="mt-3 text-xs text-gray-500">Tip: You can also track by SMS. Send your number to <span class="font-semibold">8001</span>.</p>
+            {{-- <p class="mt-3 text-xs text-gray-500">Tip: You can also track by SMS. Send your number to <span class="font-semibold">8001</span>.</p> --}}
             </div>
         </section>
 
         <!-- Call to action -->
-        <section id="register-complaint" class="relative overflow-hidden">
+        <section id="register-complaint" class="relative1 overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-b from-primary-50 to-white pointer-events-none"></div>
             <div class="max-w-7xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-8 items-center">
             <div>
@@ -276,12 +276,12 @@
                 <p class="mt-2 text-gray-600">Help us keep Pakpattan safe and responsive. Submit a complaint now — it only takes a minute.</p>
             </div>
             <div class="flex md:justify-end">
-                <a href="#" class="px-6 py-3 rounded-2xl bg-primary-600 text-white font-semibold hover:bg-primary-700">Start Complaint</a>
+                <a href="{{ url('complaint') }}" class="px-6 py-3 rounded-2xl bg-primary-600 text-white font-semibold hover:bg-primary-700">Register Complaint</a>
             </div>
             </div>
         </section>
 
-
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script>
         // Mobile menu toggle
         const menuBtn = document.getElementById('menuBtn');

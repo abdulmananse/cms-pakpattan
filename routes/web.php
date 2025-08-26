@@ -18,9 +18,8 @@ use App\Models\PermissionGroup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('landing');
+
+Route::get('/', [DashboardController::class, 'landing'])->name('landing');
 
 # Complaint
 Route::get('complaint', [FrontComplaintController::class, 'create'])->name('complaint');
