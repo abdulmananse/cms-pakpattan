@@ -91,6 +91,7 @@ class ComplaintController extends Controller
         $complaintData['source_id'] = $request->source;
         $complaintData['complaint_no'] = $complaintNo;
         $complaintData['assigned_by'] = $userId;
+        $complaintData['assigned_at'] = date('Y-m-d H:i:s');
         $complaintData['created_by'] = $userId;
 
         if ($request->hasFile('attachment')) {
@@ -177,6 +178,7 @@ class ComplaintController extends Controller
         $complaint->complaint_status = 1;
         $complaint->remarks = $request->remarks;
         $complaint->resolved_by = Auth::id();
+        $complaint->resolved_at = date('Y-m-d H:i:s');
         $complaint->save();
 
         Session::flash('success', 'Complaint successfully resolved!');

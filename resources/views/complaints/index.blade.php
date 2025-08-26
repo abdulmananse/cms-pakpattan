@@ -30,7 +30,7 @@
                 <div class="col-xl-12 col-md-12">
                     <div class="card user-profile-list">
                         <div class="card-body-dd">
-                            <x-table :keys="['Complaint No', 'Name', 'CNIC', 'Mobile', 'Category', 'Department', 'Complaint By', 'Source', 'Status', '']"></x-table>
+                            <x-table :keys="['Complaint No', 'Name', 'CNIC', 'Mobile', 'Category', 'Department', 'Complaint By', 'Source', 'Date', 'Status', '']"></x-table>
                         </div>
                     </div>
                 </div>
@@ -65,6 +65,11 @@
                 },
                 {
                     data: 'source.name'
+                },
+                {
+                    data: 'created_at', render: function(data) {
+                        return moment(data, "YYYY-MM-DD").format("DD-MMM"); 
+                    } 
                 },
                 {
                     data: 'complaint_status',

@@ -28,8 +28,11 @@ class Complaint extends Model
         'source_id',
         'complaint_status',
         'created_by',
+        'assigned_by',
+        'assigned_at',
         'rejected_by',
         'resolved_by',
+        'resolved_at',
         'resolved_attachment',
         'remarks',
     ];
