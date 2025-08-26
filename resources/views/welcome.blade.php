@@ -268,7 +268,7 @@
         </section>
 
         <!-- Call to action -->
-        <section id="register-complaint" class="relative overflow-hidden">
+        <section id="register-complaint" class="relative overflow-hidden hidden">
             <div class="absolute inset-0 bg-gradient-to-b from-primary-50 to-white pointer-events-none"></div>
             <div class="max-w-7xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-8 items-center">
             <div>
