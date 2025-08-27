@@ -85,30 +85,26 @@
                                                         @php
                                                             $ext = strtolower(pathinfo($complaint->attachment, PATHINFO_EXTENSION));
                                                         @endphp
-                                                        <div class="col-sm-3">
-                                                            <a href="{{ asset('storage/complaints/' . $complaint->attachment) }}" target="_blank">
-                                                                @if($ext === 'pdf')
-                                                                    <img src="{{ asset('images/pdf_icon.png') }}" width="40" alt="PDF" />
-                                                                @else
-                                                                    <img src="{{ asset('storage/complaints/' . $complaint->attachment) }}" width="80" />
-                                                                @endif
-                                                            </a>
-                                                        </div>
+                                                        <a href="{{ asset('storage/complaints/' . $complaint->attachment) }}" target="_blank">
+                                                            @if($ext === 'pdf')
+                                                                <img src="{{ asset('images/pdf_icon.png') }}" width="80" alt="PDF" />
+                                                            @else
+                                                                <img src="{{ asset('storage/complaints/' . $complaint->attachment) }}" width="80" />
+                                                            @endif
+                                                        </a>
                                                     @endif
 
                                                     @if($complaint->complaint_status == 1 && $complaint->resolved_attachment)
                                                         @php
                                                             $resolvedExt = strtolower(pathinfo($complaint->resolved_attachment, PATHINFO_EXTENSION));
                                                         @endphp
-                                                        <div class="col-sm-3">
-                                                            <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="ms-3">
-                                                                @if($resolvedExt === 'pdf')
-                                                                    <img src="{{ asset('images/pdf_icon.png') }}" width="40" alt="PDF" />
-                                                                @else
-                                                                    <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" width="80" />
-                                                                @endif
-                                                            </a>
-                                                        </div>
+                                                        <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="ms-5">
+                                                            @if($resolvedExt === 'pdf')
+                                                                <img src="{{ asset('images/pdf_icon.png') }}" width="80" alt="PDF" />
+                                                            @else
+                                                                <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" width="80" />
+                                                            @endif
+                                                        </a>
                                                     @endif
                                                 </div>
                                             </div>
