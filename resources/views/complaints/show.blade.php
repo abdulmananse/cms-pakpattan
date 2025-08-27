@@ -87,7 +87,7 @@
                                                         @endphp
                                                         <a href="{{ asset('storage/complaints/' . $complaint->attachment) }}" target="_blank">
                                                             @if($ext === 'pdf')
-                                                                <img src="{{ asset('images/pdf-icon.png') }}" width="40" alt="PDF" />
+                                                                <img src="{{ asset('images/pdf_icon.png') }}" width="40" alt="PDF" />
                                                             @else
                                                                 <img src="{{ asset('storage/complaints/' . $complaint->attachment) }}" width="80" />
                                                             @endif
@@ -100,7 +100,7 @@
                                                         @endphp
                                                         <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="ms-3">
                                                             @if($resolvedExt === 'pdf')
-                                                                <img src="{{ asset('images/pdf-icon.png') }}" width="40" alt="PDF" />
+                                                                <img src="{{ asset('images/pdf_icon.png') }}" width="40" alt="PDF" />
                                                             @else
                                                                 <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" width="80" />
                                                             @endif
