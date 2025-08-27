@@ -82,19 +82,31 @@
                                                 <label class="col-sm-3 col-form-label font-weight-bolder">Attachment</label>
                                                 <div class="col-sm-9">
                                                     @if($complaint->attachment)
-                                                    <a href="{{ asset('storage/complaints/' . $complaint->attachment) }}" target="_blank">
-                                                        <img src="{{ asset('storage/complaints/' . $complaint->attachment) }}" width=80 />
-                                                    </a>
+                                                        @php
+                                                            $ext = strtolower(pathinfo($complaint->attachment, PATHINFO_EXTENSION));
+                                                        @endphp
+                                                        <a href="{{ asset('storage/complaints/' . $complaint->attachment) }}" target="_blank">
+                                                            @if($ext === 'pdf')
+                                                                <img src="{{ asset('images/pdf-icon.png') }}" width="40" alt="PDF" />
+                                                            @else
+                                                                <img src="{{ asset('storage/complaints/' . $complaint->attachment) }}" width="80" />
+                                                            @endif
+                                                        </a>
                                                     @endif
 
                                                     @if($complaint->complaint_status == 1 && $complaint->resolved_attachment)
-                                                    <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="ms-3">
-                                                        <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" width=80 />
-                                                    </a>
+                                                        @php
+                                                            $resolvedExt = strtolower(pathinfo($complaint->resolved_attachment, PATHINFO_EXTENSION));
+                                                        @endphp
+                                                        <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="ms-3">
+                                                            @if($resolvedExt === 'pdf')
+                                                                <img src="{{ asset('images/pdf-icon.png') }}" width="40" alt="PDF" />
+                                                            @else
+                                                                <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" width="80" />
+                                                            @endif
+                                                        </a>
                                                     @endif
                                                 </div>
-
-                                                
                                             </div>
                                             @if($complaint->department_id > 0)
                                             <div class="form-group row">
