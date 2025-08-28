@@ -87,9 +87,9 @@
                                                         @endphp
                                                         <a href="{{ asset('storage/complaints/' . $complaint->attachment) }}" target="_blank">
                                                             @if($ext === 'pdf')
-                                                                <img src="{{ asset('images/pdf_icon.png') }}" width="80" alt="PDF" />
+                                                                <img src="{{ asset('images/pdf_icon.png') }}" width="120" alt="PDF" />
                                                             @else
-                                                                <img src="{{ asset('storage/complaints/' . $complaint->attachment) }}" width="80" />
+                                                                <img src="{{ asset('storage/complaints/' . $complaint->attachment) }}" width="120" />
                                                             @endif
                                                         </a>
                                                     @endif
@@ -100,9 +100,9 @@
                                                         @endphp
                                                         <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="ms-5">
                                                             @if($resolvedExt === 'pdf')
-                                                                <img src="{{ asset('images/pdf_icon.png') }}" width="80" alt="PDF" />
+                                                                <img src="{{ asset('images/pdf_icon.png') }}" width="120" alt="PDF" />
                                                             @else
-                                                                <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" width="80" />
+                                                                <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" width="120" />
                                                             @endif
                                                         </a>
                                                     @endif
