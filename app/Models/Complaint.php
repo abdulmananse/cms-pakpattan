@@ -37,10 +37,6 @@ class Complaint extends Model
         'remarks',
     ];
 
-    protected $casts = [
-        'assigned_at' => 'datetime',
-    ];
-
     public function scopeRoleFilter($query, $user)
     {
         if ($user->role == 'Department') {
