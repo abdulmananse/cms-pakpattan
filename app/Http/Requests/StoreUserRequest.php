@@ -26,7 +26,7 @@ class StoreUserRequest extends BaseRequest
     {
         return [
             'role' => 'required|exists:roles,id',
-            'department_id' => 'nullable|exists:departments,id',
+            'department_ids' => 'nullable',
             'source_id' => 'nullable|exists:sources,id',
             'name' => 'required|max:50',
             'designation' => 'nullable|max:50',

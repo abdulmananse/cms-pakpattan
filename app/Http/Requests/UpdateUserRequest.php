@@ -31,7 +31,7 @@ class UpdateUserRequest extends FormRequest
             'username' => 'required|max:100|unique:users,username,'.$this->id,
             'email' => 'nullable|email|max:100',
             'mobile' => 'nullable',
-            'department_id' => 'nullable|exists:departments,id',
+            'department_ids' => 'nullable',
             'source_id' => 'nullable|exists:sources,id',
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()]
         ];

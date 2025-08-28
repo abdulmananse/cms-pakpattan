@@ -58,4 +58,9 @@ class User extends Authenticatable
     {
         return ($value == null) ? null : (mb_substr($value, 0, 1) == 3 ? '0' . $value : $value);
     }
+
+    public function departments()
+    {
+        return $this->belongsToMany(Department::class, 'department_user', 'user_id', 'department_id');
+    }
 }

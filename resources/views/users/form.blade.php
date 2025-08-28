@@ -24,9 +24,9 @@
     {!! $errors->first('role', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
-    {{ html()->label()->for('department_id')->text('Department')->class('form-label') }}
-    {{ html()->select('department_id', $departments, null)->class('form-select')->placeholder('Select Department') }}
-    {!! $errors->first('department_id', '<label class="error">:message</label>') !!}
+    {{ html()->label()->for('department_ids')->text('Department')->class('form-label') }}
+    {{ html()->select('department_ids[]', $departments)->class('form-select')->attribute('multiple')->value(old('department_ids', $selectedDepartments)) }}
+    {!! $errors->first('department_ids', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
     {{ html()->label()->for('source_id')->text('Source')->class('form-label') }}

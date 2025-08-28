@@ -39,6 +39,8 @@ class UserController extends Controller
                 if ($column == 'is_active') {
                     $users->orderBy($column, $orderBy);
                 } 
+            } else {
+                $users->orderBy('updated_at', 'desc');
             }
 
             return Datatables::of($users)
@@ -82,6 +84,7 @@ class UserController extends Controller
         $roles = Role::where('id', '!=', 1)->active()->pluck('name', 'id');
         $departments = getActiveDepartments();
         $sources = getActiveSources();
+        $selectedDepartments = null;
 
         return view('users.create', get_defined_vars());
     }
@@ -112,6 +115,10 @@ class UserController extends Controller
             $user->assignRole($role);
         }
         
+        if ($request->filled('department_ids')) {
+            $user->departments()->sync($request->input('department_ids', []));
+        }
+
         Session::flash('success', 'User successfully created');
 
         return redirect()->route('users.index');
@@ -149,6 +156,8 @@ class UserController extends Controller
         $departments = getActiveDepartments();
         $sources = getActiveSources();
         
+        $selectedDepartments = $user->departments->pluck('id')->toArray();
+       
         return view('users.edit', get_defined_vars());
         
     }
@@ -183,6 +192,8 @@ class UserController extends Controller
         }
 
         $user->update($userData);
+
+        $user->departments()->sync($request->input('department_ids', []));
 
         Session::flash('success', 'User successfully updated');
         

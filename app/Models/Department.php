@@ -52,4 +52,9 @@ class Department extends Model
         return $this->hasMany(Complaint::class, 'department_id')->where('complaint_status', 1);
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'department_user', 'department_id', 'user_id');
+    }
+
 }
