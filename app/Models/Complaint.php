@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Carbon\Carbon;
 
 class Complaint extends Model
 {
@@ -52,7 +53,13 @@ class Complaint extends Model
     public function scopeFilter($query, $request)
     {
         if($request->filled('status')) {
-            $query->where('complaint_status', $request->status);
+            if ($request->status == 3) { // Overdue
+                $query->where('complaint_status', 0)
+                    ->where('department_id', '>', 0)
+                    ->where('assigned_at', '<', Carbon::now()->subDays(2));
+            } else {
+                $query->where('complaint_status', $request->status);
+            }
         }
         if($request->filled('d') && $request->d > 0) {
             $query->where('department_id', $request->d);
