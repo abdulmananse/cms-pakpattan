@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-2">
-                    <div class="card bg-c-primary order-card">
+                    <div class="card bg-primary order-card">
                         <a class="card-body" href="{{ route('complaints.index', ['status' => 3]) }}">
                             <h4 class="text-white">Reopen</h4>
                             <h2 class="text-end text-white"><i class="fas fa-redo float-start"></i><span>{{ number_format($summary->reopen) }}</span></h2>
