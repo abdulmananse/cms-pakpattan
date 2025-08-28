@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-md-6 col-xl-3">
                     <div class="card bg-c-red order-card">
-                        <a class="card-body" href="{{ route('complaints.index', ['status' => 0]) }}">
+                        <a class="card-body" href="{{ route('complaints.index', ['status' => 3]) }}">
                             <h4 class="text-white">Overdue</h4>
                             <h2 class="text-end text-white"><i class="fas fa-clock float-start"></i><span>{{ number_format($summary->overdue) }}</span></h2>
                         </a>
