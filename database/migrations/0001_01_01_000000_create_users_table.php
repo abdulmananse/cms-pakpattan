@@ -19,7 +19,6 @@ return new class extends Migration
             $table->bigInteger('mobile')->nullable();
             $table->string('designation', 50)->nullable();
             $table->string('role', 20)->nullable();
-            $table->bigInteger('department_id')->nullable();
             $table->bigInteger('source_id')->nullable();
             $table->string('email')->nullable();
             $table->string('address', 500)->nullable();
