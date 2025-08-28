@@ -22,6 +22,7 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 
 /**
 * Check Active Route
@@ -118,9 +119,14 @@ if (!function_exists('getComplaintStatusBadge')) {
         $badge = '<span style="overflow: visible; position: relative; width: 130px;">';
         $status = $complaint->complaint_status;
         $department = $complaint->department_id;
+        $assignedAt = new DateTime($complaint->assigned_at);
 
         if ($status == 0 && $department > 0) {
-            $badge .= '<a href="#" class="badge bg-info">Assigned to Department</a>';
+            if (Carbon::parse($assignedAt)->lt(Carbon::now()->subDays(2))) {
+                $badge .= '<a href="#" class="badge bg-danger">Overdue</a>';
+            } else {
+                $badge .= '<a href="#" class="badge bg-info">Assigned to Department</a>';
+            }
         } elseif ($status == 1) {
             $badge .= '<a href="#" class="badge bg-success">Resolved</a>';
         } elseif ($status == 2) {
