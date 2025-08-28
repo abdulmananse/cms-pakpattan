@@ -131,7 +131,9 @@ if (!function_exists('getComplaintStatusBadge')) {
             $badge .= '<a href="#" class="badge bg-success">Resolved</a>';
         } elseif ($status == 2) {
             $badge .= '<a href="#" class="badge bg-danger">Rejected</a>';
-        } else {
+        }  elseif ($status == 2) { // assuming 2 = reopened
+            $badge .= '<span class="badge bg-warning"><i class="fas fa-redo"></i> Reopened</span>';
+        }else {
             $badge .= '<a href="#" class="badge bg-info">Pending</a>';
         }
         

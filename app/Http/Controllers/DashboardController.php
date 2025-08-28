@@ -30,7 +30,8 @@ class DashboardController extends Controller
             SUM(CASE WHEN complaint_status = 0 AND department_id > 0 AND assigned_at < DATE_SUB(NOW(), INTERVAL 2 DAY) THEN 1 ELSE 0 END) as overdue,
             SUM(CASE WHEN complaint_status = 0 THEN 1 ELSE 0 END) as pending,
             SUM(CASE WHEN complaint_status = 1 THEN 1 ELSE 0 END) as resolved,
-            SUM(CASE WHEN complaint_status = 2 THEN 1 ELSE 0 END) as rejected
+            SUM(CASE WHEN complaint_status = 2 THEN 1 ELSE 0 END) as rejected,
+            SUM(CASE WHEN complaint_status = 3 THEN 1 ELSE 0 END) as reopen
         ")
         ->roleFilter($user)
         ->filter($request);
