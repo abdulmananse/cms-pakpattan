@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::post('complaints/assign/{complaint}', [ComplaintController::class, 'assigned'])->name('complaints.assigned')->middleware('permission:Complaints Assigned');
     Route::get('complaints/reject/{complaint}', [ComplaintController::class, 'rejected'])->name('complaints.rejected')->middleware('permission:Complaints Rejected');
     Route::post('complaints/resolved/{complaint}', [ComplaintController::class, 'resolved'])->name('complaints.resolved')->middleware('permission:Complaints Resolved');
+    Route::post('complaints/reopened/{complaint}', [ComplaintController::class, 'reopened'])->name('complaints.reopened')->middleware('permission:Complaints Reopened');
 
     # Reports
     Route::get('reports/pending-complaints', [ReportController::class, 'pendingComplaints'])->name('reports.pendingComplaints')->middleware('permission:Pending Complaints');

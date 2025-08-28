@@ -17,7 +17,7 @@
 
                 <div class="col-md-6 col-xl-2">
                     <div class="card bg-c-blue order-card">
-                        <a class="card-body" href="{{ route('complaints.index') }}">
+                        <a class="card-body" href="{{ route('complaints.index', ['date' => 'all']) }}">
                             <h4 class="text-white">Total</h4>
                             <h2 class="text-end text-white"><i class="fa fa-exclamation-triangle float-start"></i><span>{{ number_format($summary->total) }}</span></h2>
                         </a>
@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-md-6 col-xl-2">
                     <div class="card bg-c-yellow order-card">
-                        <a class="card-body" href="{{ route('complaints.index', ['status' => 0]) }}">
+                        <a class="card-body" href="{{ route('complaints.index', ['status' => 0, 'date' => 'all']) }}">
                             <h4 class="text-white">Fresh</h4>
                             <h2 class="text-end text-white"><i class="fa fa-bullhorn float-start"></i><span>{{ number_format($summary->fresh) }}</span>
                             </h2>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-md-6 col-xl-2">
                     <div class="card bg-c-red order-card">
-                        <a class="card-body" href="{{ route('complaints.index', ['status' => 4]) }}">
+                        <a class="card-body" href="{{ route('complaints.index', ['status' => 4, 'date' => 'all']) }}">
                             <h4 class="text-white">Overdue</h4>
                             <h2 class="text-end text-white"><i class="fas fa-clock float-start"></i><span>{{ number_format($summary->overdue) }}</span></h2>
                         </a>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-md-6 col-xl-2">
                     <div class="card bg-c-green order-card">
-                        <a class="card-body" href="{{ route('complaints.index', ['status' => 1]) }}">
+                        <a class="card-body" href="{{ route('complaints.index', ['status' => 1, 'date' => 'all']) }}">
                             <h4 class="text-white">Resolved</h4>
                             <h2 class="text-end text-white"><i class="fa fa-check-circle float-start"></i><span>{{ number_format($summary->resolved) }}</span>
                             </h2>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-md-6 col-xl-2">
                     <div class="card bg-c-blue order-card">
-                        <a class="card-body" href="{{ route('complaints.index', ['status' => 3]) }}">
+                        <a class="card-body" href="{{ route('complaints.index', ['status' => 3, 'date' => 'all']) }}">
                             <h4 class="text-white">Reopen</h4>
                             <h2 class="text-end text-white"><i class="fas fa-redo float-start"></i><span>{{ number_format($summary->reopen) }}</span></h2>
                         </a>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="col-md-6 col-xl-2">
                     <div class="card bg-c-red order-card">
-                        <a class="card-body" href="{{ route('complaints.index', ['status' => 2]) }}">
+                        <a class="card-body" href="{{ route('complaints.index', ['status' => 2, 'date' => 'all']) }}">
                             <h4 class="text-white">Rejected</h4>
                             <h2 class="text-end text-white"><i class="fas fa-times-circle float-start"></i><span>{{ number_format($summary->rejected) }}</span></h2>
                         </a>

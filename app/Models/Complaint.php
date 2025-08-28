@@ -36,6 +36,9 @@ class Complaint extends Model
         'resolved_at',
         'resolved_attachment',
         'remarks',
+        'reopened_remarks',
+        'reopened_by',
+        'reopened_at',
     ];
 
     public function scopeRoleFilter($query, $user)
@@ -53,7 +56,7 @@ class Complaint extends Model
     public function scopeFilter($query, $request)
     {
         if($request->filled('status')) {
-            if ($request->status == 1) { // Fresh
+            if ($request->status == 0) { // Fresh
                 $query->where('complaint_status', $request->status)
                         ->where('assigned_at', '>', Carbon::now()->subDays(2));
             } elseif ($request->status == 4) { // Overdue
@@ -74,11 +77,11 @@ class Complaint extends Model
         $query->when(($request->filled('date') && $request->date != 'all'), function ($query) use ($request) {
             $date = explode(',', $request->date);
             $startDate = date('Y-m-d', strtotime($date[0]));
-            $query->where('updated_at', '>=', $startDate . ' 00:00:00');
+            $query->where('created_at', '>=', $startDate . ' 00:00:00');
 
             if(@$date[1]) {
                 $endDate = date('Y-m-d', strtotime($date[1]));
-                $query->where('updated_at', '<=', $endDate . ' 23:59:59');
+                $query->where('created_at', '<=', $endDate . ' 23:59:59');
             }
 
             return $query;
@@ -120,5 +123,10 @@ class Complaint extends Model
     public function resolved_user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'resolved_by');
+    }
+    
+    public function reopened_user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'reopened_by');
     }
 }

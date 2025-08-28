@@ -184,6 +184,25 @@ class ComplaintController extends Controller
         Session::flash('success', 'Complaint successfully resolved!');
         return redirect()->route('complaints.index');
     }
+    
+    /**
+     * Reject Complaint
+     *
+     * @param  \App\Http\Request\Request  $request
+     * @param  \App\Models\Complaint $complaint
+     * @return \Illuminate\Http\Response
+     */
+    public function reopened(Request $request, Complaint $complaint) {
+
+        $complaint->complaint_status = 3;
+        $complaint->reopened_remarks = $request->reopen_remarks;
+        $complaint->reopened_by = Auth::id();
+        $complaint->reopened_at = date('Y-m-d H:i:s');
+        $complaint->save();
+
+        Session::flash('success', 'Complaint successfully reopened!');
+        return redirect()->route('complaints.index');
+    }
 
     /**
      * Show the form for editing the specified resource.
