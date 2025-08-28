@@ -58,7 +58,7 @@ class Complaint extends Model
                     ->where('department_id', '>', 0)
                     ->where('assigned_at', '<', Carbon::now()->subDays(2));
             } else {
-                $query->where('complaint_status', $request->status);
+                $query->where('complaint_status', $request->status)->where('assigned_at', '>', Carbon::now()->subDays(2));
             }
         }
         if($request->filled('d') && $request->d > 0) {
