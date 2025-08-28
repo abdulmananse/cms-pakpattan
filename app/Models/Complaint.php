@@ -53,12 +53,15 @@ class Complaint extends Model
     public function scopeFilter($query, $request)
     {
         if($request->filled('status')) {
-            if ($request->status == 3) { // Overdue
+            if ($request->status == 1) { // Fresh
+                $query->where('complaint_status', $request->status)
+                        ->where('assigned_at', '>', Carbon::now()->subDays(2));
+            } elseif ($request->status == 3) { // Overdue
                 $query->where('complaint_status', 0)
                     ->where('department_id', '>', 0)
                     ->where('assigned_at', '<', Carbon::now()->subDays(2));
             } else {
-                $query->where('complaint_status', $request->status)->where('assigned_at', '>', Carbon::now()->subDays(2));
+                $query->where('complaint_status', $request->status);
             }
         }
         if($request->filled('d') && $request->d > 0) {
