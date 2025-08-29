@@ -183,7 +183,7 @@
                                         @endcan
 
                                         @canany(['Complaints Resolved'])
-                                            @if($complaint->complaint_status == 0 && $complaint->department_id != NULL && in_array($complaint->department_id, auth()->departments->pluck('id')->toArray()))
+                                            @if($complaint->complaint_status == 0 && $complaint->department_id != NULL && in_array($complaint->department_id, $user->departments->pluck('id')->toArray()))
                                             {{ html()->form('POST', route('complaints.resolved', $complaint->uuid))->id('formValidation')->attribute('enctype', 'multipart/form-data')->open() }}
                                                 <div class="card-body row">
                                                     <div class="form-group col-md-12">
