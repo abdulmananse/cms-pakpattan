@@ -3,7 +3,7 @@
 
     <div class="m-header">
         <a class="mobile-menu" id="mobile-collapse" href="#"><span></span></a>
-        <a href="{{ route('dashboard') }}" class="b-brand">
+        <a href="{{ url('/') }}" class="b-brand">
             <b class="mb-0 navbarTextPser">{{ getSettingValue('site_name') }}</b>
             <!-- ========   change your logo hear   ============ -->
             {{-- <img src="{{asset('images/logo.png')}}" alt="" class="logo"> --}}

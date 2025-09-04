@@ -24,7 +24,6 @@ Route::get('/', [DashboardController::class, 'landing'])->name('landing');
 # Complaint
 Route::get('complaint', [FrontComplaintController::class, 'create'])->name('complaint');
 Route::post('complaint', [FrontComplaintController::class, 'store'])->name('complaint.store');
-Route::get('complaint-status', [FrontComplaintController::class, 'status'])->name('complaint-status');
 Route::post('complaint-status', [FrontComplaintController::class, 'checkStatus'])->name('complaint-status.check');
 
 Route::middleware('auth')->group(function () {

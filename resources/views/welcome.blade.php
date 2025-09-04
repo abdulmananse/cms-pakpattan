@@ -258,7 +258,8 @@
             <div class="max-w-3xl mx-auto px-4 py-16 text-center">
             <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Track your complaint</h2>
             <p class="mt-2 text-gray-600">Enter your complaint number to view the latest status and updates.</p>
-            <form action="#" method="GET" class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+            <form action="{{ route('complaint-status.check') }}" method="POST" id="searchComplaint" class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+                @csrf
                 <label for="complaint_no" class="sr-only">Complaint Number</label>
                 <input id="complaint_no" name="complaint_no" type="text" placeholder="e.g. PKP-2025-1044" class="w-full sm:w-96 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500" />
                 <button type="submit" class="px-5 py-3 rounded-xl bg-primary-600 text-white font-medium hover:bg-primary-700">Track</button>
@@ -266,6 +267,21 @@
             {{-- <p class="mt-3 text-xs text-gray-500">Tip: You can also track by SMS. Send your number to <span class="font-semibold">8001</span>.</p> --}}
             </div>
         </section>
+
+        <!-- Modal Background -->
+        <div id="complaintModal" class="fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <!-- Modal Content -->
+            <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-6">
+                <h2 class="text-lg font-bold mb-4">Complaint Status</h2>
+                <p id="complaintMessage" class="text-gray-700"></p>
+
+                <div class="mt-6 flex justify-end">
+                    <button onclick="closeModal()" class="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <!-- Call to action -->
         <section id="register-complaint" class="relative overflow-hidden hidden">
@@ -281,6 +297,37 @@
             </div>
         </section>
 
+
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
+        
+        <script type="text/javascript">
+            $(document).ready(function () {
+            $("#searchComplaint").on("submit", function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: $(this).attr("action"),
+                    type: "POST",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        let message = response.message || "No status found!";
+                        $("#complaintMessage").text(message);
+                        $("#complaintModal").removeClass("hidden");
+                    },
+                    error: function (response) {
+                        let message = response.responseJSON.message || "Something went wrong!";
+                        $("#complaintMessage").text(message);
+                        $("#complaintModal").removeClass("hidden");
+                    }
+                });
+            });
+        });
+
+        function closeModal() {
+            $("#complaintModal").addClass("hidden");
+        }
+        </script>
 
     <script>
         // Mobile menu toggle

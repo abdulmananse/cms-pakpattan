@@ -28,6 +28,7 @@ class Complaint extends Model
         'department_id',
         'source_id',
         'complaint_status',
+        'complaint_at',
         'created_by',
         'assigned_by',
         'assigned_at',

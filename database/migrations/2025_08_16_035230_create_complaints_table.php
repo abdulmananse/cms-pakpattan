@@ -25,6 +25,7 @@ class CreateComplaintsTable extends Migration
             $table->string('description', 500)->nullable();
             $table->string('location', 100)->nullable();
             $table->string('attachment', 30)->nullable();
+            $table->dateTime('complaint_at')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->integer('approved_by')->nullable();
