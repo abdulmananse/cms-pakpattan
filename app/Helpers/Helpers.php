@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
 use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 /**
 * Check Active Route
@@ -992,6 +993,19 @@ if (!function_exists('generatePassword')) {
 
         // Shuffle to avoid predictable pattern
         return str_shuffle($password);
+    }
+}
+
+if (!function_exists('complaintLog')) {
+    function complaintLog($complaint, $type) {
+        DB::table('complaint_logs')->insert([
+            'complaint_id' => $complaint->id,
+            'complaint_no' => $complaint->complaint_no,
+            'type' => $type,
+            'user_id' => @Auth::id(),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }
 

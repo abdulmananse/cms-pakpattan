@@ -47,6 +47,16 @@
             $('#formValidation').validate();
             $('#username').mask('00000-0000000-0');    
             $('#mobile').mask('0300-0000000');    
+            $('.date-mask').mask('00/00/0000')
+
+            $("input[name=date]").datepicker({
+                dateFormat: "dd/mm/yy",
+                maxDate: "0d",
+                minDate: "-1y",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-1:+1"
+            }).datepicker("setDate", new Date());
         });
     </script>
     @endpush

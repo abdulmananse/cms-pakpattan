@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class ComplaintController extends Controller
 {
@@ -90,6 +91,8 @@ class ComplaintController extends Controller
         $complaintData['category_id'] = $category->id;
         $complaintData['source_id'] = $request->source;
         $complaintData['complaint_no'] = $complaintNo;
+        $complaintData['complaint_at'] = date('Y-m-d', strtotime($request->date)) . ' ' . date('H:i:s');
+
         $complaintData['assigned_by'] = $userId;
         $complaintData['assigned_at'] = date('Y-m-d H:i:s');
         $complaintData['created_by'] = $userId;
@@ -101,7 +104,12 @@ class ComplaintController extends Controller
             $complaintData['attachment'] = $fileName;
         }
 
-        Complaint::create($complaintData);
+        $complaint = Complaint::create($complaintData);
+
+        if ($complaint) {
+            complaintLog($complaint, 'creation');
+            complaintLog($complaint, 'assigned');
+        }
 
         Session::flash('success', 'Complaint submitted successfully your complaint number is (' . $complaintNo . ')');
 
@@ -136,6 +144,8 @@ class ComplaintController extends Controller
             $complaint->assigned_by = Auth::id();
             $complaint->save();
 
+            complaintLog($complaint, 'assigned');
+
             Session::flash('success', 'Complaint successfully assigned!');
             return redirect()->route('complaints.index');
         }
@@ -155,6 +165,8 @@ class ComplaintController extends Controller
         $complaint->complaint_status = 2;
         $complaint->rejected_by = Auth::id();
         $complaint->save();
+
+        complaintLog($complaint, 'rejected');
 
         return ['status' => true];
     }
@@ -181,6 +193,8 @@ class ComplaintController extends Controller
         $complaint->resolved_at = date('Y-m-d H:i:s');
         $complaint->save();
 
+        complaintLog($complaint, 'resolved');
+
         Session::flash('success', 'Complaint successfully resolved!');
         return redirect()->route('complaints.index');
     }
@@ -199,6 +213,8 @@ class ComplaintController extends Controller
         $complaint->reopened_by = Auth::id();
         $complaint->reopened_at = date('Y-m-d H:i:s');
         $complaint->save();
+
+        complaintLog($complaint, 'reopened');
 
         Session::flash('success', 'Complaint successfully reopened!');
         return redirect()->route('complaints.index');

@@ -25,17 +25,17 @@
 </div>
 <div class="form-group col-md-6">
     {{ html()->label()->for('category')->text('Complaint Category')->class('form-label required-input') }}
-    {{ html()->select('category', $categories, null)->class('form-select')->placeholder('Complaint Category')->required() }}
+    {{ html()->select('category', $categories, null)->class('form-select select2')->placeholder('Complaint Category')->required() }}
     {!! $errors->first('category', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
     {{ html()->label()->for('department_id')->text('Department')->class('form-label required-input') }}
-    {{ html()->select('department_id', $departments, null)->class('form-select')->placeholder('Department')->required() }}
+    {{ html()->select('department_id', $departments, null)->class('form-select select2')->placeholder('Department')->required() }}
     {!! $errors->first('department_id', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
     {{ html()->label()->for('description')->text('Description')->class('form-label required-input') }}
-    {{ html()->textarea('description')->class('form-control')->classIf($errors->has('description'), 'error')->placeholder('Description')->maxlength(500)->required() }}
+    {{ html()->textarea('description')->class('form-control')->classIf($errors->has('description'), 'error')->placeholder('Description')->maxlength(1500)->required() }}
     {!! $errors->first('description', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
@@ -47,6 +47,11 @@
     {{ html()->label()->for('source')->text('Source')->class('form-label required-input') }}
     {{ html()->select('source', $sources, null)->class('form-select')->placeholder('Complaint Source')->required() }}
     {!! $errors->first('source', '<label class="error">:message</label>') !!}
+</div>
+<div class="form-group col-md-6">
+    {{ html()->label()->for('date')->text('Complaint Date')->class('form-label required-input') }}
+    {{ html()->text('date', null)->class('form-control date-mask')->placeholder('DD/MM/YYYY')->required()->attribute('readonly') }}
+    {!! $errors->first('date', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
     {{ html()->label()->for('attachment')->text('Attachment')->class('form-label') }} <br/>

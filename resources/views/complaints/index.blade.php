@@ -38,12 +38,16 @@
             </div>
         </div>
     </div>
-    @include('layouts.dataTablesFiles')
+    @include('layouts.dataTablesFiles', ['export' => true])
     @push('scripts')
         <script>
             let t;
             const columns = [{
-                    data: 'complaint_no'
+                    data: 'complaint_no',
+                     name: 'complaint_no',
+                    render: function(data, type, row) {
+                        return `<a href="${ route('complaints.show', row.uuid) }" target="_blank" class="text-primary">${data}</a>`;
+                    }
                 },
                 {
                     data: 'name'
@@ -67,7 +71,7 @@
                     data: 'source.name'
                 },
                 {
-                    data: 'created_at', render: function(data) {
+                    data: 'complaint_at', render: function(data) {
                         return moment(data, "YYYY-MM-DD").format("DD-MMM"); 
                     } 
                 },
@@ -85,6 +89,17 @@
                 }
             ];
 
+            const exportButtons = [{
+                extend: 'csv',
+                text: 'Download',
+                title: 'Complaints',
+                action: datatableExportAction,
+                className:'btn btn-success',
+                exportOptions: {
+                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                }
+            }];
+
         /**
          * Filter Callback
          */
@@ -93,7 +108,7 @@
             if (t != undefined) {
                 t.ajax.url(url).load()
             } else {
-                t = create_datatables(url, columns) 
+                t = create_datatables(url, columns, 'datatable', true, [], 30, true, true, exportButtons)
             }
             stopOverlay($('.filterBtn'));
         }

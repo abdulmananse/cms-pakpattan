@@ -42,6 +42,7 @@ class ComplaintRequest extends FormRequest
             $rules['address'] = ['nullable', 'string', 'max:500'];
             $rules['username'] = ['nullable', 'string', 'max:255'];
             $rules['mobile'] = ['nullable'];
+            $rules['date'] = ['required', 'date'];
         }
 
         if (!Auth::check()) {
@@ -64,6 +65,9 @@ class ComplaintRequest extends FormRequest
         }
         if($this->filled('mobile')) {
             $data['mobile'] = str_replace('-', '', $this->get('mobile'));
+        }
+        if($this->filled('date')) {
+            $data['date'] = date('m/d/Y', strtotime(str_replace('/', '-', $this->date)));
         }
         
         $this->merge($data);

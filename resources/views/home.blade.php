@@ -17,7 +17,7 @@
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Description</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Location</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Status</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Created At</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Complaint At</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
@@ -36,7 +36,7 @@
                                         {{ getComplaintStatus($complaint->complaint_status) }}
                                     </span>
                                 </td>
-                                <td class="px-4 py-2 text-sm text-gray-600">{{ $complaint->created_at->format('d M, Y') }}</td>
+                                <td class="px-4 py-2 text-sm text-gray-600">{{ date('d M, Y', strtotime($complaint->complaint_at)) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

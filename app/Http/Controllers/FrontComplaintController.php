@@ -87,12 +87,16 @@ class FrontComplaintController extends Controller
             $complaintData['attachment'] = $fileName;
         }
 
-        Complaint::create($complaintData);
+        $complaint = Complaint::create($complaintData);
 
         if (Auth::check()) {
             $message = "Your complaint has been registered successfully. Your complaint number is: <b>" . $complaintNo . "</b>";
         } else {
             $message = "Your complaint has been registered successfully. Your account has also been created. <br/> Your complaint number is: <b>" . $complaintNo . "</b> <br/> Your username is: <b>" . $username . "</b> <br/> Your password is: <b>" . $password . "</b> <br/> Please change your password after login.";
+        }
+
+        if ($complaint) {
+            complaintLog($complaint, 'creation');
         }
         
         Session::flash('success', $message);
