@@ -34,9 +34,9 @@ label.error {
     margin-left: 5px;
     max-width: 150px;
 }
-.table-responsive {
+/* .table-responsive {
     overflow-x: hidden;
-}
+} */
 .pagination {
     float: right;
 }

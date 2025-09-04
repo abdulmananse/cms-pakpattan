@@ -182,6 +182,22 @@
                                             @endif
                                         @endcan
 
+                                        @canany(['Complaints Reassigned'])
+                                            @if($complaint->complaint_status == 0 && $complaint->department_id != NULL)
+                                            {{ html()->form('POST', route('complaints.assigned', $complaint->uuid))->id('formValidation')->open() }}
+                                                <div class="card-body row">
+                                                    <div class="form-group col-md-4">
+                                                        {{ html()->label()->for('department_id')->text('Department')->class('form-label required-input') }}
+                                                        {{ html()->select('department_id', $departments, null)->class('form-select')->placeholder('Select Department')->required() }}
+                                                    </div>
+                                                    <div class="card-footer d-flex justify-content-end">
+                                                        <button type="submit" class="btn btn-primary">Re-Assign</button>
+                                                    </div>
+                                                </div>
+                                            {{ html()->form()->close() }}
+                                            @endif
+                                        @endcan
+
                                         @canany(['Complaints Resolved'])
                                             @if($complaint->complaint_status == 0 && $complaint->department_id != NULL && in_array($complaint->department_id, $user->departments->pluck('id')->toArray()))
                                             {{ html()->form('POST', route('complaints.resolved', $complaint->uuid))->id('formValidation')->attribute('enctype', 'multipart/form-data')->open() }}

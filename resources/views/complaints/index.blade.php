@@ -46,7 +46,7 @@
                     data: 'complaint_no',
                      name: 'complaint_no',
                     render: function(data, type, row) {
-                        return `<a href="${ route('complaints.show', row.uuid) }" target="_blank" class="text-primary">${data}</a>`;
+                        return `<a href="${ route('complaints.show', row.uuid) }" class="text-primary">${data}</a>`;
                     }
                 },
                 {

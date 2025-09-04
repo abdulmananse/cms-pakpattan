@@ -1003,6 +1003,7 @@ if (!function_exists('complaintLog')) {
             'complaint_no' => $complaint->complaint_no,
             'type' => $type,
             'user_id' => @Auth::id(),
+            'department_id' => $complaint->department_id,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

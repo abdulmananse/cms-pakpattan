@@ -19,6 +19,7 @@ class CreateComplaintLogsTable extends Migration
             $table->string('complaint_no', 30)->index()->nullable();
             $table->string('type', 30)->nullable();
             $table->integer('user_id')->nullable();
+            $table->integer('department_id')->nullable();
             $table->timestamps();
         });
     }

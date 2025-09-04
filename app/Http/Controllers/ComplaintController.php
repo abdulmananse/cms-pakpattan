@@ -140,13 +140,15 @@ class ComplaintController extends Controller
 
 
         if ($request->filled('department_id')) {
+            $type = $complaint->department_id == NULL ? 'assigned' : 'reassigned';
+            
             $complaint->department_id = $request->department_id;
             $complaint->assigned_by = Auth::id();
             $complaint->save();
 
-            complaintLog($complaint, 'assigned');
+            complaintLog($complaint, $type);
 
-            Session::flash('success', 'Complaint successfully assigned!');
+            Session::flash('success', 'Complaint successfully '.$type.'!');
             return redirect()->route('complaints.index');
         }
 
