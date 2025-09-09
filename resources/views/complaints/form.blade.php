@@ -27,11 +27,13 @@
     {{ html()->label()->for('category')->text('Complaint Category')->class('form-label required-input') }}
     {{ html()->select('category', $categories, null)->class('form-select select2')->placeholder('Complaint Category')->required() }}
     {!! $errors->first('category', '<label class="error">:message</label>') !!}
+    <label id="category-error" class="error" for="category"></label>
 </div>
 <div class="form-group col-md-6">
     {{ html()->label()->for('department_id')->text('Department')->class('form-label required-input') }}
     {{ html()->select('department_id', $departments, null)->class('form-select select2')->placeholder('Department')->required() }}
     {!! $errors->first('department_id', '<label class="error">:message</label>') !!}
+    <label id="department_id-error" class="error" for="department_id"></label>
 </div>
 <div class="form-group col-md-6">
     {{ html()->label()->for('description')->text('Description')->class('form-label required-input') }}
