@@ -37,7 +37,7 @@
 </div>
 <div class="form-group col-md-6">
     {{ html()->label()->for('description')->text('Description')->class('form-label required-input') }}
-    {{ html()->textarea('description')->class('form-control')->classIf($errors->has('description'), 'error')->placeholder('Description')->maxlength(1500)->required() }}
+    {{ html()->textarea('description')->class('form-control')->classIf($errors->has('description'), 'error')->placeholder('Description')->required() }}
     {!! $errors->first('description', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">

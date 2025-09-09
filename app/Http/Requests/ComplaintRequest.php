@@ -27,7 +27,7 @@ class ComplaintRequest extends FormRequest
     {
         $rules = [
             'category' => 'required|exists:categories,id',
-            'description' => 'required|string|max:1500',
+            'description' => 'required|string|max:5000',
             'location' => 'nullable|string|max:100',
             'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'source' => 'nullable',
