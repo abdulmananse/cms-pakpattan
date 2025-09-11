@@ -124,7 +124,7 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label fw-bold">Assigned At</label>
                                                 <div class="col-sm-9">
-                                                    {{ date('d M, Y h:i A', strtotime($complaint->assigned_at)) }}
+                                                    {{ date('d M h:i A', strtotime($complaint->assigned_at)) }}
                                                 </div>
                                             </div>
                                             @endif
@@ -141,6 +141,12 @@
                                                 <label class="col-sm-3 col-form-label fw-bold">Resolved By</label>
                                                 <div class="col-sm-9">
                                                     {{ optional($complaint->resolved_user)->name }}
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label fw-bold">Resolved At</label>
+                                                <div class="col-sm-9">
+                                                    {{ date('d M h:i A', strtotime($complaint->resolved_at)) }}
                                                 </div>
                                             </div>
                                             <div class="form-group row">
