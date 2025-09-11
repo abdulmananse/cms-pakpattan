@@ -1,4 +1,111 @@
 <x-admin-layout>
+
+    @can('AAAAAAAAA')
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+        background-color: #f8f9fa;
+        }
+        .card {
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .card-header {
+        background: #0d6efd;
+        color: white;
+        border-radius: 15px 15px 0 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+        }
+        .table th {
+        width: 200px;
+        background-color: #f1f3f5;
+        }
+        .attachments img {
+        width: 150px;
+        height: auto;
+        border-radius: 10px;
+        margin: 5px;
+        border: 1px solid #dee2e6;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+        }
+        .attachments img:hover {
+        transform: scale(1.05);
+        }
+    </style>
+    </head>
+    <body>
+    <div class="container py-5">
+        <div class="card">
+        <div class="card-header text-center">
+            Complaint Details
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered align-middle">
+            <tbody>
+                <tr>
+                <th>Complaint #</th>
+                <td>SW-400</td>
+                </tr>
+                <tr>
+                <th>Complaint At</th>
+                <td>09 Sep 05:39 PM</td>
+                </tr>
+                <tr>
+                <th>Name</th>
+                <td>SMU (09.09.2025)</td>
+                </tr>
+                <tr>
+                <th>CNIC</th>
+                <td>-</td>
+                </tr>
+                <tr>
+                <th>Mobile</th>
+                <td>-</td>
+                </tr>
+                <tr>
+                <th>Category</th>
+                <td>Solid Waste</td>
+                </tr>
+                <tr>
+                <th>Description</th>
+                <td>SMU (09.09.2025)</td>
+                </tr>
+                <tr>
+                <th>Location</th>
+                <td>Pakpattan</td>
+                </tr>
+                <tr>
+                <th>Source</th>
+                <td>SMU</td>
+                </tr>
+                <tr>
+                <th>Complaint By</th>
+                <td>SMU</td>
+                </tr>
+                <tr>
+                <th>Attachment</th>
+                <td class="attachments">
+                    <img src="https://via.placeholder.com/150" alt="Attachment 1">
+                    <img src="https://via.placeholder.com/150" alt="Attachment 2">
+                </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+    </body>
+    </html>
+    @endcan
+
     <!-- [ Main Content ] start -->
     <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
