@@ -61,42 +61,32 @@
                                                 <table class="table table-bordered align-middle">
                                                 <tbody>
                                                     <tr>
-                                                    <th>Complaint #</th>
-                                                    <td>SW-400</td>
+                                                        <th>Complaint #</th>
+                                                        <td>SW-400</td>
+                                                        <th>Complaint At</th>
+                                                        <td>09 Sep 05:39 PM</td>
                                                     </tr>
                                                     <tr>
-                                                    <th>Complaint At</th>
-                                                    <td>09 Sep 05:39 PM</td>
-                                                    </tr>
-                                                    <tr>
-                                                    <th>Name</th>
-                                                    <td>SMU (09.09.2025)</td>
-                                                    </tr>
-                                                    <tr>
-                                                    <th>CNIC</th>
-                                                    <td>-</td>
+                                                        <th>Name</th>
+                                                        <td>SMU (09.09.2025)</td>
+                                                        <th>CNIC</th>
+                                                        <td>-</td>
                                                     </tr>
                                                     <tr>
                                                     <th>Mobile</th>
                                                     <td>-</td>
-                                                    </tr>
-                                                    <tr>
                                                     <th>Category</th>
                                                     <td>Solid Waste</td>
                                                     </tr>
                                                     <tr>
                                                     <th>Description</th>
                                                     <td>SMU (09.09.2025)</td>
-                                                    </tr>
-                                                    <tr>
                                                     <th>Location</th>
                                                     <td>Pakpattan</td>
                                                     </tr>
                                                     <tr>
                                                     <th>Source</th>
                                                     <td>SMU</td>
-                                                    </tr>
-                                                    <tr>
                                                     <th>Complaint By</th>
                                                     <td>SMU</td>
                                                     </tr>
