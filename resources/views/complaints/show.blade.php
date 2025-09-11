@@ -121,6 +121,12 @@
                                                     {{ optional($complaint->assigned_user)->name }}
                                                 </div>
                                             </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label fw-bold">Assigned At</label>
+                                                <div class="col-sm-9">
+                                                    {{ datetime('d M, Y h:i A', $complaint->assigned_at) }}
+                                                </div>
+                                            </div>
                                             @endif
 
                                             <div class="form-group row">
