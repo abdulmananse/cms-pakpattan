@@ -92,7 +92,7 @@
                                                     </tr>
                                                     <tr>
                                                     <th>Attachment</th>
-                                                    <td class="attachments">
+                                                    <td class="attachments" colspan="2">
                                                         <img src="https://via.placeholder.com/150" alt="Attachment 1">
                                                         <img src="https://via.placeholder.com/150" alt="Attachment 2">
                                                     </td>
