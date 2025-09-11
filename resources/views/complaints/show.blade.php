@@ -31,6 +31,12 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label fw-bold">Complaint At</label>
+                                                <div class="col-sm-9">
+                                                    {{ date('d M h:i A', strtotime($complaint->complaint_at)) }}
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label fw-bold">Name</label>
                                                 <div class="col-sm-9">
                                                     {{ $complaint->name }}
