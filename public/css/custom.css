@@ -308,6 +308,10 @@ table.dataTable.table-sm .sorting_desc:after {
     background: #0176a1;
     border-color: #0176a1;
 }
+.urduLabel {
+    font-family: "Noto Nastaliq Urdu", serif !important;
+}
+
 /* Media Query */
 @media(max-width:991px) {
     .auth-container {

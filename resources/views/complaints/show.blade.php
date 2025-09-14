@@ -79,7 +79,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th>Description</th>
-                                                        <td colspan="3">{{ $complaint->description }}</td>
+                                                        <td colspan="3" class="urduLabel">{{ $complaint->description }}</td>
                                                     </tr>
                                                     <tr>
                                                         <th>Location</th>
