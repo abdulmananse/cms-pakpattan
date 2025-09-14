@@ -63,7 +63,8 @@ class Complaint extends Model
             } elseif ($request->status == 4) { // Overdue
                 $query->where('complaint_status', 0)
                     ->where('department_id', '>', 0)
-                    ->where('assigned_at', '<', Carbon::now()->subDays(2));
+                    // ->where('assigned_at', '<', Carbon::now()->subDays(2));
+                    ->whereRaw('assigned_at < DATE_SUB(NOW(), INTERVAL 2 DAY)');
             } else {
                 $query->where('complaint_status', $request->status);
             }
