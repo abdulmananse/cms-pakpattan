@@ -134,7 +134,7 @@
                                                         <th>Department</th>
                                                         <td>{{ optional($complaint->department)->name }}</td>
                                                         <th>Assigned By</th>
-                                                        <td>{{ optional($complaint->assigned_user)->name }} ({{ date('d M h:i A', strtotime($complaint->assigned_at))) }}</td>
+                                                        <td>{{ optional($complaint->assigned_user)->name }} ({{ date('d M h:i A', strtotime($complaint->assigned_at)) }})</td>
                                                     </tr>
                                                     @endif
 
