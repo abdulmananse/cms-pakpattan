@@ -93,10 +93,39 @@
                                                         <td>{!! getComplaintStatusBadge($complaint) !!}</td>
                                                     </tr>
                                                     <tr>
-                                                    <th>Attachment</th>
+                                                    <th>Attachments</th>
                                                     <td class="attachments" colspan="3">
-                                                        <img src="https://via.placeholder.com/150" alt="Attachment 1">
-                                                        <img src="https://via.placeholder.com/150" alt="Attachment 2">
+                                                        @if($complaint->attachment)
+                                                            @php
+                                                                $ext = strtolower(pathinfo($complaint->attachment, PATHINFO_EXTENSION));
+                                                                $videoExt = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
+                                                            @endphp
+                                                            <a href="{{ asset('storage/complaints/' . $complaint->attachment) }}" target="_blank">
+                                                                @if($ext === 'pdf')
+                                                                    <img src="{{ asset('images/pdf_icon.png') }}" width="120" alt="PDF" />
+                                                                @elseif(in_array($ext, $videoExt))
+                                                                    <img src="{{ asset('images/vlc_icon.png') }}" width="120" alt="PDF" />
+                                                                @else
+                                                                    <img src="{{ asset('storage/complaints/' . $complaint->attachment) }}" width="120" />
+                                                                @endif
+                                                            </a>
+                                                        @endif
+
+                                                        @if($complaint->complaint_status == 1 && $complaint->resolved_attachment)
+                                                            @php
+                                                                $resolvedExt = strtolower(pathinfo($complaint->resolved_attachment, PATHINFO_EXTENSION));
+                                                                $videoExt = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
+                                                            @endphp
+                                                            <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="ms-5">
+                                                                @if($resolvedExt === 'pdf')
+                                                                    <img src="{{ asset('images/pdf_icon.png') }}" width="120" alt="PDF" />
+                                                                @elseif(in_array($resolvedExt, $videoExt))
+                                                                    <img src="{{ asset('images/vlc_icon.png') }}" width="120" alt="PDF" />
+                                                                @else
+                                                                    <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" width="120" />
+                                                                @endif
+                                                            </a>
+                                                        @endif
                                                     </td>
                                                     </tr>
                                                 </tbody>
