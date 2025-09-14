@@ -309,7 +309,7 @@ table.dataTable.table-sm .sorting_desc:after {
     border-color: #0176a1;
 }
 .urduLabel {
-    font-family: "Noto Nastaliq Urdu", serif !important;
+    font-family: "Poppins", "Noto Nastaliq Urdu", sans-serif !important;
     line-height: 2;
 }
 
