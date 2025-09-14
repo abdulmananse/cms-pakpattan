@@ -28,7 +28,7 @@
                     <div class="mt-1 text-3xl font-bold">{{ number_format($summary->total) }}</div>
                     <div class="mt-4 grid grid-cols-3 gap-4 text-center">
                         <div><div class="text-xl font-bold">{{ number_format($summary->resolved) }}</div><div class="text-xs opacity-90">Resolved</div></div>
-                        <div><div class="text-xl font-bold">{{ number_format($summary->resolved) }}</div><div class="text-xs opacity-90">Pending</div></div>
+                        <div><div class="text-xl font-bold">{{ number_format($summary->pending) }}</div><div class="text-xs opacity-90">Pending</div></div>
                         <div><div class="text-xl font-bold">{{ number_format($summary->overdue) }}</div><div class="text-xs opacity-90">Overdue</div></div>
                     </div>
                     </div>
