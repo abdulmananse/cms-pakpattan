@@ -210,7 +210,7 @@
                                                             {{ html()->file('attachment')->required() }}
                                                             {!! $errors->first('attachment', '<label class="error">:message</label>') !!}
                                                         </div>
-                                                        <div class="form-group col-md-4">
+                                                        <div class="form-group col-md-6">
                                                             {{ html()->label()->for('remarks')->text('Remarks')->class('form-label required-input') }}
                                                             {{ html()->textarea('remarks', null)->class('form-control')->placeholder('Remarks')->required()->maxlength(500) }}
                                                             {!! $errors->first('remarks', '<label class="error">:message</label>') !!}
@@ -227,7 +227,7 @@
                                                 @if($complaint->complaint_status == 1)
                                                 {{ html()->form('POST', route('complaints.reopened', $complaint->uuid))->id('formValidation')->attribute('enctype', 'multipart/form-data')->open() }}
                                                     <div class="card-body row">
-                                                        <div class="form-group col-md-4">
+                                                        <div class="form-group col-md-6">
                                                             {{ html()->label()->for('reopen_remarks')->text('Reopen Remarks')->class('form-label required-input') }}
                                                             {{ html()->textarea('reopen_remarks', null)->class('form-control')->placeholder('Reopen Remarks')->required()->maxlength(500) }}
                                                             {!! $errors->first('reopen_remarks', '<label class="error">:message</label>') !!}
