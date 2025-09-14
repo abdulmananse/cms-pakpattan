@@ -147,7 +147,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th>Remarks</th>
-                                                        <td colspan="3">{{ $complaint->remarks }}</td>
+                                                        <td colspan="3" class="urduLabel">{{ $complaint->remarks }}</td>
                                                     </tr>
                                                     @endif
 
@@ -156,7 +156,7 @@
                                                         <th>Reopened By</th>
                                                         <td>{{ optional($complaint->reopened_user)->name }}</td>
                                                         <th>Reopened Remarks</th>
-                                                        <td>{{ $complaint->reopened_remarks }}</td>
+                                                        <td class="urduLabel">{{ $complaint->reopened_remarks }}</td>
                                                     </tr>
                                                     @endif
 
