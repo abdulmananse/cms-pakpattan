@@ -135,7 +135,7 @@
                                                         <th>Assigned By</th>
                                                         <td>{{ optional($complaint->assigned_user)->name }} at {{ date('d M h:i A', strtotime($complaint->assigned_at)) }}</td>
                                                     </tr>
-
+                                                    @endif
                                                 </tbody>
                                                 </table>
                                             </div>
