@@ -2,31 +2,31 @@
 
     <style>
         .card {
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
         }
         .card-header {
-        background: #0d6efd;
-        color: white;
-        border-radius: 15px 15px 0 0;
-        font-size: 1.25rem;
-        font-weight: 600;
+            background: #399268;
+            color: white;
+            border-radius: 15px 15px 0 0;
+            font-size: 1.25rem;
+            font-weight: 600;
         }
         .table th {
-        width: 200px;
-        background-color: #f1f3f5;
+            width: 200px;
+            background-color: #f1f3f5;
         }
         .attachments img {
-        width: 150px;
-        height: auto;
-        border-radius: 10px;
-        margin: 5px;
-        border: 1px solid #dee2e6;
-        transition: transform 0.3s ease;
-        cursor: pointer;
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+            margin: 5px;
+            border: 1px solid #dee2e6;
+            transition: transform 0.3s ease;
+            cursor: pointer;
         }
         .attachments img:hover {
-        transform: scale(1.05);
+            transform: scale(1.05);
         }
     </style>
 
@@ -238,7 +238,7 @@
                                                 {{ html()->form()->close() }}
                                                 @endif
                                             @endcan
-                                            
+
                                         </div>
                                         @endcan
                                 <!-- [ basic-table ] end -->
