@@ -1,6 +1,6 @@
 <x-admin-layout>
 
-    {{-- <style>
+    <style>
         .card {
         border-radius: 15px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.05);
@@ -28,7 +28,7 @@
         .attachments img:hover {
         transform: scale(1.05);
         }
-    </style> --}}
+    </style>
 
     <!-- [ Main Content ] start -->
     <div class="pcoded-main-container">
@@ -51,7 +51,7 @@
                                 <div class="col-xl-12">
 
                                     @can('AAAAAAAAA')
-                                        <div class="card d-none">
+                                        <div class="card">
                                             <div class="card-header text-center">
                                                 Complaint Details
                                             </div>
