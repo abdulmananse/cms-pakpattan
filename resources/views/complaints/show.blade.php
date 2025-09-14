@@ -136,6 +136,20 @@
                                                         <td>{{ optional($complaint->assigned_user)->name }} at {{ date('d M h:i A', strtotime($complaint->assigned_at)) }}</td>
                                                     </tr>
                                                     @endif
+
+                                                    @if($complaint->complaint_status == 1 || $complaint->complaint_status == 3)
+                                                    <tr>
+                                                        <th>Resolved By</th>
+                                                        <td>{{ optional($complaint->resolved_user)->name }}</td>
+                                                        <th>Resolved At</th>
+                                                        <td>{{ date('d M h:i A', strtotime($complaint->resolved_at)) }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Remarks</th>
+                                                        <td colspan="3">{{ $complaint->remarks }}</td>
+                                                    </tr>
+                                                    @endif
+
                                                 </tbody>
                                                 </table>
                                             </div>
