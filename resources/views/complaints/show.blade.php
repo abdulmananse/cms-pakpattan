@@ -60,33 +60,37 @@
                                                 <tbody>
                                                     <tr>
                                                         <th>Complaint #</th>
-                                                        <td>SW-400</td>
-                                                        <th>Complaint At</th>
-                                                        <td>09 Sep 05:39 PM</td>
+                                                        <td>{{ $complaint->complaint_no }}</td>
+                                                        <th>Complaint Time</th>
+                                                        <td>{{ date('d M h:i A', strtotime($complaint->complaint_at)) }}</td>
                                                     </tr>
                                                     <tr>
                                                         <th>Name</th>
-                                                        <td>SMU (09.09.2025)</td>
+                                                        <td>{{ $complaint->name }}</td>
                                                         <th>CNIC</th>
-                                                        <td>-</td>
+                                                        <td>{{ addDashesInCNIC($complaint->cnic) }}</td>
                                                     </tr>
                                                     <tr>
-                                                    <th>Mobile</th>
-                                                    <td>-</td>
-                                                    <th>Category</th>
-                                                    <td>Solid Waste</td>
+                                                        <th>Mobile</th>
+                                                        <td>{{ addDashInMobile($complaint->mobile) }}</td>
+                                                        <th>Category</th>
+                                                        <td>{{ optional($complaint->category)->name }}</td>
                                                     </tr>
                                                     <tr>
-                                                    <th>Description</th>
-                                                    <td>SMU (09.09.2025)</td>
-                                                    <th>Location</th>
-                                                    <td>Pakpattan</td>
+                                                        <th>Description</th>
+                                                        <td colspan="3">{{ $complaint->description }}</td>
                                                     </tr>
                                                     <tr>
-                                                    <th>Source</th>
-                                                    <td>SMU</td>
-                                                    <th>Complaint By</th>
-                                                    <td>SMU</td>
+                                                        <th>Location</th>
+                                                        <td>{{ $complaint->location }}</td>
+                                                        <th>Source</th>
+                                                        <td>{{ optional($complaint->source)->name }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Complaint By</th>
+                                                        <td>{{ optional($complaint->complaint_by)->name }}</td>
+                                                        <th>Complaint Status</th>
+                                                        <td>{!! getComplaintStatusBadge($complaint) !!}</td>
                                                     </tr>
                                                     <tr>
                                                     <th>Attachment</th>
