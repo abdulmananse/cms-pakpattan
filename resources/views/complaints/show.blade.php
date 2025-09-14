@@ -6,6 +6,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.05);
         }
         .card-header {
+            padding: 15px 15px;
             background: #399268;
             color: white;
             border-radius: 15px 15px 0 0;
