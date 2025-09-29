@@ -326,13 +326,13 @@
                         if(response.before_link != null) {
                             $("#beforeImage").html(`<h3 class="text-sm font-semibold mb-2">Before</h3>
                                         <a href="${response.before_link}" target="_blank">
-                                            <img src="${response.before_image}" alt="Before" class="rounded-lg border w-full object-cover">
+                                            <img src="${response.before_image}" alt="Before" class="rounded-lg border object-cover" width="150">
                                         </a>`);
                         }
                         if(response.after_link != null) {
                             $("#afterImage").html(`<h3 class="text-sm font-semibold mb-2">After</h3>
                                                 <a href="${response.after_link}" target="_blank">
-                                                    <img src="${response.after_image}" alt="After" class="rounded-lg border w-full object-cover">
+                                                    <img src="${response.after_image}" alt="After" class="rounded-lg border object-cover" width="150">
                                                 </a>`);
                         }
                         
