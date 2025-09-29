@@ -113,6 +113,7 @@ class FrontComplaintController extends Controller
 
         $complaint = Complaint::where('complaint_no', $request->complaint_no)->first();
 
+        $beforeLink = $beforeImage = $afterLink = $afterImage = NULL;
         if($complaint) {
             if ($complaint->complaint_status == 0 && $complaint->approved_by == NULL) {
                 $message = 'Your complaint is still pending approval. Please wait for the approval from the admin.';
@@ -127,6 +128,28 @@ class FrontComplaintController extends Controller
             } else {
                 $message = 'Your complaint is under process.';
             }
+
+            $videoExt = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
+            if($complaint->complaint_status == 1) {
+                if($complaint->attachment) {
+                    $ext = strtolower(pathinfo($complaint->attachment, PATHINFO_EXTENSION));
+                    $beforeLink = $beforeImage = asset('storage/complaints/' . $complaint->attachment);
+                    if($ext === 'pdf') {
+                        $beforeImage = asset('images/pdf_icon.png');
+                    } elseif(in_array($ext, $videoExt)) {
+                        $beforeImage = asset('images/vlc_icon.png');
+                    }                                            
+                }
+                if($complaint->resolved_attachment) {
+                    $ext = strtolower(pathinfo($complaint->resolved_attachment, PATHINFO_EXTENSION));
+                    $afterLink = $afterImage = asset('storage/complaints/' . $complaint->resolved_attachment);
+                    if($ext === 'pdf') {
+                        $afterImage = asset('images/pdf_icon.png');
+                    } elseif(in_array($ext, $videoExt)) {
+                        $afterImage = asset('images/vlc_icon.png');
+                    }                                            
+                }
+            }
         } else {
             $message = 'Complaint not found against this complaint no. (' . $complaintNo . ')';
         }
@@ -139,6 +162,13 @@ class FrontComplaintController extends Controller
             'updated_at' => now(),
         ]);
 
-        return response()->json(['message' => $message]);
+        return response()->json([
+            'complaint_status' => $complaint->complaint_status,
+            'message' => $message,
+            'before_link' => $beforeLink,
+            'before_image' => $beforeImage,
+            'after_link' => $afterLink,
+            'after_image' => $afterImage
+        ]);
     }
 }
