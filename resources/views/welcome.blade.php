@@ -275,6 +275,15 @@
                 <h2 class="text-lg font-bold mb-4">Complaint Status</h2>
                 <p id="complaintMessage" class="text-gray-700"></p>
 
+                <div class="grid grid-cols-2 gap-4">
+                    <div id="beforeImage">
+                        
+                    </div>
+                    <div id="afterImage">
+                        
+                    </div>
+                </div>
+
                 <div class="mt-6 flex justify-end">
                     <button onclick="closeModal()" class="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400">
                         Close
@@ -313,11 +322,27 @@
                     success: function (response) {
                         let message = response.message || "No status found!";
                         $("#complaintMessage").text(message);
+                        $("#beforeImage,#afterImage").html('');
+                        if(response.before_link != null) {
+                            $("#beforeImage").html(`<h3 class="text-sm font-semibold mb-2">Before</h3>
+                                        <a href="${response.before_link}" target="_blank">
+                                            <img src="${response.before_image}" alt="Before" class="rounded-lg border w-full object-cover">
+                                        </a>`);
+                        }
+                        if(response.after_link != null) {
+                            $("#afterImage").html(`<h3 class="text-sm font-semibold mb-2">After</h3>
+                                                <a href="${response.after_link}" target="_blank">
+                                                    <img src="${response.after_image}" alt="After" class="rounded-lg border w-full object-cover">
+                                                </a>`);
+                        }
+                        
+
                         $("#complaintModal").removeClass("hidden");
                     },
                     error: function (response) {
                         let message = response.responseJSON.message || "Something went wrong!";
                         $("#complaintMessage").text(message);
+                        $("#beforeImage,#afterImage").html('');
                         $("#complaintModal").removeClass("hidden");
                     }
                 });

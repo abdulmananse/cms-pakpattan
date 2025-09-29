@@ -163,7 +163,6 @@ class FrontComplaintController extends Controller
         ]);
 
         return response()->json([
-            'complaint_status' => $complaint->complaint_status,
             'message' => $message,
             'before_link' => $beforeLink,
             'before_image' => $beforeImage,
