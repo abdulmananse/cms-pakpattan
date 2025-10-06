@@ -310,7 +310,7 @@ table.dataTable.table-sm .sorting_desc:after {
 }
 .urduLabel {
     font-family: "Poppins", "Noto Nastaliq Urdu", sans-serif !important;
-    line-height: 2;
+    line-height: 2.2;
 }
 
 /* Media Query */

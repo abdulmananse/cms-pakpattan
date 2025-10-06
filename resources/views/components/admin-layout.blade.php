@@ -23,7 +23,7 @@
 
     <!-- vendor css -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/custom.css?v=5') }}">
+    <link rel="stylesheet" href="{{ asset('css/custom.css?v=6') }}">
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
