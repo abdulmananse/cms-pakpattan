@@ -144,6 +144,7 @@ class ComplaintController extends Controller
             
             $complaint->department_id = $request->department_id;
             $complaint->assigned_by = Auth::id();
+            $complaint->assigned_at = date('Y-m-d H:i:s');
             $complaint->save();
 
             complaintLog($complaint, $type);
