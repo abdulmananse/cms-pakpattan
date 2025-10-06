@@ -47,7 +47,7 @@
 </div>
 <div class="form-group col-md-6">
     {{ html()->label()->for('source')->text('Source')->class('form-label required-input') }}
-    {{ html()->select('source', $sources, null)->class('form-select')->placeholder('Complaint Source')->required() }}
+    {{ html()->select('source', $sources, auth()->user()->source_id)->class('form-select')->placeholder('Complaint Source')->required() }}
     {!! $errors->first('source', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
