@@ -64,17 +64,23 @@
                                                     <th>Complaint Time</th>
                                                     <td>{{ date('d M h:i A', strtotime($complaint->complaint_at)) }}</td>
                                                 </tr>
+                                                
                                                 <tr>
                                                     <th>Name</th>
                                                     <td>{{ $complaint->name }}</td>
-                                                    <th>CNIC</th>
-                                                    <td>{{ addDashesInCNIC($complaint->cnic) }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Mobile</th>
-                                                    <td>{{ addDashInMobile($complaint->mobile) }}</td>
                                                     <th>Category</th>
                                                     <td>{{ optional($complaint->category)->name }}</td>
+                                                </tr>
+
+                                                <tr>
+                                                    @if($complaint->cnic)
+                                                    <th>CNIC</th>
+                                                    <td>{{ addDashesInCNIC($complaint->cnic) }}</td>
+                                                    @endif
+                                                    @if($complaint->mobile)
+                                                    <th>Mobile</th>
+                                                    <td>{{ addDashInMobile($complaint->mobile) }}</td>
+                                                    @endif
                                                 </tr>
                                                 <tr>
                                                     <th>Description</th>
