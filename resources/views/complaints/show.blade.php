@@ -88,7 +88,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th>Location</th>
-                                                    <td>{{ $complaint->location }}</td>
+                                                    <td class="urduLabel">{{ $complaint->location }}</td>
                                                     <th>Source</th>
                                                     <td>{{ optional($complaint->source)->name }}</td>
                                                 </tr>
