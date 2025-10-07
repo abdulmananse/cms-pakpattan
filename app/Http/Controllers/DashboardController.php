@@ -8,6 +8,7 @@ use App\Models\Department;
 use App\Models\Source;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -39,7 +40,31 @@ class DashboardController extends Controller
         $summary = $summary->first();
 
         if ($user->can('Department Complaint Charts')) {
-            $departments = Department::withCount('pending_complaints', 'resolved_complaints')->get();
+            // $departments = Department::withCount('pending_complaints', 'resolved_complaints')->get();
+            
+            $departments = Department::withCount([
+                    // Existing relations
+                    'pending_complaints',
+                    'resolved_complaints',
+
+                    // Fresh complaints
+                    'complaints as fresh_complaints_count' => function ($query) {
+                        $query->where('complaint_status', 0)
+                            ->where(function ($q) {
+                                $q->whereNull('department_id')
+                                    ->orWhere('created_at', '>=', DB::raw('DATE_SUB(NOW(), INTERVAL 2 DAY)'));
+                            });
+                    },
+
+                    // Overdue complaints
+                    'complaints as overdue_complaints_count' => function ($query) {
+                        $query->where('complaint_status', 0)
+                            ->where('department_id', '>', 0)
+                            ->where('assigned_at', '<', DB::raw('DATE_SUB(NOW(), INTERVAL 2 DAY)'));
+                    },
+                ])
+                ->get();
+                // dd($departments->toArray());
         }
         if ($user->can('Source Complaint Charts')) {
             $sources = Source::withCount('pending_complaints', 'resolved_complaints')->get();

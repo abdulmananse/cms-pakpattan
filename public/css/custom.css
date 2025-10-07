@@ -313,6 +313,10 @@ table.dataTable.table-sm .sorting_desc:after {
     line-height: 2.2;
 }
 
+.highcharts-pie-series text {
+    font-size: 8px !important;
+}
+
 /* Media Query */
 @media(max-width:991px) {
     .auth-container {

@@ -68,6 +68,27 @@
             </div>
 
             <div class="row">
+                @can('Department Complaint Charts')
+                <div class="col-xl-6 col-md-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="text-center fw-bold">Fresh Complaints</h4>
+                            <p  class="text-center"> by Department</p>
+                            <div class="pie-chart-div" id="FreshComplaintsByDepartmentPieChart"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="text-center fw-bold">Overdue Complaints</h4>
+                            <p  class="text-center"> by Department</p>
+                            <div class="pie-chart-div" id="OverdueComplaintsByDepartmentPieChart"></div>
+                        </div>
+                    </div>
+                </div>
+                @endcan
+
                 <div class="col-xl-6 col-md-6 col-sm-12">
                     <div class="card">
                         <div class="card-body">
@@ -77,18 +98,6 @@
                         </div>
                     </div>
                 </div>
-
-                @can('Department Complaint Charts')
-                <div class="col-xl-6 col-md-6 col-sm-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="text-center fw-bold">Pending Complaints</h4>
-                            <p  class="text-center"> by Department</p>
-                            <div class="pie-chart-div" id="PendingComplaintsByDepartmentPieChart"></div>
-                        </div>
-                    </div>
-                </div>
-                @endcan
 
                 @can('Source Complaint Charts')
                 <div class="col-xl-6 col-md-6 col-sm-12">
@@ -192,23 +201,23 @@
                 name: 'Counts',
                 colorByPoint: true,
                 data: [{
-                        name: 'Pending',
-                        y: {{ (int) $summary->pending }},
+                        name: 'Fresh',
+                        y: {{ (int) $summary->fresh }},
                         color: '#FFB64D'
+                    }, {
+                        name: 'Overdue',
+                        y: {{ (int) $summary->overdue }},
+                        color: '#FF5370'
                     }, {
                         name: 'Resolved',
                         y: {{ (int) $summary->resolved }},
                         color: '#2ed8b6'
-                    }, {
-                        name: 'Rejected',
-                        y: {{ (int) $summary->rejected }},
-                        color: '#FF5370'
                     }]
             }]
         });
         
         @can('Department Complaint Charts')
-            Highcharts.chart('PendingComplaintsByDepartmentPieChart', {
+            Highcharts.chart('FreshComplaintsByDepartmentPieChart', {
                 chart: chartOption,
                 title: {text: ''},
                 tooltip: tooltip,
@@ -223,10 +232,36 @@
                     colorByPoint: true,
                     data: [
                         @foreach ($departments as $department)
-                            @if($department->pending_complaints_count > 0)
+                            @if($department->fresh_complaints_count > 0)
                             {
                                 name: '{{ $department->name }}',
-                                y: {{ (int) $department->pending_complaints_count }}
+                                y: {{ (int) $department->fresh_complaints_count }}
+                            },
+                            @endif
+                        @endforeach
+                        ]
+                }]
+            });
+            
+            Highcharts.chart('OverdueComplaintsByDepartmentPieChart', {
+                chart: chartOption,
+                title: {text: ''},
+                tooltip: tooltip,
+                plotOptions: plotOptions,
+                legend: {
+                    align: 'right',       // Move legend to the right
+                    verticalAlign: 'middle', // Center it vertically
+                    layout: 'vertical'    // Stack items vertically
+                },
+                series: [{
+                    name: 'Counts',
+                    colorByPoint: true,
+                    data: [
+                        @foreach ($departments as $department)
+                            @if($department->overdue_complaints_count > 0)
+                            {
+                                name: '{{ $department->name }}',
+                                y: {{ (int) $department->overdue_complaints_count }}
                             },
                             @endif
                         @endforeach
