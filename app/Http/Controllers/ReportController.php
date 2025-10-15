@@ -22,7 +22,7 @@ class ReportController extends Controller
             ->get()
             ->groupBy('source_id');
 
-        // dd($data->toArray());
+        dd($data->toArray());
 
         return view('reports.pending-complaints', get_defined_vars());
     }
