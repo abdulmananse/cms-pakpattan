@@ -32,7 +32,7 @@
     </style>
 
     <!-- [ Main Content ] start -->
-    <div class="pcoded-main-container">
+    <div class="pcoded-main-mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
         <div class="pcoded-wrapper">
             <div class="pcoded-content">
                 <div class="pcoded-inner-content">
@@ -40,16 +40,16 @@
                     <div class="main-body">
                         <div class="page-wrapper">
                             <!-- [ Main Content ] start -->
-                            <div class="row">
+                            <div class="flex flex-wrap -mx-3 ">
                                 <!-- [ basic-table ] start -->
-                                <div class="col-xl-12">
+                                <div class="w-full px-3 -xl-12">
 
-                                    <div class="card">
-                                        <div class="card-header text-center">
+                                    <div class="bg-white shadow rounded-md ">
+                                        <div class="bg-white shadow rounded-md -header text-center ">
                                             Complaint Details
                                         </div>
-                                        <div class="card-body">
-                                            <table class="table table-bordered align-middle">
+                                        <div class="p-6 bg-white shadow rounded-md ">
+                                            <table class="min-w-full divide-y divide-gray-200  table-bordered align-middle">
                                             <tbody>
                                                 <tr>
                                                     <th>Complaint #</th>

@@ -39,7 +39,9 @@
                                 </td>
                                 <td class="px-4 py-2 text-sm text-gray-600">{{ date('d M, Y', strtotime($complaint->complaint_at)) }}</td>
                                 <td class="px-4 py-2 text-sm">
-                                    <a href="{{ route('complaint.show', $complaint->uuid) }}" class="text-blue-600 hover:underline">View</a>
+                                    <a href="{{ route('complaint.show', $complaint->uuid) }}" class="text-blue-600 hover:underline">
+                                        View Details
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
