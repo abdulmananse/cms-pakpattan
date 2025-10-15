@@ -18,7 +18,7 @@
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Location</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Status</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Complaint At</th>
-                            {{-- <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700"></th> --}}
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700"></th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
@@ -38,11 +38,11 @@
                                     </span>
                                 </td>
                                 <td class="px-4 py-2 text-sm text-gray-600">{{ date('d M, Y', strtotime($complaint->complaint_at)) }}</td>
-                                {{-- <td class="px-4 py-2 text-sm">
+                                <td class="px-4 py-2 text-sm">
                                     <a href="{{ route('complaint.show', $complaint->uuid) }}" class="text-blue-600 hover:underline">
                                         View Details
                                     </a>
-                                </td> --}}
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
