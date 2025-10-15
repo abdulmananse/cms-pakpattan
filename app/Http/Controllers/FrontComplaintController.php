@@ -170,4 +170,15 @@ class FrontComplaintController extends Controller
             'after_image' => $afterImage
         ]);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Complaint $complaint
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Complaint $complaint)
+    {
+        return view('front-complaints.show', get_defined_vars());
+    }
 }
