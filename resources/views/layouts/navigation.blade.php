@@ -6,7 +6,14 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                        {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" /> --}}
+                        
+                        <!-- Placeholder Logo -->
+                        <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-primary-100 text-primary-700 font-black">DC</span>
+                        <div class="leading-tight">
+                            <div class="text-sm font-semibold">Deputy Commissioner</div>
+                            <div class="text-xs text-gray-500 -mt-0.5">Pakpattan</div>
+                        </div>
                     </a>
                 </div>
 
