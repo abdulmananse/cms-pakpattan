@@ -17,7 +17,9 @@
                                         <tr>
                                             <th>Source</th>
                                             @foreach($departments as $deptID => $deptName)
-                                                <th>{{ $deptName }}</th>
+                                                @if($departmentIds->contains($deptID))
+                                                    <th>{{ $deptName }}</th>
+                                                @endif
                                             @endforeach
                                             <th>Total</th>
                                         </tr>

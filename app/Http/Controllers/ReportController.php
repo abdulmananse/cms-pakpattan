@@ -22,8 +22,6 @@ class ReportController extends Controller
             ->get();
 
         $departmentIds = $complaints->pluck('department_id');
-
-        dd($departmentIds);
         $data = $complaints->groupBy('source_id');
 
         return view('reports.pending-complaints', get_defined_vars());
