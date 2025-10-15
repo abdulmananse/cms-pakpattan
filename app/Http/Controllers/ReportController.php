@@ -15,14 +15,14 @@ class ReportController extends Controller
         $departments = getActiveDepartments();
         $sources = getActiveSources();
 
-        $data = Complaint::selectRaw('source_id, department_id, COUNT(*) as total')
+        $complaints = Complaint::selectRaw('source_id, department_id, COUNT(*) as total')
             ->where('complaint_status', 0)
             ->whereNotNull('department_id')
             ->groupBy('source_id', 'department_id')
-            ->get()
-            ->groupBy('source_id');
+            ->get();
 
-        dd($data->toArray());
+        dd($complaints->toArray());
+        $data = $complaints->groupBy('source_id');
 
         return view('reports.pending-complaints', get_defined_vars());
     }
