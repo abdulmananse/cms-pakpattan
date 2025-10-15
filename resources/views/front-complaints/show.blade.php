@@ -33,16 +33,13 @@
 
 
 <div class="min-h-auto flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-      <div class="w-full sm:max-w-5xl mt-6 mb-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+      <div class="w-full sm:max-w-5xl mb-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
           <h1 class="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Complaint Details</h1>
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
               <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                   <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
                       <tr>
-                          <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Product name</th>
-                          <th scope="col" class="px-6 py-3">Color</th>
-                          <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Category</th>
-                          <th scope="col" class="px-6 py-3">Price</th>
+                          <th colspan="4" scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Complaint Details</th>
                       </tr>
                   </thead>
                   <tbody>
