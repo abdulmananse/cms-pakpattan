@@ -21,7 +21,7 @@ class ReportController extends Controller
             ->groupBy('source_id', 'department_id')
             ->get();
 
-        $departmentIds = $complaints->pluck('department_id')->unique()->values();
+        $departmentIds = $complaints->pluck('department_id');
 
         dd($departmentIds);
         $data = $complaints->groupBy('source_id');
