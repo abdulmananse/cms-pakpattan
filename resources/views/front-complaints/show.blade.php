@@ -32,110 +32,71 @@
     </style>
 
 
-<div class="min-h-auto flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-      <div class="w-full sm:max-w-5xl mb-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
-          <h1 class="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Complaint Details</h1>
-          <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-              <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                  <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
-                      <tr>
-                          <th colspan="4" scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Complaint Details</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr class="border-b border-gray-200 dark:border-gray-700">
-                          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">Apple MacBook Pro 17"</th>
-                          <td class="px-6 py-4">Silver</td>
-                          <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">Laptop</td>
-                          <td class="px-6 py-4">$2999</td>
-                      </tr>
-                      <tr class="border-b border-gray-200 dark:border-gray-700">
-                          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">Microsoft Surface Pro</th>
-                          <td class="px-6 py-4">White</td>
-                          <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">Laptop PC</td>
-                          <td class="px-6 py-4">$1999</td>
-                      </tr>
-                      <tr class="border-b border-gray-200 dark:border-gray-700">
-                          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">Magic Mouse 2</th>
-                          <td class="px-6 py-4">Black</td>
-                          <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">Accessories</td>
-                          <td class="px-6 py-4">$99</td>
-                      </tr>
-                      <tr class="border-b border-gray-200 dark:border-gray-700">
-                          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">Google Pixel Phone</th>
-                          <td class="px-6 py-4">Gray</td>
-                          <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">Phone</td>
-                          <td class="px-6 py-4">$799</td>
-                      </tr>
-                      <tr>
-                          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">Apple Watch 5</th>
-                          <td class="px-6 py-4">Red</td>
-                          <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">Wearables</td>
-                          <td class="px-6 py-4">$999</td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>    
-      </div>
-  </div>
+    <div class="min-h-auto flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+        <div class="w-full sm:max-w-5xl mb-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+            <h1 class="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Complaint Details</h1>
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <tbody>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                Complaint #
+                            </th>
+                            <td class="px-6 py-4">
+                                {{ $complaint->complaint_no }}
+                            </td>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                Complaint Time
+                            </th>
+                            <td class="px-6 py-4">
+                                {{ date('d M h:i A', strtotime($complaint->complaint_at)) }}
+                            </td>
+                        </tr>
 
-    
-    
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                Name
+                            </th>
+                            <td class="px-6 py-4">
+                                {{ $complaint->name }}
+                            </td>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                Category
+                            </th>
+                            <td class="px-6 py-4">
+                                {{ optional($complaint->category)->name }}
+                            </td>
+                        </tr>
+                        
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                CNIC
+                            </th>
+                            <td class="px-6 py-4">
+                                {{ addDashesInCNIC($complaint->cnic) }}
+                            </td>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                Mobile
+                            </th>
+                            <td class="px-6 py-4">
+                                {{ addDashInMobile($complaint->mobile) }}
+                            </td>
+                        </tr>
+                        
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                Description
+                            </th>
+                            <td class="px-6 py-4" colspan="3" class="urduLabel">
+                                {{ $complaint->description }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>    
+        </div>
+    </div>
 
-
-    <!-- [ Main Content ] start -->
-    <div class="pcoded-main-mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
-        <div class="pcoded-wrapper">
-            <div class="pcoded-content">
-                <div class="pcoded-inner-content">
-                    
-                    <div class="main-body">
-                        <div class="page-wrapper">
-                            <!-- [ Main Content ] start -->
-                            <div class="flex flex-wrap -mx-3 ">
-                                <!-- [ basic-table ] start -->
-                                <div class="w-full px-3 -xl-12">
-
-                                    <div class="bg-white shadow rounded-md ">
-                                        <div class="bg-white shadow rounded-md -header text-center ">
-                                            Complaint Details
-                                        </div>
-                                        <div class="p-6 bg-white shadow rounded-md ">
-
-
-                                            
-
-
-                                            <table class="min-w-full divide-y divide-gray-200  table-bordered align-middle">
-                                            <tbody>
-                                                <tr>
-                                                    <th>Complaint #</th>
-                                                    <td>{{ $complaint->complaint_no }}</td>
-                                                    <th>Complaint Time</th>
-                                                    <td>{{ date('d M h:i A', strtotime($complaint->complaint_at)) }}</td>
-                                                </tr>
-                                                
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <td>{{ $complaint->name }}</td>
-                                                    <th>Category</th>
-                                                    <td>{{ optional($complaint->category)->name }}</td>
-                                                </tr>
-
-                                                <tr>
-                                                    @if($complaint->cnic)
-                                                    <th>CNIC</th>
-                                                    <td>{{ addDashesInCNIC($complaint->cnic) }}</td>
-                                                    @endif
-                                                    @if($complaint->mobile)
-                                                    <th>Mobile</th>
-                                                    <td>{{ addDashInMobile($complaint->mobile) }}</td>
-                                                    @endif
-                                                </tr>
-                                                <tr>
-                                                    <th>Description</th>
-                                                    <td colspan="3" class="urduLabel">{{ $complaint->description }}</td>
-                                                </tr>
                                                 <tr>
                                                     <th>Location</th>
                                                     <td class="urduLabel">{{ $complaint->location }}</td>
