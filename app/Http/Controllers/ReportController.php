@@ -21,7 +21,9 @@ class ReportController extends Controller
             ->groupBy('source_id', 'department_id')
             ->get();
 
-        dd($complaints->toArray());
+        $departmentIds = $complaints->pluck('department_id')->unique()->values();
+
+        dd($departmentIds);
         $data = $complaints->groupBy('source_id');
 
         return view('reports.pending-complaints', get_defined_vars());
