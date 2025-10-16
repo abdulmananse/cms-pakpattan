@@ -26,6 +26,9 @@ class Complaint extends Model
         'location',
         'attachment',
         'department_id',
+        'transfer_from',
+        'transfer_from_by',
+        'transfer_from_at',
         'source_id',
         'complaint_status',
         'complaint_at',
@@ -105,6 +108,11 @@ class Complaint extends Model
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
+    }
+    
+    public function transfer_from_department(): BelongsTo
+    {
+        return $this->belongsTo(Department::class, 'transfer_from');
     }
     
     public function source(): BelongsTo

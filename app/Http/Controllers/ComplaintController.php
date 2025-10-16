@@ -158,6 +158,36 @@ class ComplaintController extends Controller
     }
     
     /**
+     * Transfer complaint to department
+     *
+     * @param  \App\Http\Request\Request  $request
+     * @param  \App\Models\Complaint $complaint
+     * @return \Illuminate\Http\Response
+     */
+    public function transfer(Request $request, Complaint $complaint) {
+
+
+        if ($request->filled('department_id')) {
+            $complaint->transfer_from = $complaint->department_id;
+            $complaint->transfer_from_by = $complaint->assigned_by;
+            $complaint->transfer_from_at = $complaint->assigned_at;
+
+            $complaint->department_id = $request->department_id;
+            $complaint->assigned_by = Auth::id();
+            $complaint->assigned_at = date('Y-m-d H:i:s');
+            $complaint->save();
+
+            complaintLog($complaint, 'transfer');
+
+            Session::flash('success', 'Complaint successfully transferred!');
+            return redirect()->route('complaints.index');
+        }
+
+        Session::flash('error', 'Complaint not assigned!');
+        return redirect()->back();
+    }
+    
+    /**
      * Reject Complaint
      *
      * @param  \App\Models\Complaint $complaint

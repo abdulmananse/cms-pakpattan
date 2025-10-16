@@ -30,7 +30,7 @@
                 <div class="col-xl-12 col-md-12">
                     <div class="card user-profile-list">
                         <div class="card-body-dd">
-                            <x-table :keys="['Complaint No', 'Name', 'CNIC', 'Mobile', 'Category', 'Department', 'Complaint By', 'Source', 'Date', 'Status', '']"></x-table>
+                            <x-table :keys="['Complaint #', 'Name', 'Category', 'Department', 'Complaint By', 'Source', 'Date', 'Status', '']"></x-table>
                         </div>
                     </div>
                 </div>
@@ -51,12 +51,6 @@
                 },
                 {
                     data: 'name'
-                },
-                {
-                    data: 'cnic'
-                },
-                {
-                    data: 'mobile'
                 },
                 {
                     data: 'category.name'
@@ -96,7 +90,7 @@
                 action: datatableExportAction,
                 className:'btn btn-success',
                 exportOptions: {
-                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8]
                 }
             }];
 

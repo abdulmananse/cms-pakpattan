@@ -26,13 +26,14 @@ class StoreUserRequest extends BaseRequest
     {
         return [
             'role' => 'required|exists:roles,id',
-            'department_ids' => 'nullable',
             'source_id' => 'nullable|exists:sources,id',
             'name' => 'required|max:50',
             'designation' => 'nullable|max:50',
             'username' => 'required|max:50|unique:users,username',
             'email' => 'nullable|email|max:100',
             'mobile' => 'nullable',
+            'department_ids' => 'nullable',
+            'permission_ids' => 'nullable',
             'password' => ['required', 'confirmed', Rules\Password::defaults()]
             
         ];

@@ -134,6 +134,15 @@
                                                         @endif
                                                     </td>
                                                 </tr>
+                                                @if($complaint->transfer_from > 0)
+                                                <tr>
+                                                    <th>Transfer From</th>
+                                                    <td>{{ optional($complaint->transfer_from_department)->name }}</td>
+                                                    <th>Transfer By</th>
+                                                    <td>{{ optional($complaint->assigned_user)->name }}</td>
+                                                </tr>
+                                                @endif
+                                                
                                                 @if($complaint->department_id > 0)
                                                 <tr>
                                                     <th>Department</th>
@@ -172,7 +181,7 @@
                                             </tbody>
                                             </table>
                                         </div>
-
+                                        
                                         @canany(['Complaints Assigned', 'Complaints Rejected'])
                                             @if($complaint->complaint_status == 0 && $complaint->department_id == NULL)
                                             {{ html()->form('POST', route('complaints.assigned', $complaint->uuid))->id('formValidation')->open() }}
@@ -204,6 +213,22 @@
                                                     </div>
                                                     <div class="card-footer d-flex justify-content-end">
                                                         <button type="submit" class="btn btn-primary">Re-Assign</button>
+                                                    </div>
+                                                </div>
+                                            {{ html()->form()->close() }}
+                                            @endif
+                                        @endcan
+
+                                        @canany(['Complaints Transfer'])
+                                            @if($complaint->complaint_status == 0 && $complaint->department_id != NULL && $complaint->transfer_from == NULL)
+                                            {{ html()->form('POST', route('complaints.transfer', $complaint->uuid))->id('formValidation')->open() }}
+                                                <div class="card-body row">
+                                                    <div class="form-group col-md-4">
+                                                        {{ html()->label()->for('department_id')->text('Department')->class('form-label required-input') }}
+                                                        {{ html()->select('department_id', $departments->except($complaint->department_id), null)->class('form-select')->placeholder('Select Department')->required() }}
+                                                    </div>
+                                                    <div class="card-footer d-flex justify-content-end">
+                                                        <button type="submit" class="btn btn-primary">Transfer</button>
                                                     </div>
                                                 </div>
                                             {{ html()->form()->close() }}

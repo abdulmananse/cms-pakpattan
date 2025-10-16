@@ -32,6 +32,7 @@ class UpdateUserRequest extends FormRequest
             'email' => 'nullable|email|max:100',
             'mobile' => 'nullable',
             'department_ids' => 'nullable',
+            'permission_ids' => 'nullable',
             'source_id' => 'nullable|exists:sources,id',
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()]
         ];

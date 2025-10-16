@@ -15,6 +15,7 @@ use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Department;
+use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -84,7 +85,9 @@ class UserController extends Controller
         $roles = Role::where('id', '!=', 1)->active()->pluck('name', 'id');
         $departments = getActiveDepartments();
         $sources = getActiveSources();
-        $selectedDepartments = null;
+        $selectedDepartments = $selectedPermissions = null;
+
+        $permissions = Permission::where('name', 'Complaints Transfer')->pluck('name', 'id');
 
         return view('users.create', get_defined_vars());
     }
@@ -113,6 +116,11 @@ class UserController extends Controller
 
         if($user && $role) {
             $user->assignRole($role);
+        }
+        
+        if ($request->filled('permission_ids')) {
+            $permissions = Permission::whereIn('id', $request->permission_ids)->get();
+            $user->givePermissionTo($permissions);
         }
         
         if ($request->filled('department_ids')) {
@@ -157,7 +165,10 @@ class UserController extends Controller
         $sources = getActiveSources();
         
         $selectedDepartments = $user->departments->pluck('id')->toArray();
-       
+        
+        $permissions = Permission::where('name', 'Complaints Transfer')->pluck('name', 'id');
+        $selectedPermissions = $user->permissions->pluck('id')->toArray();
+
         return view('users.edit', get_defined_vars());
         
     }
@@ -180,6 +191,13 @@ class UserController extends Controller
             $user->syncRoles($role);
         }
         
+        if ($request->filled('permission_ids')) {
+            $permissions = Permission::whereIn('id', $request->permission_ids)->get();
+            $user->givePermissionTo($permissions);
+        } else {
+            $user->permissions()->detach();
+        }
+
         if ($request->filled('mobile')) {
             $userData['mobile'] = str_replace('-', '', $request->mobile);
         }

@@ -952,7 +952,7 @@ if (!function_exists('complaintSources')) {
 if (!function_exists('getActiveDepartments')) {
     function getActiveDepartments()
     {
-        return Department::active()->orderBy('ordering', 'asc')->pluck('name', 'id');;
+        return Department::active()->orderBy('ordering', 'asc')->pluck('name', 'id');
     }
 }
 

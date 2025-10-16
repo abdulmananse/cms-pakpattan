@@ -24,14 +24,19 @@
     {!! $errors->first('role', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
+    {{ html()->label()->for('source_id')->text('Source')->class('form-label') }}
+    {{ html()->select('source_id', $sources, null)->class('form-select')->placeholder('Select Source') }}
+    {!! $errors->first('source_id', '<label class="error">:message</label>') !!}
+</div>
+<div class="form-group col-md-6">
     {{ html()->label()->for('department_ids')->text('Department')->class('form-label') }}
     {{ html()->select('department_ids[]', $departments)->class('form-select')->attribute('multiple')->value(old('department_ids', $selectedDepartments)) }}
     {!! $errors->first('department_ids', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
-    {{ html()->label()->for('source_id')->text('Source')->class('form-label') }}
-    {{ html()->select('source_id', $sources, null)->class('form-select')->placeholder('Select Source') }}
-    {!! $errors->first('source_id', '<label class="error">:message</label>') !!}
+    {{ html()->label()->for('permission_ids')->text('Permission')->class('form-label') }}
+    {{ html()->select('permission_ids[]', $permissions)->class('form-select')->attribute('multiple')->value(old('permission_ids', $selectedPermissions)) }}
+    {!! $errors->first('permission_ids', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
     {{ html()->label()->for('designation')->text('Designation')->class('form-label') }}
