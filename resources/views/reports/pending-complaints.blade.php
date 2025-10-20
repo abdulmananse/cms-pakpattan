@@ -44,7 +44,7 @@
                                                     </td>
                                                     @endif
                                                 @endforeach
-                                                <td class="fw-bold">{{ $rowTotal }}</td>
+                                                <td class="fw-bold">{{ number_format($rowTotal) }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -58,7 +58,7 @@
                                                         return isset($data[$id]) ? ($data[$id]->firstWhere('department_id', $deptID)->total ?? 0): 0;
                                                     })->sum();
                                                 @endphp
-                                                <td>{{ $colTotal }}</td>
+                                                <td>{{ number_format($colTotal) }}</td>
                                                 @endif
                                             @endforeach
                                             
@@ -70,7 +70,7 @@
                                                 })->sum();
                                             @endphp
 
-                                            <td>{{ $grandTotal }}</td>
+                                            <td>{{ number_format($grandTotal) }}</td>
                                         </tr>
                                     </tfoot>
                                 </table>
