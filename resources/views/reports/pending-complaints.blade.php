@@ -37,7 +37,11 @@
                                                             $rowTotal += $count;
                                                         }
                                                     @endphp
-                                                    <td>{{ $count }}</td>
+                                                    <td>
+                                                        <a href="{{ route('complaints.index', ['status' => 0, 'date' => 'all']) }}" target="_blank">
+                                                        {{ number_format($count) }}
+                                                        </a>
+                                                    </td>
                                                     @endif
                                                 @endforeach
                                                 <td class="fw-bold">{{ $rowTotal }}</td>

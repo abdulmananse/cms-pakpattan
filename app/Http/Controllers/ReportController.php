@@ -32,12 +32,14 @@ class ReportController extends Controller
         $departments = getActiveDepartments();
         $sources = getActiveSources();
 
-        $data = Complaint::selectRaw('source_id, department_id, COUNT(*) as total')
+        $complaints = Complaint::selectRaw('source_id, department_id, COUNT(*) as total')
             ->where('complaint_status', 1)
             ->whereNotNull('department_id')
             ->groupBy('source_id', 'department_id')
-            ->get()
-            ->groupBy('source_id');
+            ->get();
+
+        $departmentIds = $complaints->pluck('department_id');
+        $data = $complaints->groupBy('source_id');
 
         return view('reports.resolved-complaints', get_defined_vars());
     }

@@ -17,7 +17,9 @@
                                         <tr>
                                             <th>Source</th>
                                             @foreach($departments as $deptID => $deptName)
+                                                @if($departmentIds->contains($deptID))
                                                 <th>{{ $deptName }}</th>
+                                                @endif
                                             @endforeach
                                             <th>Total</th>
                                         </tr>
@@ -28,13 +30,19 @@
                                                 <td class="text-start fw-bold">{{ $sourceName }}</td>
                                                 @php $rowTotal = $count = 0; @endphp
                                                 @foreach($departments as $deptID => $deptName)
+                                                    @if($departmentIds->contains($deptID))
                                                     @php
                                                         if(isset($data[$sourceId])) {
                                                             $count = $data[$sourceId]->firstWhere('department_id', $deptID)->total ?? 0;
                                                             $rowTotal += $count;
                                                         }
                                                     @endphp
-                                                    <td>{{ $count }}</td>
+                                                    <td>
+                                                        <a href="{{ route('complaints.index', ['status' => 1, 'date' => 'all']) }}" target="_blank">
+                                                        {{ number_format($count) }}
+                                                        </a>
+                                                    </td>
+                                                    @endif
                                                 @endforeach
                                                 <td class="fw-bold">{{ $rowTotal }}</td>
                                             </tr>
@@ -44,12 +52,14 @@
                                         <tr>
                                             <td>Total</td>
                                             @foreach($departments as $deptID => $deptName)
+                                                @if($departmentIds->contains($deptID))
                                                 @php
                                                     $colTotal = collect($sources)->map(function($name, $id) use($data, $deptID) {
                                                         return isset($data[$id]) ? ($data[$id]->firstWhere('department_id', $deptID)->total ?? 0): 0;
                                                     })->sum();
                                                 @endphp
                                                 <td>{{ $colTotal }}</td>
+                                                @endif
                                             @endforeach
                                             
                                             @php
