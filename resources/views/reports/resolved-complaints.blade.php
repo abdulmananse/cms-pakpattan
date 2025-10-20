@@ -44,7 +44,11 @@
                                                     </td>
                                                     @endif
                                                 @endforeach
-                                                <td class="fw-bold">{{ number_format($rowTotal) }}</td>
+                                                <td class="fw-bold">
+                                                    <a href="{{ route('complaints.index', ['s' => $sourceId, 'status' => 0, 'date' => 'all']) }}" target="_blank">
+                                                        {{ number_format($rowTotal) }}
+                                                    </a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
