@@ -38,7 +38,7 @@
                                                         }
                                                     @endphp
                                                     <td>
-                                                        <a href="{{ route('complaints.index', ['status' => 0, 'date' => 'all']) }}" target="_blank">
+                                                        <a href="{{ route('complaints.index', ['d' => $deptID, 'status' => 0, 'date' => 'all']) }}" target="_blank">
                                                         {{ number_format($count) }}
                                                         </a>
                                                     </td>
