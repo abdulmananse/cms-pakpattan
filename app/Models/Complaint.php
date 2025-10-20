@@ -72,6 +72,9 @@ class Complaint extends Model
                 $query->where('complaint_status', $request->status);
             }
         }
+        if($request->filled('c') && $request->c > 0) {
+            $query->where('category_id', $request->c);
+        }
         if($request->filled('d') && $request->d > 0) {
             $query->where('department_id', $request->d);
         }
