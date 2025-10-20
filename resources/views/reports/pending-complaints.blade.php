@@ -62,7 +62,11 @@
                                                         return isset($data[$id]) ? ($data[$id]->firstWhere('department_id', $deptID)->total ?? 0): 0;
                                                     })->sum();
                                                 @endphp
-                                                <td>{{ number_format($colTotal) }}</td>
+                                                <td>
+                                                    <a href="{{ route('complaints.index', ['d' => $deptID, 'status' => 0, 'date' => 'all']) }}" target="_blank">
+                                                        {{ number_format($colTotal) }}
+                                                    </a>
+                                                </td>
                                                 @endif
                                             @endforeach
                                             
