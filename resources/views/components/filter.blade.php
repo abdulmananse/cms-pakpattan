@@ -2,6 +2,14 @@
     {{-- @dd(auth()->user()) --}}
     <form id="filterForm" class="row text-end justify-content-xxl-end justify-content-center" >
         
+        @if($category == 'true')
+            <div class="col-xxl-{{ $col }} main-div col-md-3">
+                <div class="label-float p-0">
+                    {{ html()->select('category_id', getActiveCategories(), request()->c)->class('form-select')->placeholder('All Categories') }}
+                </div>
+            </div>
+        @endif
+        
         @if($department == 'true')
             <div class="col-xxl-{{ $col }} main-div col-md-3">
                 <div class="label-float p-0">
@@ -34,13 +42,9 @@
         </div>
         @endif
 
-        @hasrole(['Tehsil Supervisor'])
-        <button type="button" class="btn btn-continue btn-sm filterBtn d-none"><i class="fas fa-search"></i></button>
-        @else
         <div class="col-md-1 main-div search_icon" style="">
             <button type="button" class="btn btn-continue btn-sm filterBtn"><i class="fas fa-search"></i></button>
         </div>
-        @endhasrole
         
     </form>
 
@@ -99,6 +103,14 @@
                 $(".filterBtn").css("color", "#fff");
                 loadingOverlay($('.filterBtn'))
                 
+                
+                @if($category == 'true')
+                let categoryId = $('[name=category_id]').val();
+                if (categoryId == '' || categoryId == undefined) {
+                    categoryId = ($('[name=category_id]').data('selectedid') > 0) ? $('[name=category_id]').data('selectedid') : 0;
+                }
+                insertParam('c', categoryId);
+                @endif
                 
                 @if($department == 'true')
                 let departmentId = $('[name=department_id]').val();

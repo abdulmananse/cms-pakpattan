@@ -9,7 +9,7 @@
             
             <div class="col-lg-12 col-md-12 ms-auto mb-3">
                 <div class="card-body-dd">
-                    <x-filter date=true department=true source=true status=true col=2 />
+                    <x-filter date=true category=true department=true source=true status=true col=2 />
                 </div>
             </div>
             

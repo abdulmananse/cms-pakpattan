@@ -10,6 +10,7 @@ class Filter extends Component
     public $refresh;
     public $date;
     public $status;
+    public $category;
     public $department;
     public $source;
 
@@ -23,6 +24,7 @@ class Filter extends Component
         $refresh = false,
         $date = false,
         $status = false,
+        $category = true,
         $department = true,
         $source = false
         )
@@ -31,6 +33,7 @@ class Filter extends Component
         $this->refresh = $refresh;
         $this->col = $col;
         $this->status = $status;
+        $this->category = $category;
         $this->department = $department;
         $this->source = $source;
     }
