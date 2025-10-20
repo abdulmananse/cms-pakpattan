@@ -78,7 +78,11 @@
                                                 })->sum();
                                             @endphp
 
-                                            <td>{{ number_format($grandTotal) }}</td>
+                                            <td>
+                                                <a href="{{ route('complaints.index', ['status' => 1, 'date' => 'all']) }}" target="_blank">
+                                                    {{ number_format($grandTotal) }}
+                                                </a>
+                                            </td>
                                         </tr>
                                     </tfoot>
                                 </table>
