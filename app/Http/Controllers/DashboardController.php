@@ -27,8 +27,8 @@ class DashboardController extends Controller
 
         $summary = Complaint::selectRaw("
             COUNT(*) as total,
-            SUM(CASE WHEN complaint_status = 0 AND (department_id IS NULL OR created_at >= DATE_SUB(NOW(), INTERVAL 2 DAY)) THEN 1 ELSE 0 END) as fresh,
-            SUM(CASE WHEN complaint_status = 0 AND department_id > 0 AND assigned_at < DATE_SUB(NOW(), INTERVAL 2 DAY) THEN 1 ELSE 0 END) as overdue,
+            SUM(CASE WHEN complaint_status = 0 AND (department_id IS NULL OR created_at >= DATE_SUB(NOW(), INTERVAL 5 DAY)) THEN 1 ELSE 0 END) as fresh,
+            SUM(CASE WHEN complaint_status = 0 AND department_id > 0 AND assigned_at < DATE_SUB(NOW(), INTERVAL 5 DAY) THEN 1 ELSE 0 END) as overdue,
             SUM(CASE WHEN complaint_status = 0 THEN 1 ELSE 0 END) as pending,
             SUM(CASE WHEN complaint_status = 1 THEN 1 ELSE 0 END) as resolved,
             SUM(CASE WHEN complaint_status = 2 THEN 1 ELSE 0 END) as rejected,
@@ -52,7 +52,7 @@ class DashboardController extends Controller
                         $query->where('complaint_status', 0)
                             ->where(function ($q) {
                                 $q->whereNull('department_id')
-                                    ->orWhere('created_at', '>=', DB::raw('DATE_SUB(NOW(), INTERVAL 2 DAY)'));
+                                    ->orWhere('created_at', '>=', DB::raw('DATE_SUB(NOW(), INTERVAL 5 DAY)'));
                             });
                     },
 
@@ -60,7 +60,7 @@ class DashboardController extends Controller
                     'complaints as overdue_complaints_count' => function ($query) {
                         $query->where('complaint_status', 0)
                             ->where('department_id', '>', 0)
-                            ->where('assigned_at', '<', DB::raw('DATE_SUB(NOW(), INTERVAL 2 DAY)'));
+                            ->where('assigned_at', '<', DB::raw('DATE_SUB(NOW(), INTERVAL 5 DAY)'));
                     },
                 ])
                 ->get();
@@ -77,8 +77,8 @@ class DashboardController extends Controller
     {
         $summary = Complaint::selectRaw("
             COUNT(*) as total,
-            SUM(CASE WHEN complaint_status = 0 AND (department_id IS NULL OR created_at >= DATE_SUB(NOW(), INTERVAL 2 DAY)) THEN 1 ELSE 0 END) as fresh,
-            SUM(CASE WHEN complaint_status = 0 AND department_id > 0 AND assigned_at < DATE_SUB(NOW(), INTERVAL 2 DAY) THEN 1 ELSE 0 END) as overdue,
+            SUM(CASE WHEN complaint_status = 0 AND (department_id IS NULL OR created_at >= DATE_SUB(NOW(), INTERVAL 5 DAY)) THEN 1 ELSE 0 END) as fresh,
+            SUM(CASE WHEN complaint_status = 0 AND department_id > 0 AND assigned_at < DATE_SUB(NOW(), INTERVAL 5 DAY) THEN 1 ELSE 0 END) as overdue,
             SUM(CASE WHEN complaint_status = 0 THEN 1 ELSE 0 END) as pending,
             SUM(CASE WHEN complaint_status = 1 THEN 1 ELSE 0 END) as resolved,
             SUM(CASE WHEN complaint_status = 2 THEN 1 ELSE 0 END) as rejected

@@ -123,7 +123,7 @@ if (!function_exists('getComplaintStatusBadge')) {
         $assignedAt = Carbon::parse($complaint->assigned_at);
 
         if ($status == 0 && $department > 0) {
-            if ($assignedAt->lt(now()->subDays(2))) {
+            if ($assignedAt->lt(now()->subDays(5))) {
                 $badge .= '<a href="#" class="badge bg-danger">Overdue</a>';
             } else {
                 $badge .= '<a href="#" class="badge bg-info">Assigned to Department</a>';
