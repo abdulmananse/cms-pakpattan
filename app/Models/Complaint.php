@@ -62,7 +62,7 @@ class Complaint extends Model
         if($request->filled('status')) {
             if ($request->status == 0) { // Fresh
                 $query->where('complaint_status', $request->status)
-                        ->where('assigned_at', '>', Carbon::now()->subDays(2));
+                        ->where('assigned_at', '>', Carbon::now()->subDays(5));
             } elseif ($request->status == 4) { // Overdue
                 $query->where('complaint_status', 0)
                     ->where('department_id', '>', 0)
