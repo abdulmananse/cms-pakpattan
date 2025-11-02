@@ -18,7 +18,7 @@
                 <div class="col-xl-12 col-md-12">
                     <div class="card user-profile-list">
                         <div class="card-body-dd">
-                            <button id="downloadCsv" class="btn btn-success" style="margin-top: -52px;display: block;">Download CSV</button>
+                            <button id="downloadCsv" class="btn btn-success" style="margin-top: -52px;display: block;">Download</button>
                             <div class="dt-responsive table-responsive">
                                 <table class="table nowrap datatable" id="SummaryTable">
                                     <thead>
