@@ -37,6 +37,9 @@
                             <span class="pcoded-mtext">Reports</span>
                         </a>
                         <ul class="pcoded-submenu">
+                            @can('Charts')
+                                <li><a href="{{ route('reports.charts') }}">Charts</a></li>
+                            @endcan
                             @can('Summary')
                                 <li><a href="{{ route('reports.summary') }}">Summary</a></li>
                             @endcan
