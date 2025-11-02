@@ -62,9 +62,9 @@
                                             @endif
                                         @endforeach
                                     </tbody>
-                                    <tfoot class="table-secondary fw-bold">
+                                    <tfoot class="table-secondary">
                                         <tr>
-                                            <td>Total</td>
+                                            <th>Total</th>
                                             @foreach($sources as $sourceId => $sourceName)
                                                 @if($sourceIds->contains($sourceId))
                                                 @php
@@ -73,11 +73,11 @@
                                                     })->sum();
                                                     
                                                 @endphp
-                                                <td>
+                                                <th>
                                                     <a href="{{ route('complaints.index', ['s' => $sourceId, 'c' => (request()->filled('c') ? request()->c : 0), 'status' => (request()->status > 0 ? request()->status : ''), 'date' => (request()->filled('date') ? request()->date : 'all')]) }}" target="_blank">
                                                         {{ number_format($colTotal) }}
                                                     </a>
-                                                </td>
+                                                </th>
                                                 @endif
                                             @endforeach
                                             
@@ -89,11 +89,11 @@
                                                 })->sum();
                                             @endphp
 
-                                            <td>
+                                            <th>
                                                 <a href="{{ route('complaints.index', ['c' => (request()->filled('c') ? request()->c : 0), 'status' => (request()->status > 0 ? request()->status : ''), 'date' => (request()->filled('date') ? request()->date : 'all')]) }}" target="_blank">
                                                     {{ number_format($grandTotal) }}
                                                 </a>
-                                            </td>
+                                            </th>
                                         </tr>
                                     </tfoot>
                                 </table>
