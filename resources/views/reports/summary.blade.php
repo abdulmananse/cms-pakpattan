@@ -18,8 +18,9 @@
                 <div class="col-xl-12 col-md-12">
                     <div class="card user-profile-list">
                         <div class="card-body-dd">
+                            <button id="downloadCsv" class="btn btn-success" style="margin-top: -52px;display: block;">Download CSV</button>
                             <div class="dt-responsive table-responsive">
-                                <table class="table nowrap datatable">
+                                <table class="table nowrap datatable" id="SummaryTable">
                                     <thead>
                                         <tr>
                                             <th>Department</th>
@@ -104,4 +105,35 @@
             </div>
         </div>
     </div>
+    
+    @push('scripts')
+        <script>
+            $("#downloadCsv").on("click", function () {
+                var csv = [];
+                $("#SummaryTable tr").each(function () {
+                    var row = [];
+                    $(this).find("th, td").each(function () {
+                        var text = $(this).text().trim().replace(/"/g, '""'); // Escape quotes
+                        row.push('"' + text + '"');
+                    });
+                    csv.push(row.join(","));
+                });
+
+                // Create CSV string
+                var csvString = csv.join("\n");
+
+                // Create hidden download link
+                var blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
+                var link = document.createElement("a");
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", "Summary.csv");
+                link.style.display = "none";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+
+        </script>
+    @endpush
 </x-admin-layout>
