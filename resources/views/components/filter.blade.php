@@ -29,7 +29,7 @@
         @if($status == 'true')
             <div class="col-xxl-{{ $col }} col-md-3 main-div">
                 <div class="label-float p-0">
-                    {{ html()->select('status', ['' => 'Complaint Status', '0' => 'Pending', '4' => 'Overdue', '1' => 'Resolved', '3' => 'Reopen', '2' => 'Rejected'], request()->status)->class('form-select') }}
+                    {{ html()->select('status', ['' => 'Complaint Status', '0' => 'Fresh', '4' => 'Overdue', '1' => 'Resolved', '3' => 'Reopen', '2' => 'Rejected'], request()->status)->class('form-select') }}
                 </div>
             </div>
         @endif
@@ -56,6 +56,11 @@
             let start = moment().subtract(6, 'days');
             let end = moment();
             let date = 'custom';
+
+            @if($dateValue == 'all')
+                start = moment('2025-01-01');
+                end = moment();
+            @endif
 
             @if(request()->filled('date'))
                 const qDate = '{{ request()->date }}';
@@ -91,7 +96,8 @@
                     'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                     'Last 30 Days': [moment().subtract(29, 'days'), moment()],
                     'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                    'All Days' : [moment('2025-01-01'), moment()]
                 }
             }, cb);
 
@@ -145,6 +151,7 @@
                 @endif
 
                 @if($refresh == 'true')
+                location.reload();
                 @else
                 filterCallbackFun();
                 @endif

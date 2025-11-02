@@ -13,6 +13,7 @@ class Filter extends Component
     public $category;
     public $department;
     public $source;
+    public $dateValue;
 
     /**
      * Create a new component instance.
@@ -21,16 +22,18 @@ class Filter extends Component
      */
     public function __construct(
         $col = 2,
+        $dateValue = 'custom',
         $refresh = false,
         $date = false,
         $status = false,
-        $category = true,
-        $department = true,
+        $category = false,
+        $department = false,
         $source = false
         )
     {
         $this->date = $date;
         $this->refresh = $refresh;
+        $this->dateValue = $dateValue;
         $this->col = $col;
         $this->status = $status;
         $this->category = $category;

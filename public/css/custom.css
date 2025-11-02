@@ -291,7 +291,7 @@ table.dataTable.table-sm .sorting_desc:after {
 }
 .col-md-1.search_icon {
     width: 4%;
-    margin-left: -15px;
+    margin-left: -10px;
 }
 .btn-continue {
     background: #0294c9;
@@ -351,6 +351,7 @@ table.dataTable.table-sm .sorting_desc:after {
     }
     .col-md-1.search_icon {
         width: 100% !important;
+        margin-left: -15px;
     }
     .dataTables_filter input {
         float: none;

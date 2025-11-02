@@ -10,6 +10,26 @@ use Illuminate\Http\Request;
 class ReportController extends Controller
 {
     
+    public function summary(Request $request)
+    {
+        $departments = getActiveDepartments();
+        $sources = getActiveSources();
+
+        $complaints = Complaint::selectRaw('department_id, source_id, COUNT(*) as total')
+            ->whereNotNull('department_id')
+            ->whereNotNull('source_id')
+            ->filter($request)
+            ->groupBy('department_id', 'source_id')
+            ->get();
+        
+        $sourceIds = $complaints->pluck('source_id');
+        $departmentIds = $complaints->pluck('department_id');
+        
+        $data = $complaints->groupBy('department_id');
+
+        return view('reports.summary', get_defined_vars());
+    }
+
     public function pendingComplaints(Request $request)
     {
         $departments = getActiveDepartments();

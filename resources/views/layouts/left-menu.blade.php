@@ -30,13 +30,16 @@
                     </li>
                 @endcanany
 
-                @canany(['Pending Complaints', 'Resolved Complaints'])
+                @canany(['Summary', 'Pending Complaints', 'Resolved Complaints'])
                     <li class="nav-item pcoded-hasmenu {{ setActive(['reports']) }}">
                         <a href="#" class="nav-link ">
                             <span class="pcoded-micon"><i class="feather icon-file-text"></i></span>
                             <span class="pcoded-mtext">Reports</span>
                         </a>
                         <ul class="pcoded-submenu">
+                            @can('Summary')
+                                <li><a href="{{ route('reports.summary') }}">Summary</a></li>
+                            @endcan
                             @can('Pending Complaints')
                                 <li><a href="{{ route('reports.pendingComplaints') }}">Pending Complaints</a></li>
                             @endcan
