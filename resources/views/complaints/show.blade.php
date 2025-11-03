@@ -109,6 +109,8 @@
                                                             <a href="{{ asset('storage/complaints/' . $complaint->attachment) }}" target="_blank">
                                                                 @if($ext === 'pdf')
                                                                     <img src="{{ asset('images/pdf_icon.png') }}" width="120" alt="PDF" />
+                                                                @elseif($ext === 'pptx')
+                                                                    <img src="{{ asset('images/pptx_icon.png') }}" width="120" alt="PDF" />
                                                                 @elseif(in_array($ext, $videoExt))
                                                                     <img src="{{ asset('images/vlc_icon.png') }}" width="120" alt="PDF" />
                                                                 @else
@@ -125,6 +127,8 @@
                                                             <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="ms-5">
                                                                 @if($resolvedExt === 'pdf')
                                                                     <img src="{{ asset('images/pdf_icon.png') }}" width="120" alt="PDF" />
+                                                                @elseif($resolvedExt === 'pptx')
+                                                                    <img src="{{ asset('images/pptx_icon.png') }}" width="120" alt="PDF" />
                                                                 @elseif(in_array($resolvedExt, $videoExt))
                                                                     <img src="{{ asset('images/vlc_icon.png') }}" width="120" alt="PDF" />
                                                                 @else
