@@ -1,4 +1,13 @@
 <x-admin-layout>
+
+    @push('styles')
+        <style>
+            table tbody a {
+                font-size: 18px !important;
+            }
+        </style>
+    @endpush
+
     <div class="pcoded-main-container">
         <div class="pcoded-content">
             <!-- [ breadcrumb ] start -->
@@ -11,7 +20,7 @@
                     <x-filter date=true category=true status=true refresh=true dateValue=all col=2 />
                 </div>
             </div>
-
+            
             <div class="row">
                 <!-- product profit end -->
 
