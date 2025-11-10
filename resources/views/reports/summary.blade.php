@@ -2,7 +2,7 @@
 
     @push('styles')
         <style>
-            table tbody a {
+            table a {
                 font-size: 18px !important;
             }
         </style>
