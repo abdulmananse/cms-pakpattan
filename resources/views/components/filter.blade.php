@@ -29,7 +29,7 @@
         @if($status == 'true')
             <div class="col-xxl-{{ $col }} col-md-3 main-div">
                 <div class="label-float p-0">
-                    {{ html()->select('status', ['' => 'Complaint Status', '0' => 'Fresh', '4' => 'Overdue', '1' => 'Resolved', '3' => 'Reopen', '2' => 'Rejected'], request()->status)->class('form-select') }}
+                    {{ html()->select('status', ['' => 'Complaint Status', '99' => 'Pending', '0' => 'Fresh', '4' => 'Overdue', '1' => 'Resolved', '3' => 'Reopen', '2' => 'Rejected'], request()->status)->class('form-select') }}
                 </div>
             </div>
         @endif

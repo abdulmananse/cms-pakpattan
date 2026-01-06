@@ -60,7 +60,9 @@ class Complaint extends Model
     public function scopeFilter($query, $request)
     {
         if($request->filled('status')) {
-            if ($request->status == 0) { // Fresh
+            if ($request->status == 99) { // Pending
+                $query->where('complaint_status', 0)->where('department_id', 0);
+            } elseif ($request->status == 0) { // Fresh
                 $query->where('complaint_status', $request->status)
                         ->where('assigned_at', '>', Carbon::now()->subDays(5));
             } elseif ($request->status == 4) { // Overdue
