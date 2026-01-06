@@ -61,7 +61,7 @@ class Complaint extends Model
     {
         if($request->filled('status')) {
             if ($request->status == 99) { // Pending
-                $query->where('complaint_status', 0)->where('department_id', 0);
+                $query->where('complaint_status', 0)->whereNull('department_id');
             } elseif ($request->status == 0) { // Fresh
                 $query->where('complaint_status', $request->status)
                         ->where('assigned_at', '>', Carbon::now()->subDays(5));
