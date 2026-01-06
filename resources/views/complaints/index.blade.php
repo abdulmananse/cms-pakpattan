@@ -30,7 +30,28 @@
                 <div class="col-xl-12 col-md-12">
                     <div class="card user-profile-list">
                         <div class="card-body-dd">
-                            <x-table :keys="['Complaint #', 'Name', 'Category', 'Department', 'Complaint By', 'Source', 'Date', 'Status', '']"></x-table>
+                            <div class="dt-responsive table-responsive">
+                                <table id="user-list-table" class="table nowrap datatable user-list-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Complaint #</th>    
+                                            <th>Name</th>    
+                                            <th>Category</th>    
+                                            <th>Department</th>    
+                                            <th>Complaint By</th>    
+                                            <th>Source</th>    
+                                            <th>Date</th>    
+                                            <th>Status</th>    
+                                            <th></th>   
+                                            <th class="d-none">Mobile</th>
+                                            <th class="d-none">Address</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -80,7 +101,15 @@
                     width: '10%',
                     orderable: false,
                     searchable: false
-                }
+                },
+                {
+                    data: 'mobile', 
+                    visible: false
+                },
+                {
+                    data: 'location', 
+                    visible: false
+                },
             ];
 
             const exportButtons = [{
@@ -90,7 +119,7 @@
                 action: datatableExportAction,
                 className:'btn btn-success',
                 exportOptions: {
-                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8]
+                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11]
                 }
             }];
 
