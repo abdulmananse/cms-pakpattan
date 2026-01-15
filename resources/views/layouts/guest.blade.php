@@ -108,6 +108,7 @@
             <div>
                 <h3 class="text-sm font-semibold">Quick Links</h3>
                 <ul class="mt-3 space-y-2 text-sm text-gray-600">
+                <li><a href="#vision" class="hover:text-primary-700">Our Vision</a></li>
                 <li><a href="#features" class="hover:text-primary-700">Features</a></li>
                 <li><a href="#how" class="hover:text-primary-700">How it works</a></li>
                 <li><a href="#categories" class="hover:text-primary-700">Categories</a></li>
@@ -128,7 +129,7 @@
             <div class="border-t border-gray-100">
             <div class="max-w-7xl mx-auto px-4 py-4 text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-2">
                 <p>© <span id="year"></span> District Pakpattan — All rights reserved.</p>
-                <p>Powered by CMS</p>
+                {{-- <p>Powered by CMS</p> --}}
             </div>
             </div>
         </footer>

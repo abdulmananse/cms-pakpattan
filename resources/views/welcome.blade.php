@@ -173,8 +173,6 @@
             </div>
         </section>
 
-        
-
         <!-- Features -->
         <section id="features" class="max-w-7xl mx-auto px-4 py-16">
             <div class="max-w-2xl">
