@@ -57,7 +57,8 @@
             font-family: "Noto Nastaliq Urdu", serif;
             direction: rtl;
             text-align: right;
-            font-size: 15px;
+            font-size: 14px;
+            line-height: 2;
         }
 
         /* Responsive */
