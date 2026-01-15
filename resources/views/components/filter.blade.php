@@ -21,7 +21,7 @@
         @if($source == 'true')
         <div class="col-xxl-{{ $col }} main-div col-md-3">
             <div class="label-float p-0">
-                {{ html()->select('source_id', getActiveSources(), request()->s)->class('form-select')->placeholder('All Sources') }}
+                {{ html()->select('source_id[]', getActiveSources(), explode(',', request()->s))->class('form-select source_ids select2')->multiple() }}
             </div>
         </div>
         @endif
@@ -51,6 +51,11 @@
     @push('scripts')
     <script>
         _$.ready(function() {
+
+            $(".source_ids").select2({
+                placeholder: "Select Sources",
+                allowClear: true
+            });  
 
             @if($date == 'true')
             let start = moment().subtract(6, 'days');
@@ -127,11 +132,11 @@
                 @endif
 
                 @if($source == 'true')
-                let sourceId = $('[name=source_id]').val();
-                if (sourceId == '' || sourceId == undefined) {
-                    sourceId = ($('[name=source_id]').data('selectedid') > 0) ? $('[name=source_id]').data('selectedid') : 0;
+                let sourceIds = $('.source_ids').val();
+                if (sourceIds == '' || sourceIds == undefined) {
+                    sourceIds = ($('.source_ids').data('selectedid') > 0) ? $('.source_ids').data('selectedid') : [];
                 }
-                insertParam('s', sourceId);
+                insertParam('s', sourceIds.join(","));
                 @endif
                 
                 @if($status == 'true')

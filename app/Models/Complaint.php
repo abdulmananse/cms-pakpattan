@@ -80,8 +80,8 @@ class Complaint extends Model
         if($request->filled('d') && $request->d > 0) {
             $query->where('department_id', $request->d);
         }
-        if($request->filled('s') && $request->s > 0) {
-            $query->where('source_id', $request->s);
+        if($request->filled('s')) {
+            $query->whereIn('source_id', explode(',', $request->s));
         }
 
         $query->when(($request->filled('date') && $request->date != 'all'), function ($query) use ($request) {

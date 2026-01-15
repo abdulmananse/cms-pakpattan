@@ -31,7 +31,7 @@ _$.ready(function(){
 
     if (typeof $(".select2") !== 'undefined' && $(".select2").select2) {
         $(".select2").select2({
-            placeholder: "Select Option",
+            // placeholder: "Select Option",
             allowClear: true
         });    
     }
