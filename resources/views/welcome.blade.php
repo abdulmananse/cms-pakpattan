@@ -119,6 +119,28 @@
             </div>
         </section>
 
+        <!-- Stats -->
+        <section class="border-y border-gray-100 bg-white">
+            <div class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div class="p-6 rounded-2xl bg-gray-50">
+                <div class="text-3xl font-extrabold text-gray-900">2m+</div>
+                <div class="text-sm text-gray-600">Residents Served</div>
+            </div>
+            <div class="p-6 rounded-2xl bg-gray-50">
+                <div class="text-3xl font-extrabold text-gray-900">10k+</div>
+                <div class="text-sm text-gray-600">Complaints / year</div>
+            </div>
+            <div class="p-6 rounded-2xl bg-gray-50">
+                <div class="text-3xl font-extrabold text-gray-900">92%</div>
+                <div class="text-sm text-gray-600">On-time Resolution</div>
+            </div>
+            <div class="p-6 rounded-2xl bg-gray-50">
+                <div class="text-3xl font-extrabold text-gray-900">24/7</div>
+                <div class="text-sm text-gray-600">Online Support</div>
+            </div>
+            </div>
+        </section>
+        
         <!-- Vision Section -->
         <section id="vision" class="vision-section">
             <div class="vision-wrapper">
@@ -150,27 +172,7 @@
             </div>
         </section>
 
-        <!-- Stats -->
-        <section class="border-y border-gray-100 bg-white">
-            <div class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div class="p-6 rounded-2xl bg-gray-50">
-                <div class="text-3xl font-extrabold text-gray-900">2m+</div>
-                <div class="text-sm text-gray-600">Residents Served</div>
-            </div>
-            <div class="p-6 rounded-2xl bg-gray-50">
-                <div class="text-3xl font-extrabold text-gray-900">10k+</div>
-                <div class="text-sm text-gray-600">Complaints / year</div>
-            </div>
-            <div class="p-6 rounded-2xl bg-gray-50">
-                <div class="text-3xl font-extrabold text-gray-900">92%</div>
-                <div class="text-sm text-gray-600">On-time Resolution</div>
-            </div>
-            <div class="p-6 rounded-2xl bg-gray-50">
-                <div class="text-3xl font-extrabold text-gray-900">24/7</div>
-                <div class="text-sm text-gray-600">Online Support</div>
-            </div>
-            </div>
-        </section>
+        
 
         <!-- Features -->
         <section id="features" class="max-w-7xl mx-auto px-4 py-16">
