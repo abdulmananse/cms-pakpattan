@@ -317,6 +317,15 @@ table.dataTable.table-sm .sorting_desc:after {
     font-size: 8px !important;
 }
 
+#filterForm .select2-container .select2-selection--multiple {
+    height: 40px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+#filterForm .select2-container .select2-search--inline .select2-search__field {
+    margin-top: 10px;
+}
+
 /* Media Query */
 @media(max-width:991px) {
     .auth-container {

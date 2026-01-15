@@ -59,26 +59,65 @@ class Complaint extends Model
 
     public function scopeFilter($query, $request)
     {
-        if($request->filled('status')) {
-            if ($request->status == 99) { // Pending
-                $query->where('complaint_status', 0)->whereNull('department_id');
-            } elseif ($request->status == 0) { // Fresh
-                $query->where('complaint_status', $request->status)
-                        ->where('assigned_at', '>', Carbon::now()->subDays(5));
-            } elseif ($request->status == 4) { // Overdue
-                $query->where('complaint_status', 0)
-                    ->where('department_id', '>', 0)
-                    // ->where('assigned_at', '<', Carbon::now()->subDays(5));
-                    ->whereRaw('assigned_at < DATE_SUB(NOW(), INTERVAL 5 DAY)');
-            } else {
-                $query->where('complaint_status', $request->status);
-            }
+        if ($request->filled('status')) {
+
+            $statuses = explode(',', $request->status);
+
+            $query->where(function ($q) use ($statuses) {
+
+                foreach ($statuses as $status) {
+
+                    $q->orWhere(function ($sub) use ($status) {
+
+                        if ($status == 99) {
+                            // Pending
+                            $sub->where('complaint_status', 0)
+                                ->whereNull('department_id');
+
+                        } elseif ($status == 0) {
+                            // Fresh
+                            $sub->where('complaint_status', 0)
+                                ->where('assigned_at', '>', Carbon::now()->subDays(5));
+
+                        } elseif ($status == 4) {
+                            // Overdue
+                            $sub->where('complaint_status', 0)
+                                ->where('department_id', '>', 0)
+                                ->whereRaw('assigned_at < DATE_SUB(NOW(), INTERVAL 5 DAY)');
+
+                        } else {
+                            // Normal statuses (1,2,3...)
+                            $sub->where('complaint_status', $status);
+                        }
+
+                    });
+                }
+
+            });
         }
-        if($request->filled('c') && $request->c > 0) {
-            $query->where('category_id', $request->c);
+
+        // if($request->filled('status')) {
+            
+        //     if ($request->status == 99) { // Pending
+        //         $query->where('complaint_status', 0)->whereNull('department_id');
+        //     } elseif ($request->status == 0) { // Fresh
+        //         $query->where('complaint_status', $request->status)
+        //                 ->where('assigned_at', '>', Carbon::now()->subDays(5));
+        //     } elseif ($request->status == 4) { // Overdue
+        //         $query->where('complaint_status', 0)
+        //             ->where('department_id', '>', 0)
+        //             // ->where('assigned_at', '<', Carbon::now()->subDays(5));
+        //             ->whereRaw('assigned_at < DATE_SUB(NOW(), INTERVAL 5 DAY)');
+        //     } else {
+        //         $query->where('complaint_status', $request->status);
+        //     }
+        // }
+
+        if($request->filled('c')) {
+            $query->whereIn('category_id', explode(',', $request->c));
         }
-        if($request->filled('d') && $request->d > 0) {
-            $query->where('department_id', $request->d);
+        if($request->filled('d')) {
+            $query->whereIn('department_id', explode(',', $request->d));
         }
         if($request->filled('s')) {
             $query->whereIn('source_id', explode(',', $request->s));

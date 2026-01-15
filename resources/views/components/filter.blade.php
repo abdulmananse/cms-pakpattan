@@ -5,7 +5,7 @@
         @if($category == 'true')
             <div class="col-xxl-{{ $col }} main-div col-md-3">
                 <div class="label-float p-0">
-                    {{ html()->select('category_id', getActiveCategories(), request()->c)->class('form-select')->placeholder('All Categories') }}
+                    {{ html()->select('category_id[]', getActiveCategories(), explode(',', request()->c))->class('form-select category_ids select2')->multiple() }}
                 </div>
             </div>
         @endif
@@ -13,7 +13,7 @@
         @if($department == 'true')
             <div class="col-xxl-{{ $col }} main-div col-md-3">
                 <div class="label-float p-0">
-                    {{ html()->select('department_id', getActiveDepartments(), request()->d)->class('form-select')->placeholder('All Departments') }}
+                    {{ html()->select('department_id[]', getActiveDepartments(), explode(',', request()->d))->class('form-select department_ids select2')->multiple() }}
                 </div>
             </div>
         @endif
@@ -29,7 +29,7 @@
         @if($status == 'true')
             <div class="col-xxl-{{ $col }} col-md-3 main-div">
                 <div class="label-float p-0">
-                    {{ html()->select('status', ['' => 'Complaint Status', '99' => 'Pending', '0' => 'Fresh', '4' => 'Overdue', '1' => 'Resolved', '3' => 'Reopen', '2' => 'Rejected'], request()->status)->class('form-select') }}
+                    {{ html()->select('status[]', ['99' => 'Pending', '0' => 'Fresh', '4' => 'Overdue', '1' => 'Resolved', '3' => 'Reopen', '2' => 'Rejected'], explode(',', request()->status))->class('form-select status_ids select2')->multiple() }}
                 </div>
             </div>
         @endif
@@ -52,10 +52,10 @@
     <script>
         _$.ready(function() {
 
-            $(".source_ids").select2({
-                placeholder: "Select Sources",
-                allowClear: true
-            });  
+            $(".category_ids").select2({placeholder: "Select Categories"});  
+            $(".department_ids").select2({placeholder: "Select Departments"});  
+            $(".source_ids").select2({placeholder: "Select Sources"});  
+            $(".status_ids").select2({placeholder: "Select Status"});  
 
             @if($date == 'true')
             let start = moment().subtract(6, 'days');
@@ -114,21 +114,20 @@
                 $(".filterBtn").css("color", "#fff");
                 loadingOverlay($('.filterBtn'))
                 
-                
                 @if($category == 'true')
-                let categoryId = $('[name=category_id]').val();
-                if (categoryId == '' || categoryId == undefined) {
-                    categoryId = ($('[name=category_id]').data('selectedid') > 0) ? $('[name=category_id]').data('selectedid') : 0;
+                let categoryIds = $('.category_ids').val();
+                if (categoryIds == '' || categoryIds == undefined) {
+                    categoryIds = ($('.category_ids').data('selectedid') > 0) ? $('.category_ids').data('selectedid') : [];
                 }
-                insertParam('c', categoryId);
+                insertParam('c', categoryIds.join(","));
                 @endif
                 
                 @if($department == 'true')
-                let departmentId = $('[name=department_id]').val();
-                if (departmentId == '' || departmentId == undefined) {
-                    departmentId = ($('[name=department_id]').data('selectedid') > 0) ? $('[name=department_id]').data('selectedid') : 0;
+                let departmentIds = $('.department_ids').val();
+                if (departmentIds == '' || departmentIds == undefined) {
+                    departmentIds = ($('.department_ids').data('selectedid') > 0) ? $('.department_ids').data('selectedid') : [];
                 }
-                insertParam('d', departmentId);
+                insertParam('d', departmentIds.join(","));
                 @endif
 
                 @if($source == 'true')
@@ -140,11 +139,11 @@
                 @endif
                 
                 @if($status == 'true')
-                let status = $('[name=status]').val();
-                if (status == '' || status == undefined) {
-                    status = ($('[name=status]').data('selectedid') > 0) ? $('[name=status]').data('selectedid') : '';
+                let statusIds = $('.status_ids').val();
+                if (statusIds == '' || statusIds == undefined) {
+                    statusIds = ($('.status_ids').data('selectedid') > 0) ? $('.status_ids').data('selectedid') : [];
                 }
-                insertParam('status', status);
+                insertParam('status', statusIds);
                 @endif
                
                 @if($date == 'true')
