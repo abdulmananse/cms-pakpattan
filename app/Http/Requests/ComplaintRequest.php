@@ -29,13 +29,14 @@ class ComplaintRequest extends FormRequest
             'category' => 'required|exists:categories,id',
             'description' => 'required|string|max:5000',
             'location' => 'nullable|string|max:100',
-            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120', // 5MB
             'source' => 'nullable',
         ];
 
         if ($this->source == 'Online Form') {
             $rules['location'] = 'required|string|max:100';
+            $rules['attachment'] = 'required|file|mimes:jpg,jpeg,png,pdf|max:5120';
         } else {
+            $rules['attachment'] = 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120';
             $rules['department_id'] = ['required'];
             $rules['name'] = ['required', 'string', 'max:255'];
             $rules['email'] = ['nullable', 'string', 'lowercase', 'email', 'max:255'];

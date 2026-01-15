@@ -82,7 +82,7 @@
                     
                     <!-- Attachment -->
                     <div class="mt-4">
-                        <x-input-label for="attachment" :value="__('Attachment')" />
+                        <x-input-label for="attachment" class="required-input" :value="__('Attachment')" />
                         {{ html()->file('attachment') }}
                         <x-input-error :messages="$errors->get('attachment')" class="mt-2" />
                     </div>

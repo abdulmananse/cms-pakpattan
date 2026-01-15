@@ -1,4 +1,77 @@
 <x-guest-layout>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400..700&display=swap");
+
+        .vision-section {
+            background: #f8fafc;
+            padding: 80px 6%;
+        }
+
+        .vision-wrapper {
+            max-width: 1300px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            align-items: stretch;
+        }
+
+        .vision-image-box {
+            flex: 1;
+            overflow: hidden;
+            border-radius: 18px;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.08);
+        }
+
+        .vision-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* KEY: fills container properly */
+            display: block;
+        }
+
+        .vision-text-box {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        .vision-tag {
+            display: inline-block;
+            padding: 6px 18px;
+            background: #e0e7ff;
+            color: #4f46e5;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+
+        .vision-text-box p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+
+        .vision-text-box .urdu {
+            font-family: "Noto Nastaliq Urdu", serif;
+            direction: rtl;
+            text-align: right;
+            font-size: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .vision-wrapper {
+                flex-direction: column;
+            }
+
+            .vision-image-box {
+                height: 300px;
+            }
+        }
+
+    </style>
 
         <!-- Hero -->
         <section class="relative overflow-hidden bg-cover bg-center" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/69/Mosque_at_Shrine_of_Fariduddin_Ganjshakar_1.jpg');">
@@ -43,6 +116,37 @@
                 </div>
                 </div>
             </div>
+            </div>
+        </section>
+
+        <!-- Vision Section -->
+        <section id="vision" class="vision-section">
+            <div class="vision-wrapper">
+
+                <!-- Left Image -->
+                <div class="vision-image-box">
+                    <img src="{{ asset('images/dc.jpeg') }}" alt="Our Vision">
+                </div>
+
+                <!-- Right Content -->
+                <div class="vision-text-box">
+                    <span class="vision-tag">Our Vision</span>
+                    <p>
+                        I am delighted to introduce the Complaint Management System for the citizens of District Pakpattan — a platform 
+                        built to empower every voice, strengthen public trust, and promote a culture of accountability.
+                    </p>
+                    <p>
+                        Our mission is to ensure that every concern is heard, every grievance matters, and every complaint becomes an opportunity to improve governance and serve our people better. 
+                        Through this system, we aspire to bridge the gap between citizens and administration and foster a district where responsiveness, transparency, and public service stand at the heart of progress.
+                    </p>
+                    <p class="urdu">
+                        مجھے ضلع پاکپتن کے شہریوں کے لیے کمپلینٹ مینجمنٹ سسٹم متعارف کرواتے ہوئے خوشی محسوس ہو رہی ہے — ایک ایسا پلیٹ فارم جو ہر آواز کو بااختیار بنانے، عوامی اعتماد کو مضبوط کرنے اور جوابدہی کے کلچر کو فروغ دینے کے لیے قائم کیا گیا ہے۔
+                    </p>
+                    <p class="urdu">
+ہمارا مقصد یہ یقینی بنانا ہے کہ ہر شکایت کو سنا جائے، ہر مسئلے کو اہمیت دی جائے، اور ہر فریاد کو گورننس اور عوامی خدمت کی بہتری کے موقع میں تبدیل کیا جائے۔ اس نظام کے ذریعے ہم شہریوں اور انتظامیہ کے درمیان فاصلے کو کم کرتے ہوئے ایک ایسی فضا قائم کرنا چاہتے ہیں جہاں شفافیت، جوابدہی اور مؤثر عوامی خدمت ترقی اور بھروسے کی بنیاد بنیں۔
+                    </p>
+                </div>
+
             </div>
         </section>
 

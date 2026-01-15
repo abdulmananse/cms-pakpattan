@@ -44,6 +44,7 @@
 
                 @if(Route::is('landing'))
                 <div class="hidden md:flex items-center gap-8">
+                    <a href="#vision" class="hover:text-primary-700">Our Vision</a>
                     <a href="#features" class="hover:text-primary-700">Features</a>
                     <a href="#how" class="hover:text-primary-700">How it works</a>
                     <a href="#categories" class="hover:text-primary-700">Categories</a>
