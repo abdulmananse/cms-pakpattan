@@ -116,7 +116,7 @@ class FrontComplaintController extends Controller
         $beforeLink = $beforeImage = $afterLink = $afterImage = NULL;
         if($complaint) {
             if ($complaint->complaint_status == 0 && $complaint->approved_by == NULL) {
-                $message = 'Your complaint is still pending approval. Please wait for the approval from the admin.';
+                $message = 'Respected Citizen, your complaint is in process and will be resolved very soon.';
             } elseif ($complaint->complaint_status == 0 && $complaint->approved_by != NULL && $complaint->assigned_by == NULL) {
                 $message = 'Your complaint has been approved by the admin.';
             } elseif ($complaint->complaint_status == 0 && $complaint->approved_by != NULL && $complaint->department_id != NULL) {
