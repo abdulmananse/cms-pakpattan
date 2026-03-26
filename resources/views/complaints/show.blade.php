@@ -124,6 +124,7 @@
                                                         @if($complaint->complaint_status == 1 && $complaint->resolved_attachment)
                                                             @php
                                                                 $resolvedExt = strtolower(pathinfo($complaint->resolved_attachment, PATHINFO_EXTENSION));
+                                                                dd($resolvedExt);
                                                                 $videoExt = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
                                                             @endphp
                                                             <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="ms-5">
