@@ -189,14 +189,28 @@
         };
 
         const tooltip = {
-                pointFormat: '<b> {point.y:,.0f} | {point.percentage:.1f} %</b>'
-            };
+            pointFormat: '<b> {point.y:,.0f} | {point.percentage:.1f} %</b>'
+        };
+
+        const pieChartResponsive = {
+            rules: [{
+                condition: {
+                    maxWidth: 600
+                },
+                chartOptions: {
+                    legend: {
+                        enabled: false
+                    }
+                }
+            }]
+        }
 
         Highcharts.chart('ComplaintsPieChart', {
             chart: chartOption,
             title: {text: ''},
             tooltip: tooltip,
             plotOptions: plotOptions,
+            responsive: pieChartResponsive,
             series: [{
                 name: 'Counts',
                 colorByPoint: true,
@@ -227,18 +241,7 @@
                     verticalAlign: 'middle', // Center it vertically
                     layout: 'vertical'    // Stack items vertically
                 },
-                responsive: {
-                    rules: [{
-                        condition: {
-                            maxWidth: 600
-                        },
-                        chartOptions: {
-                            legend: {
-                                enabled: false
-                            }
-                        }
-                    }]
-                },
+                responsive: pieChartResponsive,
                 series: [{
                     name: 'Counts',
                     colorByPoint: true,
@@ -265,6 +268,7 @@
                     verticalAlign: 'middle', // Center it vertically
                     layout: 'vertical'    // Stack items vertically
                 },
+                responsive: pieChartResponsive,
                 series: [{
                     name: 'Counts',
                     colorByPoint: true,
@@ -357,6 +361,7 @@
                     verticalAlign: 'middle', // Center it vertically
                     layout: 'vertical'    // Stack items vertically
                 },
+                responsive: pieChartResponsive,
                 series: [{
                     name: 'Counts',
                     colorByPoint: true,
