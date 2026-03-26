@@ -345,6 +345,9 @@ table.dataTable.table-sm .sorting_desc:after {
     #filterForm .col-xxl-2, button.btn.btn-continue.btn-sm.filterBtn {
         width: 95% !important;
     }
+    div.dt-buttons {
+        display: inline;
+    }
     #filterForm .label-float {
         margin-bottom: 10px;
     }
