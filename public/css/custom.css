@@ -342,7 +342,7 @@ table.dataTable.table-sm .sorting_desc:after {
     }
 }
 @media (max-width: 767px) {
-    #filterForm .col-xxl-2 {
+    #filterForm .col-xxl-2, button.btn.btn-continue.btn-sm.filterBtn {
         width: 95% !important;
     }
     #filterForm .label-float {
