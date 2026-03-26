@@ -227,6 +227,18 @@
                     verticalAlign: 'middle', // Center it vertically
                     layout: 'vertical'    // Stack items vertically
                 },
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 600
+                        },
+                        chartOptions: {
+                            legend: {
+                                enabled: false
+                            }
+                        }
+                    }]
+                },
                 series: [{
                     name: 'Counts',
                     colorByPoint: true,
