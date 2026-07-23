@@ -212,7 +212,7 @@
                                         @endcan
 
                                         @canany(['Complaints Reassigned'])
-                                            @if($complaint->complaint_status == 0 && $complaint->department_id != NULL)
+                                            @if(($complaint->complaint_status == 0 && $complaint->department_id != NULL) || $complaint->complaint_status == 3)
                                             {{ html()->form('POST', route('complaints.assigned', $complaint->uuid))->id('formValidation')->open() }}
                                                 <div class="card-body row">
                                                     <div class="form-group col-md-4">
