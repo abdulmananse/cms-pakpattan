@@ -113,7 +113,9 @@
             ];
 
             const exportButtons = [{
-                extend: 'csv',
+                extend: 'csvHtml5',
+                bom: true,
+                charset: 'utf-8',
                 text: 'Download',
                 title: 'Complaints',
                 action: datatableExportAction,
