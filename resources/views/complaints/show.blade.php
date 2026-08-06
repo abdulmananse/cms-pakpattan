@@ -100,7 +100,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th>Attachments</th>
-                                                    <td class="attachments" >
+                                                    <td class="attachments" colspan="3" >
                                                         @if($complaint->attachment)
                                                             @php
                                                                 $ext = strtolower(pathinfo($complaint->attachment, PATHINFO_EXTENSION));
@@ -108,36 +108,40 @@
                                                             @endphp
                                                             <a href="{{ asset('storage/complaints/' . $complaint->attachment) }}" target="_blank">
                                                                 @if($ext === 'pdf')
-                                                                    <img src="{{ asset('images/pdf_icon.png') }}" width="120" alt="PDF" />
+                                                                    <img src="{{ asset('images/pdf_icon.png') }}" alt="PDF" />
                                                                 @elseif($ext === 'docx')
-                                                                    <img src="{{ asset('images/doc_icon.jpg') }}" width="120" alt="Doc" />
+                                                                    <img src="{{ asset('images/doc_icon.jpg') }}" alt="Doc" />
                                                                 @elseif($ext === 'pptx')
-                                                                    <img src="{{ asset('images/pptx_icon.png') }}" width="120" alt="PPTX" />
+                                                                    <img src="{{ asset('images/pptx_icon.png') }}" alt="PPTX" />
                                                                 @elseif(in_array($ext, $videoExt))
-                                                                    <img src="{{ asset('images/vlc_icon.png') }}" width="120" alt="Video" />
+                                                                    <img src="{{ asset('images/vlc_icon.png') }}" alt="Video" />
                                                                 @else
-                                                                    <img src="{{ asset('storage/complaints/' . $complaint->attachment) }}" width="120" />
+                                                                    <img src="{{ asset('storage/complaints/' . $complaint->attachment) }}" />
                                                                 @endif
                                                             </a>
                                                         @endif
-                                                    </td>
-                                                    <td class="attachments" colspan="2">        
+
+                                                        
+           
                                                         @if($complaint->complaint_status == 1 && $complaint->resolved_attachment)
+                                                            
+                                                            <img src="{{ asset('images/arrow.png') }}" alt="Arrow" style="border:none;width:80px;" />
+
                                                             @php
                                                                 $resolvedExt = strtolower(pathinfo($complaint->resolved_attachment, PATHINFO_EXTENSION));
                                                                 $videoExt = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
                                                             @endphp
-                                                            <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="ms-5">
+                                                            <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="ms-1">
                                                                 @if($resolvedExt === 'pdf')
-                                                                    <img src="{{ asset('images/pdf_icon.png') }}" width="120" alt="PDF" />
+                                                                    <img src="{{ asset('images/pdf_icon.png') }}" alt="PDF" />
                                                                 @elseif($resolvedExt === 'docx')
-                                                                    <img src="{{ asset('images/doc_icon.jpg') }}" width="120" alt="Doc" />
+                                                                    <img src="{{ asset('images/doc_icon.jpg') }}" alt="Doc" />
                                                                 @elseif($resolvedExt === 'pptx')
-                                                                    <img src="{{ asset('images/pptx_icon.png') }}" width="120" alt="PPTX" />
+                                                                    <img src="{{ asset('images/pptx_icon.png') }}" alt="PPTX" />
                                                                 @elseif(in_array($resolvedExt, $videoExt))
-                                                                    <img src="{{ asset('images/vlc_icon.png') }}" width="120" alt="Video" />
+                                                                    <img src="{{ asset('images/vlc_icon.png') }}" alt="Video" />
                                                                 @else
-                                                                    <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" width="120" />
+                                                                    <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}"  />
                                                                 @endif
                                                             </a>
                                                         @endif
@@ -147,17 +151,17 @@
                                                                 $resolvedExt = strtolower(pathinfo($complaint->resolved_attachment_2, PATHINFO_EXTENSION));
                                                                 $videoExt = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
                                                             @endphp
-                                                            <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment_2) }}" target="_blank" class="ms-5">
+                                                            <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment_2) }}" target="_blank" class="ms-2">
                                                                 @if($resolvedExt === 'pdf')
-                                                                    <img src="{{ asset('images/pdf_icon.png') }}" width="120" alt="PDF" />
+                                                                    <img src="{{ asset('images/pdf_icon.png') }}" alt="PDF" />
                                                                 @elseif($resolvedExt === 'docx')
-                                                                    <img src="{{ asset('images/doc_icon.jpg') }}" width="120" alt="Doc" />
+                                                                    <img src="{{ asset('images/doc_icon.jpg') }}" alt="Doc" />
                                                                 @elseif($resolvedExt === 'pptx')
-                                                                    <img src="{{ asset('images/pptx_icon.png') }}" width="120" alt="PPTX" />
+                                                                    <img src="{{ asset('images/pptx_icon.png') }}" alt="PPTX" />
                                                                 @elseif(in_array($resolvedExt, $videoExt))
-                                                                    <img src="{{ asset('images/vlc_icon.png') }}" width="120" alt="Video" />
+                                                                    <img src="{{ asset('images/vlc_icon.png') }}" alt="Video" />
                                                                 @else
-                                                                    <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment_2) }}" width="120" />
+                                                                    <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment_2) }}" />
                                                                 @endif
                                                             </a>
                                                         @endif
