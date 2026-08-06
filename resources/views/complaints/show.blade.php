@@ -125,8 +125,10 @@
            
                                                         @if($complaint->complaint_status == 1 && $complaint->resolved_attachment)
                                                             
+                                                            @if($complaint->attachment)
                                                             <img src="{{ asset('images/arrow.png') }}" alt="Arrow" style="border:none;width:80px;" />
-
+                                                            @endif
+                                                            
                                                             @php
                                                                 $resolvedExt = strtolower(pathinfo($complaint->resolved_attachment, PATHINFO_EXTENSION));
                                                                 $videoExt = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
