@@ -254,7 +254,7 @@
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         {{ html()->label()->for('remarks')->text('Remarks')->class('form-label required-input') }}
-                                                        {{ html()->textarea('remarks', null)->class('form-control')->placeholder('Remarks')->required()->maxlength(500) }}
+                                                        {{ html()->textarea('remarks', null)->class('form-control')->placeholder('Remarks')->required()->maxlength(1000) }}
                                                         {!! $errors->first('remarks', '<label class="error">:message</label>') !!}
                                                     </div>
                                                     <div class="card-footer d-flex justify-content-end">
