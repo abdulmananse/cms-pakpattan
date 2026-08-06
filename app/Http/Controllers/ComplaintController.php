@@ -75,7 +75,7 @@ class ComplaintController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Request\ComplaintRequest  $request
+     * @param  ComplaintRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(ComplaintRequest $request)
@@ -132,7 +132,7 @@ class ComplaintController extends Controller
     /**
      * Assign complaint to department
      *
-     * @param  \App\Http\Request\Request  $request
+     * @param  Request $request
      * @param  \App\Models\Complaint $complaint
      * @return \Illuminate\Http\Response
      */
@@ -160,7 +160,7 @@ class ComplaintController extends Controller
     /**
      * Transfer complaint to department
      *
-     * @param  \App\Http\Request\Request  $request
+     * @param  Request $request
      * @param  \App\Models\Complaint $complaint
      * @return \Illuminate\Http\Response
      */
@@ -190,7 +190,7 @@ class ComplaintController extends Controller
     /**
      * Reject Complaint
      *
-     * @param  \App\Models\Complaint $complaint
+     * @param  Complaint $complaint
      * @return \Illuminate\Http\Response
      */
     public function rejected(Complaint $complaint) {
@@ -207,8 +207,8 @@ class ComplaintController extends Controller
     /**
      * Reject Complaint
      *
-     * @param  \App\Http\Request\Request  $request
-     * @param  \App\Models\Complaint $complaint
+     * @param  Request $request
+     * @param  Complaint $complaint
      * @return \Illuminate\Http\Response
      */
     public function resolved(Request $request, Complaint $complaint) {
@@ -235,8 +235,8 @@ class ComplaintController extends Controller
     /**
      * Reject Complaint
      *
-     * @param  \App\Http\Request\Request  $request
-     * @param  \App\Models\Complaint $complaint
+     * @param  Request  $request
+     * @param  Complaint $complaint
      * @return \Illuminate\Http\Response
      */
     public function reopened(Request $request, Complaint $complaint) {
@@ -256,61 +256,32 @@ class ComplaintController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category $category
+     * @param  Complaint $complaint
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Complaint $complaint)
     {
-        return view('categories.edit', get_defined_vars());
+        
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Request\CategoryRequest  $request
-     * @param  \App\Models\Category $category
+     * @param  Request $request
+     * @param  Complaint $complaint
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, Category $category) {
-
-        $category->update($request->validated());
-
-        Session::flash('success', 'Category successfully updated!');
-
-        return redirect()->route('categories.index');
+    public function update(Request $request, Complaint $complaint) {
 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category $category
+     * @param  Complaint $complaint
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category) {
-        if($category) {
-            $category->delete();
-            return $this->sendResponse(true, 'Category successfully deleted!');
-        }
-
-        return $this->sendResponse(false, 'Category not found!', [], 404);
-    }
-
-    /**
-     * Update Status
-     *
-     * @param  \App\Models\Category $category
-     * @return \Illuminate\Http\Response
-     */
-    public function updateStatus(Category $category) {
-
-        if($category) {
-            $category->is_active = !$category->is_active;
-            $category->save();
-
-            return $this->sendResponse(true, 'Category status successfully updated!');
-        }
-
-        return $this->sendResponse(false, 'Category not found!', [], 404);
+    public function destroy(Complaint $complaint) {
+        
     }
 }
