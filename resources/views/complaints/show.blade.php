@@ -265,7 +265,7 @@
                                         @endcan
 
                                         @canany(['Complaints Resolved'])
-                                            {{-- @if(in_array($complaint->complaint_status, [0, 3]) && $complaint->department_id != NULL && in_array($complaint->department_id, $user->departments->pluck('id')->toArray())) --}}
+                                            @if(in_array($complaint->complaint_status, [0, 3]) && $complaint->department_id != NULL && in_array($complaint->department_id, $user->departments->pluck('id')->toArray()))
                                             {{ html()->form('POST', route('complaints.resolved', $complaint->uuid))->id('formValidation')->attribute('enctype', 'multipart/form-data')->open() }}
                                                 <div class="card-body row">
                                                     <div class="form-group col-md-3">
@@ -289,7 +289,7 @@
                                                     </div>
                                                 </div>
                                             {{ html()->form()->close() }}
-                                            {{-- @endif --}}
+                                            @endif
                                         @endcan
 
                                         @canany(['Complaints Reopened'])
