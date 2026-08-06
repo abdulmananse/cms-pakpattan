@@ -39,6 +39,7 @@ class Complaint extends Model
         'resolved_by',
         'resolved_at',
         'resolved_attachment',
+        'resolved_attachment_2',
         'remarks',
         'reopened_remarks',
         'reopened_by',

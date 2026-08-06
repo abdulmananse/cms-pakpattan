@@ -124,6 +124,7 @@ class ComplaintController extends Controller
      */
     public function show(Complaint $complaint)
     {
+        // dd($complaint->toArray());
         $user = Auth::user();
         $departments = getActiveDepartments();
         return view('complaints.show', get_defined_vars());
@@ -218,6 +219,13 @@ class ComplaintController extends Controller
             $fileName = $complaint->complaint_no . '_r.' . $extension;
             $request->file('attachment')->storeAs('complaints', $fileName, 'public');
             $complaint->resolved_attachment = $fileName;
+        }
+
+        if ($request->hasFile('attachment_2')) {
+            $extension = $request->file('attachment_2')->getClientOriginalExtension();
+            $fileName = $complaint->complaint_no . '_r2.' . $extension;
+            $request->file('attachment_2')->storeAs('complaints', $fileName, 'public');
+            $complaint->resolved_attachment_2 = $fileName;
         }
 
         $complaint->complaint_status = 1;
