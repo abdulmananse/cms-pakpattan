@@ -159,7 +159,7 @@ class ReportController extends Controller
         }
 
         $user = Auth::user();
-        $query = Complaint::query()->roleFilter($user);
+        $query = Complaint::roleFilter($user);
 
         // Date range filter on complaint creation date (created_at)
         if ($request->filled('from_date')) {

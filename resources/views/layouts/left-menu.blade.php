@@ -49,7 +49,9 @@
                             @can('Resolved Complaints')
                                 <li><a href="{{ route('reports.resolvedComplaints') }}">Resolved Complaints</a></li>
                             @endcan
+                            @can('Complaints Download')
                             <li><a href="{{ route('reports.download') }}">Complaints Download</a></li>
+                             @endcan
                         </ul>
                     </li>
                 @endcanany
