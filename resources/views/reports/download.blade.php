@@ -178,7 +178,7 @@
                                         <label for="to_date" class="form-label fw-bold">To Date</label>
                                         <input type="date" id="to_date" name="to_date" class="form-control date-picker-input" value="{{ old('to_date') }}" placeholder="YYYY-MM-DD">
                                     </div>
-                                    <div class="col-md-2 d-flex align-items-end">
+                                    <div class="col-md-2 d-flex align-items-end  mt-5">
                                         <button type="button" class="btn btn-outline-secondary w-100" id="btnClearDates" title="Clear Date Filter">
                                             <i class="feather icon-x-circle me-1"></i> Clear Dates
                                         </button>
