@@ -36,7 +36,7 @@ class ComplaintRequest extends FormRequest
             $rules['location'] = 'required|string|max:100';
             $rules['attachment'] = 'required|file|mimes:jpg,jpeg,png,pdf|max:5120';
         } else {
-            $rules['attachment'] = 'nullable|file';
+            $rules['attachment'] = 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120';
             $rules['department_id'] = ['required'];
             $rules['name'] = ['required', 'string', 'max:255'];
             $rules['email'] = ['nullable', 'string', 'lowercase', 'email', 'max:255'];
