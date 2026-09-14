@@ -279,6 +279,7 @@
                                             @if($complaint->complaint_status == 0 && $complaint->department_id == NULL)
                                             {{ html()->form('POST', route('complaints.assigned', $complaint->uuid))->id('formValidation')->open() }}
                                                 <div class="card-body row">
+                                                    <h4 class="form-label">Assign Department</h4>
                                                     <div class="form-group col-md-4">
                                                         {{ html()->label()->for('department_id')->text('Department')->class('form-label required-input') }}
                                                         {{ html()->select('department_id', $departments, null)->class('form-select select2')->placeholder('Select Department')->required() }}

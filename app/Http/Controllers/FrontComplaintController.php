@@ -181,4 +181,15 @@ class FrontComplaintController extends Controller
     {
         return view('front-complaints.show', get_defined_vars());
     }
+
+    public function submitFeedback(Request $request, Complaint $complaint) {
+
+        $complaint->feedback = $request->feedback;
+        $complaint->save();
+
+        complaintLog($complaint, 'feedback');
+
+        Session::flash('success', 'Complaint feedback submitted successfully!');
+        return redirect()->route('dashboard');
+    }
 }

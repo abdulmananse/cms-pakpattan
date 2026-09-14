@@ -125,6 +125,10 @@
                                         <a href="{{ asset('storage/complaints/' . $complaint->attachment) }}" target="_blank">
                                             @if($ext === 'pdf')
                                                 <img src="{{ asset('images/pdf_icon.png') }}" width="120" alt="PDF" />
+                                            @elseif($ext === 'docx')
+                                                <img src="{{ asset('images/doc_icon.jpg') }}" width="120" alt="Doc" />
+                                            @elseif($ext === 'pptx')
+                                                <img src="{{ asset('images/pptx_icon.png') }}" width="120" alt="PPTX" />
                                             @elseif(in_array($ext, $videoExt))
                                                 <img src="{{ asset('images/vlc_icon.png') }}" width="120" alt="PDF" />
                                             @else
@@ -134,6 +138,11 @@
                                     @endif
 
                                     @if($complaint->complaint_status == 1 && $complaint->resolved_attachment)
+                                        
+                                        @if($complaint->attachment)
+                                        <img src="{{ asset('images/arrow.png') }}" alt="Arrow" style="border:none;width:50px;margin-inline-start: 1rem;" />
+                                        @endif
+                                        
                                         @php
                                             $resolvedExt = strtolower(pathinfo($complaint->resolved_attachment, PATHINFO_EXTENSION));
                                             $videoExt = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
@@ -141,10 +150,35 @@
                                         <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="ms-5">
                                             @if($resolvedExt === 'pdf')
                                                 <img src="{{ asset('images/pdf_icon.png') }}" width="120" alt="PDF" />
+                                            @elseif($resolvedExt === 'docx')
+                                                <img src="{{ asset('images/doc_icon.jpg') }}" width="120" alt="Doc" />
+                                            @elseif($resolvedExt === 'pptx')
+                                                <img src="{{ asset('images/pptx_icon.png') }}" width="120" alt="PPTX" />
                                             @elseif(in_array($resolvedExt, $videoExt))
                                                 <img src="{{ asset('images/vlc_icon.png') }}" width="120" alt="PDF" />
                                             @else
                                                 <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" width="120" />
+                                            @endif
+                                        </a>
+                                    @endif
+
+                                    @if($complaint->complaint_status == 1 && $complaint->resolved_attachment_2)
+                                        
+                                        @php
+                                            $resolvedExt = strtolower(pathinfo($complaint->resolved_attachment_2, PATHINFO_EXTENSION));
+                                            $videoExt = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
+                                        @endphp
+                                        <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment_2) }}" target="_blank" class="ms-5">
+                                            @if($resolvedExt === 'pdf')
+                                                <img src="{{ asset('images/pdf_icon.png') }}" width="120" alt="PDF" />
+                                            @elseif($resolvedExt === 'docx')
+                                                <img src="{{ asset('images/doc_icon.jpg') }}" width="120" alt="Doc" />
+                                            @elseif($resolvedExt === 'pptx')
+                                                <img src="{{ asset('images/pptx_icon.png') }}" width="120" alt="PPTX" />
+                                            @elseif(in_array($resolvedExt, $videoExt))
+                                                <img src="{{ asset('images/vlc_icon.png') }}" width="120" alt="PDF" />
+                                            @else
+                                                <img src="{{ asset('storage/complaints/' . $complaint->resolved_attachment_2) }}" width="120" />
                                             @endif
                                         </a>
                                     @endif
@@ -193,6 +227,35 @@
                         </tr>
                         @endif
 
+                        @if($complaint->feedback != NULL)
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                Feedback
+                            </th>
+                            <td class="px-6 py-4" colspan="3" class="urduLabel">
+                                {{ $complaint->feedback }}
+                            </td>
+                        </tr>
+                        @endif
+
+                        @if($complaint->complaint_status == 1 && $complaint->feedback == NULL)
+                        {{ html()->form('POST', route('complaint-feedback.submit', $complaint->uuid))->id('formValidation')->attribute('enctype', 'multipart/form-data')->open() }}
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Complaint Feedback
+                                </th>
+                                <td class="px-6 py-4" colspan="3" class="urduLabel">
+                                    {{ html()->textarea('feedback', null)->class('block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm')->placeholder('Feedback')->maxlength(500)->required() }}
+                                    {!! $errors->first('feedback', '<label class="error">:message</label>') !!}
+                                
+                                    <br/>
+                                    <x-primary-button class="ms-4">
+                                        {{ __('Submit') }}
+                                    </x-primary-button>
+                                </td>
+                            </tr>
+                        {{ html()->form()->close() }}
+                        @endif
                     </tbody>
                 </table>
             </div>    
