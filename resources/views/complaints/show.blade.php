@@ -123,17 +123,17 @@
 
                                                         
            
-                                                        @if($complaint->complaint_status == 1 && $complaint->resolved_attachment)
+                                                        @if(in_array($complaint->complaint_status, [1, 3]) && $complaint->resolved_attachment)
                                                             
                                                             @if($complaint->attachment)
-                                                            <img src="{{ asset('images/arrow.png') }}" alt="Arrow" style="border:none;width:80px;" />
+                                                            <img src="{{ asset('images/arrow.png') }}" alt="Arrow" style="border:none;width:50px;" />
                                                             @endif
                                                             
                                                             @php
                                                                 $resolvedExt = strtolower(pathinfo($complaint->resolved_attachment, PATHINFO_EXTENSION));
                                                                 $videoExt = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
                                                             @endphp
-                                                            <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="ms-1">
+                                                            <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment) }}" target="_blank" class="_ms-1">
                                                                 @if($resolvedExt === 'pdf')
                                                                     <img src="{{ asset('images/pdf_icon.png') }}" alt="PDF" />
                                                                 @elseif($resolvedExt === 'docx')
@@ -148,12 +148,12 @@
                                                             </a>
                                                         @endif
 
-                                                        @if($complaint->complaint_status == 1 && $complaint->resolved_attachment_2)
+                                                        @if(in_array($complaint->complaint_status, [1, 3]) && $complaint->resolved_attachment_2)
                                                             @php
                                                                 $resolvedExt = strtolower(pathinfo($complaint->resolved_attachment_2, PATHINFO_EXTENSION));
                                                                 $videoExt = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
                                                             @endphp
-                                                            <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment_2) }}" target="_blank" class="ms-2">
+                                                            <a href="{{ asset('storage/complaints/' . $complaint->resolved_attachment_2) }}" target="_blank" class="_ms-2">
                                                                 @if($resolvedExt === 'pdf')
                                                                     <img src="{{ asset('images/pdf_icon.png') }}" alt="PDF" />
                                                                 @elseif($resolvedExt === 'docx')
@@ -167,6 +167,50 @@
                                                                 @endif
                                                             </a>
                                                         @endif
+
+                                                        @if($complaint->complaint_status == 1 && $complaint->reopen_resolved_attachment)
+                                                            
+                                                            <img src="{{ asset('images/arrow.png') }}" alt="Arrow" style="border:none;width:50px;" />
+                                                            
+                                                            @php
+                                                                $resolvedExt = strtolower(pathinfo($complaint->reopen_resolved_attachment, PATHINFO_EXTENSION));
+                                                                $videoExt = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
+                                                            @endphp
+                                                            <a href="{{ asset('storage/complaints/' . $complaint->reopen_resolved_attachment) }}" target="_blank" class="_ms-1">
+                                                                @if($resolvedExt === 'pdf')
+                                                                    <img src="{{ asset('images/pdf_icon.png') }}" alt="PDF" />
+                                                                @elseif($resolvedExt === 'docx')
+                                                                    <img src="{{ asset('images/doc_icon.jpg') }}" alt="Doc" />
+                                                                @elseif($resolvedExt === 'pptx')
+                                                                    <img src="{{ asset('images/pptx_icon.png') }}" alt="PPTX" />
+                                                                @elseif(in_array($resolvedExt, $videoExt))
+                                                                    <img src="{{ asset('images/vlc_icon.png') }}" alt="Video" />
+                                                                @else
+                                                                    <img src="{{ asset('storage/complaints/' . $complaint->reopen_resolved_attachment) }}"  />
+                                                                @endif
+                                                            </a>
+                                                        @endif
+
+                                                        @if($complaint->complaint_status == 1 && $complaint->reopen_resolved_attachment_2)
+                                                            @php
+                                                                $resolvedExt = strtolower(pathinfo($complaint->reopen_resolved_attachment_2, PATHINFO_EXTENSION));
+                                                                $videoExt = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
+                                                            @endphp
+                                                            <a href="{{ asset('storage/complaints/' . $complaint->reopen_resolved_attachment_2) }}" target="_blank" class="_ms-2">
+                                                                @if($resolvedExt === 'pdf')
+                                                                    <img src="{{ asset('images/pdf_icon.png') }}" alt="PDF" />
+                                                                @elseif($resolvedExt === 'docx')
+                                                                    <img src="{{ asset('images/doc_icon.jpg') }}" alt="Doc" />
+                                                                @elseif($resolvedExt === 'pptx')
+                                                                    <img src="{{ asset('images/pptx_icon.png') }}" alt="PPTX" />
+                                                                @elseif(in_array($resolvedExt, $videoExt))
+                                                                    <img src="{{ asset('images/vlc_icon.png') }}" alt="Video" />
+                                                                @else
+                                                                    <img src="{{ asset('storage/complaints/' . $complaint->reopen_resolved_attachment_2) }}" />
+                                                                @endif
+                                                            </a>
+                                                        @endif
+
                                                     </td>
                                                 </tr>
                                                 @if($complaint->transfer_from > 0)
@@ -191,7 +235,7 @@
                                                 </tr>
                                                 @endif
 
-                                                @if($complaint->complaint_status == 1 || $complaint->complaint_status == 3)
+                                                @if(in_array($complaint->complaint_status, [1, 3]))
                                                 <tr>
                                                     <th>Resolved By</th>
                                                     <td>{{ optional($complaint->resolved_user)->name }}</td>
@@ -204,12 +248,19 @@
                                                 </tr>
                                                 @endif
 
-                                                @if($complaint->complaint_status == 3)
+                                                @if($complaint->reopened_remarks != NULL)
                                                 <tr>
                                                     <th>Reopened By</th>
                                                     <td>{{ optional($complaint->reopened_user)->name }}</td>
                                                     <th>Reopened Remarks</th>
                                                     <td class="urduLabel">{{ $complaint->reopened_remarks }}</td>
+                                                </tr>
+                                                @endif
+
+                                                @if($complaint->reopen_resolved_remarks != NULL)
+                                                <tr>
+                                                    <th>Reopened Resolved Remarks</th>
+                                                    <td colspan="3" class="urduLabel">{{ $complaint->reopen_resolved_remarks }}</td>
                                                 </tr>
                                                 @endif
 
@@ -223,7 +274,7 @@
                                                 <div class="card-body row">
                                                     <div class="form-group col-md-4">
                                                         {{ html()->label()->for('department_id')->text('Department')->class('form-label required-input') }}
-                                                        {{ html()->select('department_id', $departments, null)->class('form-select')->placeholder('Select Department')->required() }}
+                                                        {{ html()->select('department_id', $departments, null)->class('form-select select2')->placeholder('Select Department')->required() }}
                                                     </div>
                                                     <div class="card-footer d-flex justify-content-end">
                                                         @can('Complaints Rejected')
@@ -242,9 +293,10 @@
                                             @if(($complaint->complaint_status == 0 && $complaint->department_id != NULL) || $complaint->complaint_status == 3)
                                             {{ html()->form('POST', route('complaints.assigned', $complaint->uuid))->id('formValidation')->open() }}
                                                 <div class="card-body row">
+                                                    <h4 class="form-label">Re-Assign Department</h4>
                                                     <div class="form-group col-md-4">
                                                         {{ html()->label()->for('department_id')->text('Department')->class('form-label required-input') }}
-                                                        {{ html()->select('department_id', $departments, null)->class('form-select')->placeholder('Select Department')->required() }}
+                                                        {{ html()->select('department_id', $departments, null)->class('form-select select2')->placeholder('Select Department')->required() }}
                                                     </div>
                                                     <div class="card-footer d-flex justify-content-end">
                                                         <button type="submit" class="btn btn-primary">Re-Assign</button>
@@ -258,9 +310,10 @@
                                             @if($complaint->complaint_status == 0 && $complaint->department_id != NULL && $complaint->transfer_from == NULL)
                                             {{ html()->form('POST', route('complaints.transfer', $complaint->uuid))->id('formValidation')->open() }}
                                                 <div class="card-body row">
+                                                    <h4 class="form-label">Transfer To Department</h4>
                                                     <div class="form-group col-md-4">
-                                                        {{ html()->label()->for('department_id')->text('Department')->class('form-label required-input') }}
-                                                        {{ html()->select('department_id', $departments->except($complaint->department_id), null)->class('form-select')->placeholder('Select Department')->required() }}
+                                                        {{ html()->label()->for('transfer_department_id')->text('Department')->class('form-label required-input') }}
+                                                        {{ html()->select('transfer_department_id', $departments->except($complaint->department_id), null)->class('form-select select2')->placeholder('Select Department')->required() }}
                                                     </div>
                                                     <div class="card-footer d-flex justify-content-end">
                                                         <button type="submit" class="btn btn-primary">Transfer</button>
@@ -271,9 +324,11 @@
                                         @endcan
 
                                         @canany(['Complaints Resolved'])
-                                            @if(in_array($complaint->complaint_status, [0, 3]) && $complaint->department_id != NULL && in_array($complaint->department_id, $user->departments->pluck('id')->toArray()))
+                                            {{-- @if(in_array($complaint->complaint_status, [0, 3]) && $complaint->department_id != NULL && in_array($complaint->department_id, $user->departments->pluck('id')->toArray())) --}}
+                                            @if(in_array($complaint->complaint_status, [0, 3]) && $complaint->department_id != NULL)
                                             {{ html()->form('POST', route('complaints.resolved', $complaint->uuid))->id('formValidation')->attribute('enctype', 'multipart/form-data')->open() }}
                                                 <div class="card-body row">
+                                                    <h4 class="form-label">Resolve Complaint</h4>
                                                     <div class="form-group col-md-3">
                                                         {{ html()->label()->for('attachment')->text('Attachment 1')->class('form-label required-input') }} <br/>
                                                         {{ html()->file('attachment')->required() }}
@@ -302,6 +357,7 @@
                                             @if($complaint->complaint_status == 1)
                                             {{ html()->form('POST', route('complaints.reopened', $complaint->uuid))->id('formValidation')->attribute('enctype', 'multipart/form-data')->open() }}
                                                 <div class="card-body row">
+                                                    <h4 class="form-label">Reopen Complaint</h4>
                                                     <div class="form-group col-md-6">
                                                         {{ html()->label()->for('reopen_remarks')->text('Reopen Remarks')->class('form-label required-input') }}
                                                         {{ html()->textarea('reopen_remarks', null)->class('form-control')->placeholder('Reopen Remarks')->required()->maxlength(500) }}
@@ -333,7 +389,7 @@
     <script type="text/javascript">
         _$.ready(function () {
             $('#formValidation').validate();
-
+            
             _$.on('click', '.btn-reject', function (e) {
                 e.preventDefault();  
 

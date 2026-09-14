@@ -44,6 +44,9 @@ class Complaint extends Model
         'reopened_remarks',
         'reopened_by',
         'reopened_at',
+        'reopen_resolved_attachment',
+        'reopen_resolved_attachment_2',
+        'reopen_resolved_remarks',
     ];
 
     public function scopeRoleFilter($query, $user)

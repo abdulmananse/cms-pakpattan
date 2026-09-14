@@ -168,12 +168,12 @@ class ComplaintController extends Controller
     public function transfer(Request $request, Complaint $complaint) {
 
 
-        if ($request->filled('department_id')) {
+        if ($request->filled('transfer_department_id')) {
             $complaint->transfer_from = $complaint->department_id;
             $complaint->transfer_from_by = $complaint->assigned_by;
             $complaint->transfer_from_at = $complaint->assigned_at;
 
-            $complaint->department_id = $request->department_id;
+            $complaint->department_id = $request->transfer_department_id;
             $complaint->assigned_by = Auth::id();
             $complaint->assigned_at = date('Y-m-d H:i:s');
             $complaint->save();
@@ -214,27 +214,46 @@ class ComplaintController extends Controller
      */
     public function resolved(Request $request, Complaint $complaint) {
 
-        if ($request->hasFile('attachment')) {
-            $extension = $request->file('attachment')->getClientOriginalExtension();
-            $fileName = $complaint->complaint_no . '_r.' . $extension;
-            $request->file('attachment')->storeAs('complaints', $fileName, 'public');
-            $complaint->resolved_attachment = $fileName;
-        }
+        if ($complaint->complaint_status == 3) {
+            if ($request->hasFile('attachment')) {
+                $extension = $request->file('attachment')->getClientOriginalExtension();
+                $fileName = $complaint->complaint_no . '_rr.' . $extension;
+                $request->file('attachment')->storeAs('complaints', $fileName, 'public');
+                $complaint->reopen_resolved_attachment = $fileName;
+            }
 
-        if ($request->hasFile('attachment_2')) {
-            $extension = $request->file('attachment_2')->getClientOriginalExtension();
-            $fileName = $complaint->complaint_no . '_r2.' . $extension;
-            $request->file('attachment_2')->storeAs('complaints', $fileName, 'public');
-            $complaint->resolved_attachment_2 = $fileName;
+            if ($request->hasFile('attachment_2')) {
+                $extension = $request->file('attachment_2')->getClientOriginalExtension();
+                $fileName = $complaint->complaint_no . '_rr2.' . $extension;
+                $request->file('attachment_2')->storeAs('complaints', $fileName, 'public');
+                $complaint->reopen_resolved_attachment_2 = $fileName;
+            }
+
+            $complaint->reopen_resolved_remarks = $request->remarks;
+            complaintLog($complaint, 'reopen_resolved');
+        } else {
+            if ($request->hasFile('attachment')) {
+                $extension = $request->file('attachment')->getClientOriginalExtension();
+                $fileName = $complaint->complaint_no . '_r.' . $extension;
+                $request->file('attachment')->storeAs('complaints', $fileName, 'public');
+                $complaint->resolved_attachment = $fileName;
+            }
+
+            if ($request->hasFile('attachment_2')) {
+                $extension = $request->file('attachment_2')->getClientOriginalExtension();
+                $fileName = $complaint->complaint_no . '_r2.' . $extension;
+                $request->file('attachment_2')->storeAs('complaints', $fileName, 'public');
+                $complaint->resolved_attachment_2 = $fileName;
+            }
+
+            $complaint->remarks = $request->remarks;
+            complaintLog($complaint, 'resolved');
         }
 
         $complaint->complaint_status = 1;
-        $complaint->remarks = $request->remarks;
         $complaint->resolved_by = Auth::id();
         $complaint->resolved_at = date('Y-m-d H:i:s');
         $complaint->save();
-
-        complaintLog($complaint, 'resolved');
 
         Session::flash('success', 'Complaint successfully resolved!');
         return redirect()->route('complaints.index');
