@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::get('complaints/reject/{complaint}', [ComplaintController::class, 'rejected'])->name('complaints.rejected')->middleware('permission:Complaints Rejected');
     Route::post('complaints/resolved/{complaint}', [ComplaintController::class, 'resolved'])->name('complaints.resolved')->middleware('permission:Complaints Resolved');
     Route::post('complaints/reopened/{complaint}', [ComplaintController::class, 'reopened'])->name('complaints.reopened')->middleware('permission:Complaints Reopened');
+    Route::post('complaints/feedback/{complaint}', [ComplaintController::class, 'feedback'])->name('complaints.feedback')->middleware('permission:Complaints Feedback');
 
     # Reports
     Route::get('reports/charts', [ReportController::class, 'charts'])->name('reports.charts')->middleware('permission:Charts');

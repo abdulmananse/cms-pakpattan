@@ -281,6 +281,24 @@ class ComplaintController extends Controller
     }
 
     /**
+     * Feedback Complaint
+     *
+     * @param  Request  $request
+     * @param  Complaint $complaint
+     * @return \Illuminate\Http\Response
+     */
+    public function feedback(Request $request, Complaint $complaint) {
+
+        $complaint->feedback = $request->feedback;
+        $complaint->save();
+
+        complaintLog($complaint, 'feedback');
+
+        Session::flash('success', 'Complaint feedback submitted successfully!');
+        return redirect()->route('complaints.index');
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  Complaint $complaint

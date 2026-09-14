@@ -264,6 +264,13 @@
                                                 </tr>
                                                 @endif
 
+                                                @if($complaint->feedback != NULL)
+                                                <tr>
+                                                    <th>Feedback</th>
+                                                    <td colspan="3" class="urduLabel">{{ $complaint->feedback }}</td>
+                                                </tr>
+                                                @endif
+
                                             </tbody>
                                             </table>
                                         </div>
@@ -365,6 +372,24 @@
                                                     </div>
                                                     <div class="card-footer d-flex justify-content-end">
                                                         <button type="submit" class="btn btn-success mr-2">Reopened</button>
+                                                    </div>
+                                                </div>
+                                            {{ html()->form()->close() }}
+                                            @endif
+                                        @endcan
+
+                                        @canany(['Complaints Feedback'])
+                                            @if($complaint->complaint_status == 1 && $complaint->feedback == NULL)
+                                            {{ html()->form('POST', route('complaints.feedback', $complaint->uuid))->id('formValidation')->attribute('enctype', 'multipart/form-data')->open() }}
+                                                <div class="card-body row">
+                                                    <h4 class="form-label">Complaint Feedback</h4>
+                                                    <div class="form-group col-md-6">
+                                                        {{ html()->label()->for('feedback')->text('Feedback')->class('form-label required-input') }}
+                                                        {{ html()->textarea('feedback', null)->class('form-control')->placeholder('Feedback')->required()->maxlength(500) }}
+                                                        {!! $errors->first('feedback', '<label class="error">:message</label>') !!}
+                                                    </div>
+                                                    <div class="card-footer d-flex justify-content-end">
+                                                        <button type="submit" class="btn btn-success mr-2">Submit Feedback</button>
                                                     </div>
                                                 </div>
                                             {{ html()->form()->close() }}
