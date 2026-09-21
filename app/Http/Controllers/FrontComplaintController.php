@@ -183,8 +183,14 @@ class FrontComplaintController extends Controller
     }
 
     public function submitFeedback(Request $request, Complaint $complaint) {
+        $request->validate([
+            'feedback_type' => 'required|string',
+            'feedback' => 'nullable|required_if:feedback_type,Not Satisfied|string|max:500',
+        ]);
 
-        $complaint->feedback = $request->feedback;
+        $complaint->feedback_type = $request->feedback_type;
+        $complaint->feedback = $request->feedback_type === 'Not Satisfied' ? $request->feedback : null;
+        $complaint->feedback_at = now();
         $complaint->save();
 
         complaintLog($complaint, 'feedback');

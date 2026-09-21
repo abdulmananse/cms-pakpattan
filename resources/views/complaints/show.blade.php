@@ -264,10 +264,13 @@
                                                 </tr>
                                                 @endif
 
-                                                @if($complaint->feedback != NULL)
+                                                @if($complaint->feedback_type != NULL)
                                                 <tr>
                                                     <th>Feedback</th>
-                                                    <td colspan="3" class="urduLabel">{{ $complaint->feedback }}</td>
+                                                    <td colspan="3" class="urduLabel">
+                                                        {{ $complaint->feedback_type }} ({{ date('d M h:i A', strtotime($complaint->feedback_at)) }})<br/>
+                                                        {{ $complaint->feedback }}
+                                                    </td>
                                                 </tr>
                                                 @endif
 
@@ -279,7 +282,7 @@
                                             @if($complaint->complaint_status == 0 && $complaint->department_id == NULL)
                                             {{ html()->form('POST', route('complaints.assigned', $complaint->uuid))->id('formValidation')->open() }}
                                                 <div class="card-body row">
-                                                    <h4 class="form-label">Assign Department</h4>
+                                                    <h4 class="form-label">Assign To Department</h4>
                                                     <div class="form-group col-md-4">
                                                         {{ html()->label()->for('department_id')->text('Department')->class('form-label required-input') }}
                                                         {{ html()->select('department_id', $departments, null)->class('form-select select2')->placeholder('Select Department')->required() }}
@@ -301,7 +304,7 @@
                                             @if(($complaint->complaint_status == 0 && $complaint->department_id != NULL) || $complaint->complaint_status == 3)
                                             {{ html()->form('POST', route('complaints.assigned', $complaint->uuid))->id('formValidation')->open() }}
                                                 <div class="card-body row">
-                                                    <h4 class="form-label">Re-Assign Department</h4>
+                                                    <h4 class="form-label">Re-Assign To Department</h4>
                                                     <div class="form-group col-md-4">
                                                         {{ html()->label()->for('department_id')->text('Department')->class('form-label required-input') }}
                                                         {{ html()->select('department_id', $departments, null)->class('form-select select2')->placeholder('Select Department')->required() }}
@@ -332,8 +335,8 @@
                                         @endcan
 
                                         @canany(['Complaints Resolved'])
-                                            @if(in_array($complaint->complaint_status, [0, 3]) && $complaint->department_id != NULL && in_array($complaint->department_id, $user->departments->pluck('id')->toArray()))
-                                            {{-- @if(in_array($complaint->complaint_status, [0, 3]) && $complaint->department_id != NULL) --}}
+                                            {{-- @if(in_array($complaint->complaint_status, [0, 3]) && $complaint->department_id != NULL && in_array($complaint->department_id, $user->departments->pluck('id')->toArray())) --}}
+                                            @if(in_array($complaint->complaint_status, [0, 3]) && $complaint->department_id != NULL)
                                             {{ html()->form('POST', route('complaints.resolved', $complaint->uuid))->id('formValidation')->attribute('enctype', 'multipart/form-data')->open() }}
                                                 <div class="card-body row">
                                                     <h4 class="form-label">Resolve Complaint</h4>
@@ -380,14 +383,21 @@
                                         @endcan
 
                                         @canany(['Complaints Feedback'])
-                                            @if($complaint->complaint_status == 1 && $complaint->feedback == NULL)
+                                            @if($complaint->complaint_status == 1 && $complaint->feedback_type == NULL)
                                             {{ html()->form('POST', route('complaints.feedback', $complaint->uuid))->id('formValidation')->attribute('enctype', 'multipart/form-data')->open() }}
                                                 <div class="card-body row">
                                                     <h4 class="form-label">Complaint Feedback</h4>
                                                     <div class="form-group col-md-6">
-                                                        {{ html()->label()->for('feedback')->text('Feedback')->class('form-label required-input') }}
-                                                        {{ html()->textarea('feedback', null)->class('form-control')->placeholder('Feedback')->required()->maxlength(500) }}
-                                                        {!! $errors->first('feedback', '<label class="error">:message</label>') !!}
+
+                                                        {{ html()->label()->for('feedback_type')->text('Feedback')->class('form-label required-input') }}
+                                                        {{ html()->select('feedback_type', ['Satisfied' => 'Satisfied', 'Not Satisfied' => 'Not Satisfied', 'Funds Required' => 'Funds Required'], null)->id('feedback_type')->class('form-select')->placeholder('Feedback')->required() }}
+                                                        {!! $errors->first('feedback_type', '<label class="error">:message</label>') !!}
+
+                                                        <div id="feedback_wrapper" style="display: none;" class="mt-2">
+                                                            {{ html()->label()->for('feedback')->text('Remarks')->class('form-label required-input') }}
+                                                            {{ html()->textarea('feedback', null)->class('form-control')->placeholder('Remarks')->maxlength(500) }}
+                                                            {!! $errors->first('feedback', '<label class="error">:message</label>') !!}
+                                                        </div>
                                                     </div>
                                                     <div class="card-footer d-flex justify-content-end">
                                                         <button type="submit" class="btn btn-success mr-2">Submit Feedback</button>
@@ -445,6 +455,16 @@
 
                 return false;
 
+            });
+
+            $('#feedback_type').on('change', function() {
+                if (this.value === 'Not Satisfied') {
+                    $('#feedback_wrapper').show();
+                    $('#feedback').attr('required', true);
+                } else {
+                    $('#feedback_wrapper').hide();
+                    $('#feedback').attr('required', false);
+                }
             });
         });
     </script>

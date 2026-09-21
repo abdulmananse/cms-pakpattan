@@ -266,7 +266,7 @@ class ReportController extends Controller
                 'callback' => fn($c) => $c->complaint_by?->name ?? '',
             ],
             'assigned_at' => [
-                'label' => 'Assigned At',
+                'label' => 'Assigned Time',
                 'callback' => fn($c) => $c->assigned_at ? \Carbon\Carbon::parse($c->assigned_at)->format('Y-m-d H:i:s') : '',
             ],
             'assigned_to_dept' => [
@@ -291,6 +291,18 @@ class ReportController extends Controller
             'reopened_remarks' => [
                 'label' => 'Reopened Remarks',
                 'callback' => fn($c) => $c->reopened_remarks ?? '',
+            ],
+            'feedback_type' => [
+                'label' => 'Feedback Type',
+                'callback' => fn($c) => $c->feedback_type ?? '',
+            ],
+            'feedback' => [
+                'label' => 'Feedback',
+                'callback' => fn($c) => $c->feedback ?? '',
+            ],
+            'feedback_at' => [
+                'label' => 'Feedback Time',
+                'callback' => fn($c) => $c->feedback_at ? \Carbon\Carbon::parse($c->feedback_at)->format('Y-m-d H:i:s') : '',
             ],
             'complaint_status' => [
                 'label' => 'Complaint Status',

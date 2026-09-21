@@ -227,31 +227,40 @@
                         </tr>
                         @endif
 
-                        @if($complaint->feedback != NULL)
+                        @if($complaint->feedback != NULL || $complaint->feedback_type != NULL)
                         <tr class="border-b border-gray-200 dark:border-gray-700">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
                                 Feedback
                             </th>
                             <td class="px-6 py-4" colspan="3" class="urduLabel">
-                                {{ $complaint->feedback }}
+                                @if($complaint->feedback_type)
+                                    <div><strong>Type:</strong> {{ $complaint->feedback_type }}</div>
+                                @endif
+                                @if($complaint->feedback)
+                                    <div class="mt-1">{{ $complaint->feedback }}</div>
+                                @endif
                             </td>
                         </tr>
                         @endif
 
-                        @if($complaint->complaint_status == 1 && $complaint->feedback == NULL)
+                        @if($complaint->complaint_status == 1 && $complaint->feedback == NULL && $complaint->feedback_type == NULL)
                         {{ html()->form('POST', route('complaint-feedback.submit', $complaint->uuid))->id('formValidation')->attribute('enctype', 'multipart/form-data')->open() }}
                             <tr class="border-b border-gray-200 dark:border-gray-700">
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
                                     Complaint Feedback
                                 </th>
                                 <td class="px-6 py-4" colspan="3" class="urduLabel">
-                                    {{ html()->textarea('feedback', null)->class('block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm')->placeholder('Feedback')->maxlength(500)->required() }}
-                                    {!! $errors->first('feedback', '<label class="error">:message</label>') !!}
+                                    
+                                    {{ html()->select('feedback_type', ['Satisfied' => 'Satisfied', 'Not Satisfied' => 'Not Satisfied', 'Funds Required' => 'Funds Required'], null)->id('feedback_type')->class('block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm')->placeholder('Feedback Type')->required() }}
+                                    {!! $errors->first('feedback_type', '<label class="error">:message</label>') !!}
+                                    
+                                    <div id="feedback_wrapper" style="display: none;" class="mt-2">
+                                        {{ html()->textarea('feedback', null)->id('feedback_field')->class('block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm')->placeholder('Feedback')->maxlength(500) }}
+                                        {!! $errors->first('feedback', '<label class="error">:message</label>') !!}
+                                    </div>
                                 
                                     <br/>
-                                    <x-primary-button class="ms-4">
-                                        {{ __('Submit') }}
-                                    </x-primary-button>
+                                    <x-primary-button class="ms-4">{{ __('Submit') }}</x-primary-button>
                                 </td>
                             </tr>
                         {{ html()->form()->close() }}
@@ -261,4 +270,33 @@
             </div>    
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const feedbackTypeSelect = document.getElementById('feedback_type');
+            const feedbackWrapper = document.getElementById('feedback_wrapper');
+            const feedbackField = document.getElementById('feedback_field');
+
+            if (feedbackTypeSelect && feedbackWrapper && feedbackField) {
+                function handleFeedbackVisibility() {
+                    if (feedbackTypeSelect.value === 'Not Satisfied') {
+                        feedbackWrapper.style.display = 'block';
+                        feedbackField.setAttribute('required', 'required');
+                    } else {
+                        feedbackWrapper.style.display = 'none';
+                        feedbackField.removeAttribute('required');
+                    }
+                }
+
+                feedbackTypeSelect.addEventListener('change', function () {
+                    if (this.value !== 'Not Satisfied') {
+                        feedbackField.value = '';
+                    }
+                    handleFeedbackVisibility();
+                });
+
+                handleFeedbackVisibility();
+            }
+        });
+    </script>
 </x-app-layout>

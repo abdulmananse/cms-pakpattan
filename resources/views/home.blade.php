@@ -16,6 +16,7 @@
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Category</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Description</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Location</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Feedback</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Status</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Complaint At</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700"></th>
@@ -29,6 +30,7 @@
                                 <td class="px-4 py-2 text-sm text-gray-600">{{ $complaint->category->name ?? '-' }}</td>
                                 <td class="px-4 py-2 text-sm text-gray-600 truncate max-w-xs">{{ $complaint->description }}</td>
                                 <td class="px-4 py-2 text-sm text-gray-600">{{ $complaint->location }}</td>
+                                <td class="px-4 py-2 text-sm text-gray-600">{{ $complaint->feedback_type }}</td>
                                 <td class="px-4 py-2 text-sm">
                                     <span class="px-2 py-1 rounded-full text-xs 
                                         {{ $complaint->complaint_status == 0 ? 'bg-yellow-100 text-yellow-800' : '' }}

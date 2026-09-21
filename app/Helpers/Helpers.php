@@ -126,7 +126,7 @@ if (!function_exists('getComplaintStatusBadge')) {
             if ($assignedAt->lt(now()->subDays(5))) {
                 $badge .= '<a href="#" class="badge bg-danger">Overdue</a>';
             } else {
-                $badge .= '<a href="#" class="badge bg-info">Assigned to Department</a>';
+                $badge .= '<a href="#" class="badge bg-info">Assigned</a>';
             }
         } elseif ($status == 1) {
             $badge .= '<a href="#" class="badge bg-success">Resolved</a>';

@@ -42,6 +42,7 @@
                                             <th>Source</th>    
                                             <th>Date</th>    
                                             <th>Status</th>    
+                                            <th>Feedback</th>    
                                             <th></th>   
                                             <th class="d-none">Mobile</th>
                                             <th class="d-none">Address</th> 
@@ -97,6 +98,9 @@
                     searchable: false
                 },
                 {
+                    data: 'feedback_type'
+                },
+                {
                     data: 'action',
                     width: '10%',
                     orderable: false,
@@ -121,7 +125,7 @@
                 action: datatableExportAction,
                 className:'btn btn-success',
                 exportOptions: {
-                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11]
+                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12]
                 }
             }];
 
