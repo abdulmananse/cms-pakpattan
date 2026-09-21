@@ -6,14 +6,15 @@ use App\Http\Controllers\Acl\RoleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ContactCategoryController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FrontComplaintController;
+use App\Http\Controllers\OfficerContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\UserController;
-use App\Models\Complaint;
 use App\Models\PermissionGroup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -84,6 +85,18 @@ Route::middleware('auth')->group(function () {
     Route::resource('sources', SourceController::class);
     Route::post('sources/datatable', [SourceController::class, 'index'])->name('sources.datatable');
     Route::get('sources/update-status/{source}', [SourceController::class, 'updateStatus'])->name('sources.updateStatus');
+
+    # Contact Categories
+    Route::resource('contact-categories', ContactCategoryController::class);
+    Route::post('contact-categories/datatable', [ContactCategoryController::class, 'index'])->name('contact-categories.datatable');
+    Route::get('contact-categories/update-status/{contact_category}', [ContactCategoryController::class, 'updateStatus'])->name('contact-categories.updateStatus');
+
+    # Officer Contact Records
+    Route::resource('officer-contacts', OfficerContactController::class);
+    Route::post('officer-contacts/datatable', [OfficerContactController::class, 'index'])->name('officer-contacts.datatable');
+    Route::get('officer-contacts/toggle-pcm/{officer_contact}', [OfficerContactController::class, 'togglePcm'])->name('officer-contacts.togglePcm');
+    Route::get('officer-contacts/toggle-fav/{officer_contact}', [OfficerContactController::class, 'toggleFavorite'])->name('officer-contacts.toggleFavorite');
+    Route::get('officer-contacts/update-status/{officer_contact}', [OfficerContactController::class, 'updateStatus'])->name('officer-contacts.updateStatus');
 
     # ACL 
     Route::resource('roles', RoleController::class)->only('index')->middleware('permission:Roles Index');

@@ -57,4 +57,8 @@ class Department extends Model
         return $this->belongsToMany(User::class, 'department_user', 'department_id', 'user_id');
     }
 
+    public function officerContactRecords(): HasMany
+    {
+        return $this->hasMany(OfficerContactRecord::class, 'department_id');
+    }
 }

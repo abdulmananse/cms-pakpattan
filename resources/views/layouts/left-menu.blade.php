@@ -30,6 +30,15 @@
                     </li>
                 @endcanany
 
+                @canany(['Officer Contacts Index'])
+                    <li class="nav-item {{ setActive(['officer-contacts']) }}">
+                        <a href="{{ route('officer-contacts.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-phone-call"></i></span>
+                            <span class="pcoded-mtext">Officer Contacts</span>
+                        </a>
+                    </li>
+                @endcanany
+
                 @canany(['Summary', 'Pending Complaints', 'Resolved Complaints'])
                     <li class="nav-item pcoded-hasmenu {{ setActive(['reports']) }}">
                         <a href="#" class="nav-link ">
@@ -66,14 +75,17 @@
                             @can('Settings Index')
                                 <li><a href="{{ route('settings.index') }}">General Settings</a></li>
                             @endcan
-                            @can('Categories Index')
-                                <li><a href="{{ route('categories.index') }}">Categories</a></li>
-                            @endcan
                             @can('Departments Index')
                                 <li><a href="{{ route('departments.index') }}">Departments</a></li>
                             @endcan
+                            @can('Categories Index')
+                                <li><a href="{{ route('categories.index') }}">Categories</a></li>
+                            @endcan
                             @can('Sources Index')
                                 <li><a href="{{ route('sources.index') }}">Sources</a></li>
+                            @endcan
+                            @can('Contact Categories Index')
+                                <li><a href="{{ route('contact-categories.index') }}">Contact Categories</a></li>
                             @endcan
                             @can('Roles Index')
                                 <li><a href="{{ route('roles.index') }}">Roles</a></li>

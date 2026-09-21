@@ -16,6 +16,8 @@ use App\Models\DEODistrictsTehsil;
 use App\Models\DEOClasses;
 use App\Models\Department;
 use App\Models\Source;
+use App\Models\ContactCategory;
+use App\Models\OfficerContactRecord;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -967,6 +969,13 @@ if (!function_exists('getActiveCategories')) {
     function getActiveCategories()
     {
         return Category::active()->orderBy('ordering')->pluck('name', 'id');
+    }
+}
+
+if (!function_exists('getActiveContactCategories')) {
+    function getActiveContactCategories()
+    {
+        return ContactCategory::active()->orderBy('name', 'asc')->pluck('name', 'id');
     }
 }
 
