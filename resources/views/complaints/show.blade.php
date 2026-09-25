@@ -390,7 +390,7 @@
                                                     <div class="form-group col-md-6">
 
                                                         {{ html()->label()->for('feedback_type')->text('Feedback')->class('form-label required-input') }}
-                                                        {{ html()->select('feedback_type', ['Satisfied' => 'Satisfied', 'Not Satisfied' => 'Not Satisfied', 'Funds Required' => 'Funds Required'], null)->id('feedback_type')->class('form-select')->placeholder('Feedback')->required() }}
+                                                        {{ html()->select('feedback_type', ['Satisfied' => 'Satisfied', 'Not Satisfied' => 'Not Satisfied', 'Funds Required' => 'Funds Required', 'Not Responding' => 'Not Responding', 'Other' => 'Other'], null)->id('feedback_type')->class('form-select')->placeholder('Feedback')->required() }}
                                                         {!! $errors->first('feedback_type', '<label class="error">:message</label>') !!}
 
                                                         <div id="feedback_wrapper" style="display: none;" class="mt-2">
@@ -458,7 +458,7 @@
             });
 
             $('#feedback_type').on('change', function() {
-                if (this.value === 'Not Satisfied') {
+                if (this.value === 'Not Satisfied' || this.value === 'Other') {
                     $('#feedback_wrapper').show();
                     $('#feedback').attr('required', true);
                 } else {

@@ -251,7 +251,7 @@
                                 </th>
                                 <td class="px-6 py-4" colspan="3" class="urduLabel">
                                     
-                                    {{ html()->select('feedback_type', ['Satisfied' => 'Satisfied', 'Not Satisfied' => 'Not Satisfied', 'Funds Required' => 'Funds Required'], null)->id('feedback_type')->class('block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm')->placeholder('Feedback Type')->required() }}
+                                    {{ html()->select('feedback_type', ['Satisfied' => 'Satisfied', 'Not Satisfied' => 'Not Satisfied', 'Funds Required' => 'Funds Required', 'Other' => 'Other'], null)->id('feedback_type')->class('block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm')->placeholder('Feedback Type')->required() }}
                                     {!! $errors->first('feedback_type', '<label class="error">:message</label>') !!}
                                     
                                     <div id="feedback_wrapper" style="display: none;" class="mt-2">
@@ -279,7 +279,7 @@
 
             if (feedbackTypeSelect && feedbackWrapper && feedbackField) {
                 function handleFeedbackVisibility() {
-                    if (feedbackTypeSelect.value === 'Not Satisfied') {
+                    if (feedbackTypeSelect.value === 'Not Satisfied' || feedbackTypeSelect.value === 'Other') {
                         feedbackWrapper.style.display = 'block';
                         feedbackField.setAttribute('required', 'required');
                     } else {

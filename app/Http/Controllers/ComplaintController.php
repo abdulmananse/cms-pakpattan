@@ -291,11 +291,11 @@ class ComplaintController extends Controller
 
         $request->validate([
             'feedback_type' => 'required|string',
-            'feedback' => 'nullable|required_if:feedback_type,Not Satisfied|string|max:500',
+            'feedback' => 'nullable|required_if:feedback_type,Not Satisfied,Other|string|max:500',
         ]);
 
         $complaint->feedback_type = $request->feedback_type;
-        $complaint->feedback = $request->feedback_type === 'Not Satisfied' ? $request->feedback : null;
+        $complaint->feedback = ($request->feedback_type === 'Not Satisfied' || $request->feedback_type === 'Other') ? $request->feedback : null;
         $complaint->feedback_at = now();
         $complaint->save();
 
