@@ -22,7 +22,7 @@ class DashboardController extends Controller
         $user = Auth::user();
         if($user->role == 'Complainant') {
             $complaints = Complaint::where('created_by', Auth::id())->orderBy('updated_at', 'desc')->get();
-            return view('home', get_defined_vars());
+            return view('home', get_defined_vars()); 
         }
 
         $summary = Complaint::selectRaw("
