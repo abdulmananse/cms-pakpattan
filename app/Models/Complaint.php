@@ -84,7 +84,7 @@ class Complaint extends Model
                         } elseif ($status == 0) {
                             // Fresh
                             $sub->where('complaint_status', 0)
-                                ->where('assigned_at', '>', Carbon::now()->subDays(5));
+                                ->whereRaw('created_at >= DATE_SUB(NOW(), INTERVAL 5 DAY)');
 
                         } elseif ($status == 4) {
                             // Overdue
