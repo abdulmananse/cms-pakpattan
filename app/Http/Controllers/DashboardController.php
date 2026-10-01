@@ -25,11 +25,6 @@ class DashboardController extends Controller
             return view('home', get_defined_vars());
         }
 
-        if ($user->username == 'acppn') {
-            echo now()->subDays(5);
-            dd(DB::select('select DATE_SUB(NOW(), INTERVAL 5 DAY) as date'));
-        }
-
         $summary = Complaint::selectRaw("
             COUNT(*) as total,
             SUM(CASE WHEN complaint_status = 0 AND (department_id IS NULL OR created_at >= DATE_SUB(NOW(), INTERVAL 5 DAY)) THEN 1 ELSE 0 END) as fresh,
