@@ -20,9 +20,20 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        if($user->role == 'Complainant') {
+
+        // If user is strictly a Land Revenue user, redirect to Land Revenue Dashboard
+        if ($user && $user->isRevenueOnly()) {
+            return redirect()->route('revenue-matters.dashboard');
+        }
+
+        if ($user && ($user->hasRole('Complainant') || $user->role == 'Complainant')) {
             $complaints = Complaint::where('created_by', Auth::id())->orderBy('updated_at', 'desc')->get();
             return view('home', get_defined_vars()); 
+        }
+
+        // Enforce authorization for general CMS dashboard
+        if (!$user || !$user->hasGeneralDashboardAccess()) {
+            abort(403, 'Unauthorized to view general CMS dashboard.');
         }
 
         $summary = Complaint::selectRaw("

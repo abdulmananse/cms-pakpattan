@@ -27,7 +27,8 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => 'required|max:50',
             'designation' => 'nullable|max:50',
-            'role' => 'nullable|exists:roles,id',
+            'roles' => 'required|array|min:1',
+            'roles.*' => 'required|exists:roles,id',
             'username' => 'required|max:100|unique:users,username,'.$this->id,
             'email' => 'nullable|email|max:100',
             'mobile' => 'nullable',
@@ -35,6 +36,15 @@ class UpdateUserRequest extends FormRequest
             'permission_ids' => 'nullable',
             'source_id' => 'nullable|exists:sources,id',
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()]
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'roles.required' => 'Please select at least one role.',
+            'roles.min' => 'Please select at least one role.',
+            'roles.*.exists' => 'The selected role is invalid.',
         ];
     }
 

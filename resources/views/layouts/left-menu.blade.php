@@ -20,6 +20,37 @@
                         </a>
                     </li>
                 @endcanany
+
+                @canany(['Land Revenue Matters Access', 'Revenue Matters Access'])
+                    <li class="nav-item pcoded-hasmenu {{ setActive(['revenue-matters*']) }}">
+                        <a href="#" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-briefcase"></i></span>
+                            <span class="pcoded-mtext">Land Revenue Matters</span>
+                        </a>
+                        <ul class="pcoded-submenu">
+                            <li><a href="{{ route('revenue-matters.dashboard') }}">Dashboard</a></li>
+                            @canany(['Land Revenue Matters Create', 'Revenue Matters Create'])
+                                <li><a href="{{ route('revenue-matters.complaints.create') }}">Lodge New Complaint</a></li>
+                            @endcanany
+                            <li><a href="{{ route('revenue-matters.complaints.index', ['tab' => 'assigned']) }}">Assigned</a></li>
+                            <li><a href="{{ route('revenue-matters.complaints.index', ['tab' => 'forwarded']) }}">Forwarded</a></li>
+                            <li><a href="{{ route('revenue-matters.complaints.search') }}">Search</a></li>
+                            @canany(['Land Revenue Matters View All', 'Revenue Matters View All'])
+                                <li>
+                                    <a href="{{ route('revenue-matters.complaints.index', ['tab' => 'all']) }}">
+                                        All Complaints
+                                        @php
+                                            $allRevenueCount = \App\Models\RevenueComplaint::count();
+                                        @endphp
+                                        @if($allRevenueCount > 0)
+                                            <span class="pcoded-badge badge bg-primary">{{ $allRevenueCount }}</span>
+                                        @endif
+                                    </a>
+                                </li>
+                            @endcanany
+                        </ul>
+                    </li>
+                @endcanany
                 
                 @canany(['Users Index', 'User Profile'])
                     <li class="nav-item {{ setActive(['users']) }}">

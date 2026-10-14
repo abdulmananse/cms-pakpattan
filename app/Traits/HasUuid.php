@@ -33,8 +33,11 @@ trait HasUuid
     protected static function bootHasUuid()
     {
         static::creating(function ($model) {
-            // $model->uuid = getUuid();
-            $model->uuid = DB::raw('uuid()');
+            if (empty($model->uuid)) {
+                $model->uuid = (DB::connection()->getDriverName() === 'sqlite')
+                    ? (string) \Illuminate\Support\Str::uuid()
+                    : DB::raw('uuid()');
+            }
         });
     }
 }

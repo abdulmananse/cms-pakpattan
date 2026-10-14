@@ -15,7 +15,11 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Revenue\RevenueComplaintActionController;
+use App\Http\Controllers\Revenue\RevenueComplaintController;
+use App\Http\Controllers\Revenue\RevenueDashboardController;
 use App\Models\PermissionGroup;
+use App\Models\RevenueComplaint;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +58,24 @@ Route::middleware('auth')->group(function () {
     Route::post('complaints/resolved/{complaint}', [ComplaintController::class, 'resolved'])->name('complaints.resolved')->middleware('permission:Complaints Resolved');
     Route::post('complaints/reopened/{complaint}', [ComplaintController::class, 'reopened'])->name('complaints.reopened')->middleware('permission:Complaints Reopened');
     Route::post('complaints/feedback/{complaint}', [ComplaintController::class, 'feedback'])->name('complaints.feedback')->middleware('permission:Complaints Feedback');
+
+    # Revenue Department Matters
+    Route::model('revenue_complaint', RevenueComplaint::class);
+    Route::prefix('revenue-matters')->name('revenue-matters.')->group(function () {
+        Route::get('dashboard', [RevenueDashboardController::class, 'index'])->name('dashboard')->middleware('permission:Land Revenue Matters Access|Land Revenue Matters Dashboard|Revenue Matters Access');
+        Route::get('complaints', [RevenueComplaintController::class, 'index'])->name('complaints.index')->middleware('permission:Land Revenue Matters Access|Revenue Matters Access');
+        Route::get('complaints/create', [RevenueComplaintController::class, 'create'])->name('complaints.create')->middleware('permission:Land Revenue Matters Create|Revenue Matters Create');
+        Route::post('complaints', [RevenueComplaintController::class, 'store'])->name('complaints.store')->middleware('permission:Land Revenue Matters Create|Revenue Matters Create');
+        Route::get('complaints/search', [RevenueComplaintController::class, 'search'])->name('complaints.search')->middleware('permission:Land Revenue Matters Access|Land Revenue Matters Search|Revenue Matters Access');
+        Route::get('complaints/{revenue_complaint}', [RevenueComplaintController::class, 'show'])->name('complaints.show');
+
+        // Revenue Complaint Actions
+        Route::post('complaints/{revenue_complaint}/forward', [RevenueComplaintActionController::class, 'forward'])->name('complaints.forward')->middleware('permission:Land Revenue Matters Forward|Revenue Matters Forward');
+        Route::post('complaints/{revenue_complaint}/send-back', [RevenueComplaintActionController::class, 'sendBack'])->name('complaints.sendBack')->middleware('permission:Land Revenue Matters Send Back|Revenue Matters Send Back');
+        Route::post('complaints/{revenue_complaint}/comment', [RevenueComplaintActionController::class, 'addComment'])->name('complaints.comment')->middleware('permission:Land Revenue Matters Comment|Revenue Matters Comment');
+        Route::post('complaints/{revenue_complaint}/close', [RevenueComplaintActionController::class, 'close'])->name('complaints.close');
+        Route::post('complaints/{revenue_complaint}/reopen', [RevenueComplaintActionController::class, 'reopen'])->name('complaints.reopen');
+    });
 
     # Reports
     Route::get('reports/charts', [ReportController::class, 'charts'])->name('reports.charts')->middleware('permission:Charts');

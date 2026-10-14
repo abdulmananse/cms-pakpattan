@@ -25,7 +25,8 @@ class StoreUserRequest extends BaseRequest
     public function rules()
     {
         return [
-            'role' => 'required|exists:roles,id',
+            'roles' => 'required|array|min:1',
+            'roles.*' => 'required|exists:roles,id',
             'source_id' => 'nullable|exists:sources,id',
             'name' => 'required|max:50',
             'designation' => 'nullable|max:50',
@@ -35,7 +36,15 @@ class StoreUserRequest extends BaseRequest
             'department_ids' => 'nullable',
             'permission_ids' => 'nullable',
             'password' => ['required', 'confirmed', Rules\Password::defaults()]
-            
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'roles.required' => 'Please select at least one role.',
+            'roles.min' => 'Please select at least one role.',
+            'roles.*.exists' => 'The selected role is invalid.',
         ];
     }
 
