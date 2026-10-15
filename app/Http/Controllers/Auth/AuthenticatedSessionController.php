@@ -28,6 +28,18 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $user = Auth::user();
+
+        if ($user && $user->isRevenueOnly()) {
+            $intended = session('url.intended');
+            if (!$intended || str_ends_with($intended, '/dashboard') || str_ends_with($intended, '/')) {
+                session()->forget('url.intended');
+                return redirect()->route('revenue-matters.dashboard');
+            }
+
+            return redirect()->intended(route('revenue-matters.dashboard', absolute: false));
+        }
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

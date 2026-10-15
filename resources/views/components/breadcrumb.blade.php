@@ -13,6 +13,9 @@
                         @if(roleName() == 'DEO')
                             <li class="breadcrumb-item"><a href="{{ route('nadra-verification.getDistrictsWiseStats') }}"><i
                                 class="feather icon-home"></i></a></li>
+                        @elseif(auth()->check() && auth()->user()->isRevenueOnly())
+                            <li class="breadcrumb-item"><a href="{{ route('revenue-matters.dashboard') }}"><i
+                                class="feather icon-home"></i></a></li>
                         @else
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
                                 class="feather icon-home"></i></a></li>

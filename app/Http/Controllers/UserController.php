@@ -46,7 +46,22 @@ class UserController extends Controller
 
             return Datatables::of($users)
                 ->addColumn('role', function ($user) {
-                    return $user->getRoleNames()->first();
+                    $roles = $user->getRoleNames();
+                    if ($roles->isEmpty()) {
+                        return $user->role ? '<span class="badge bg-secondary">' . e($user->role) . '</span>' : '—';
+                    }
+                    return $roles->map(function ($roleName) {
+                        $badgeClass = match($roleName) {
+                            'Super Admin' => 'bg-danger',
+                            'Admin' => 'bg-primary',
+                            'Revenue Department' => 'bg-warning text-dark',
+                            'Department' => 'bg-info',
+                            'Complaint_Sources' => 'bg-secondary',
+                            'Control Room' => 'bg-dark',
+                            default => 'bg-secondary',
+                        };
+                        return '<span class="badge ' . $badgeClass . ' me-1">' . e($roleName) . '</span>';
+                    })->implode(' ');
                 })
                 ->addColumn('is_active', function ($user) {
                     return getStatusBadge($user->is_active);
@@ -68,7 +83,7 @@ class UserController extends Controller
                     return $action;
                     
                 })
-                ->rawColumns(['is_active', 'action'])
+                ->rawColumns(['role', 'is_active', 'action'])
                 ->make(true);
         }
         
@@ -86,6 +101,7 @@ class UserController extends Controller
         $departments = getActiveDepartments();
         $sources = getActiveSources();
         $selectedDepartments = $selectedPermissions = null;
+        $selectedRoles = [];
 
         $permissions = Permission::where('name', 'Complaints Transfer')->pluck('name', 'id');
 
@@ -106,16 +122,16 @@ class UserController extends Controller
         }
         $userData['password'] = Hash::make($request->password);
         
-        $role = Role::find($request->role);
+        $roles = Role::whereIn('id', $request->input('roles', []))->get();
 
-        if ($role) {
-            $userData['role'] = $role->name;
+        if ($roles->isNotEmpty()) {
+            $userData['role'] = $roles->first()->name;
         }
 
         $user = User::create($userData);
 
-        if($user && $role) {
-            $user->assignRole($role);
+        if ($user && $roles->isNotEmpty()) {
+            $user->syncRoles($roles);
         }
         
         if ($request->filled('permission_ids')) {
@@ -154,11 +170,12 @@ class UserController extends Controller
 
         $roles = Role::where('id', '!=', 1)->active()->pluck('name', 'id');
 
-        $role = $user->roles->first();
-        if ($role) {
-            $user->role = $role->id;
-        } else {
-            $user->role = '';
+        $selectedRoles = $user->roles->pluck('id')->toArray();
+        if (empty($selectedRoles) && !empty($user->role)) {
+            $fallbackRole = Role::where('name', $user->role)->first();
+            if ($fallbackRole) {
+                $selectedRoles = [$fallbackRole->id];
+            }
         }
         
         $departments = getActiveDepartments();
@@ -184,11 +201,13 @@ class UserController extends Controller
     {
         $userData = $request->validated();
 
-        $role = Role::find($request->role);
+        $roles = Role::whereIn('id', $request->input('roles', []))->get();
 
-        if ($role) {
-            $userData['role'] = $role->name;
-            $user->syncRoles($role);
+        if ($roles->isNotEmpty()) {
+            $userData['role'] = $roles->first()->name;
+            $user->syncRoles($roles);
+        } else {
+            $user->syncRoles([]);
         }
         
         if ($request->filled('permission_ids')) {

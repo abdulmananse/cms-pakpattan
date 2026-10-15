@@ -54,10 +54,10 @@ class Complaint extends Model
 
     public function scopeRoleFilter($query, $user)
     {
-        if ($user->role == 'Department') {
+        if ($user->hasRole('Department') || $user->role == 'Department') {
             $query->where('department_id', $user->departments->pluck('id')->toArray());
         }
-        if ($user->role == 'Complaint_Sources') {
+        if ($user->hasRole('Complaint_Sources') || $user->role == 'Complaint_Sources') {
             $query->where('source_id', $user->source_id);
         }
 

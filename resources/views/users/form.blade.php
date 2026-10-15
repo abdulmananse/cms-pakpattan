@@ -19,9 +19,10 @@
     {!! $errors->first('mobile', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
-    {{ html()->label()->for('role')->text('Role')->class('form-label required-input') }}
-    {{ html()->select('role', $roles, null)->class('form-select')->classIf($errors->has('role'), 'error')->placeholder('Select Role')->required() }}
-    {!! $errors->first('role', '<label class="error">:message</label>') !!}
+    {{ html()->label()->for('roles')->text('Role(s)')->class('form-label required-input') }}
+    {{ html()->select('roles[]', $roles)->class('form-select select2-roles')->attribute('multiple')->value(old('roles', $selectedRoles)) }}
+    {!! $errors->first('roles', '<label class="error">:message</label>') !!}
+    {!! $errors->first('roles.*', '<label class="error">:message</label>') !!}
 </div>
 <div class="form-group col-md-6">
     {{ html()->label()->for('source_id')->text('Source')->class('form-label') }}
@@ -72,14 +73,40 @@
             }, "No space please and don't leave it empty");
 
             $('#formValidation').validate({
+                ignore: ':hidden:not(.select2-roles)',
                 rules: {
                     username: {
                         noSpace: true
+                    },
+                    'roles[]': {
+                        required: true
+                    }
+                },
+                messages: {
+                    'roles[]': {
+                        required: "Please select at least one role."
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    if (element.hasClass('select2-roles') && element.next('.select2-container').length) {
+                        error.insertAfter(element.next('.select2-container'));
+                    } else {
+                        error.insertAfter(element);
                     }
                 }
             });
 
-            $('.mobile-mask').mask('0000-0000000');    
+            $('.mobile-mask').mask('0000-0000000');
+
+            if ($.fn.select2) {
+                $('.select2-roles').select2({
+                    placeholder: "Select Role(s)",
+                    width: '100%'
+                });
+                $('.select2-roles').on('change', function () {
+                    $(this).valid();
+                });
+            }
         });
     </script>
 @endpush

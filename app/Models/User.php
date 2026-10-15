@@ -63,4 +63,67 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Department::class, 'department_user', 'user_id', 'department_id');
     }
+
+    public function getOfficialLabelAttribute(): string
+    {
+        $designation = $this->designation ? " ({$this->designation})" : '';
+        return "{$this->name}{$designation}";
+    }
+
+    public function revenueComplaintsHolding()
+    {
+        return $this->hasMany(RevenueComplaint::class, 'current_holder_id');
+    }
+
+    public function revenueComplaintsCreated()
+    {
+        return $this->hasMany(RevenueComplaint::class, 'creator_id');
+    }
+
+    /**
+     * Determine if user has legitimate access to the general CMS dashboard.
+     */
+    public function hasGeneralDashboardAccess(): bool
+    {
+        if ($this->hasRole('Super Admin')) {
+            return true;
+        }
+
+        if ($this->hasRole('Complainant') || $this->role === 'Complainant') {
+            return true;
+        }
+
+        return $this->can('Dashboard');
+    }
+
+    /**
+     * Determine if user has access to Land Revenue Matters module.
+     */
+    public function hasRevenueMattersAccess(): bool
+    {
+        return $this->can('Land Revenue Matters Dashboard')
+            || $this->can('Land Revenue Matters Access')
+            || $this->can('Revenue Matters Dashboard')
+            || $this->can('Revenue Matters Access');
+    }
+
+    /**
+     * Determine if user is strictly a Land Revenue user (no general CMS dashboard access).
+     */
+    public function isRevenueOnly(): bool
+    {
+        return $this->hasRevenueMattersAccess() && !$this->hasGeneralDashboardAccess();
+    }
+
+    /**
+     * Determine default dashboard route for this user.
+     */
+    public function defaultDashboardRoute(): string
+    {
+        if ($this->isRevenueOnly()) {
+            return route('revenue-matters.dashboard', absolute: false);
+        }
+
+        return route('dashboard', absolute: false);
+    }
 }
